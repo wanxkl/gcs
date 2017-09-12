@@ -10,5 +10,7 @@ repositories {
 }
 
 dependencies {
+    compile 'org.springframework.data:spring-data-redis:1.8.7.RELEASE'
+    compile 'org.springframework.data:spring-data-jpa:1.11.7.RELEASE'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
