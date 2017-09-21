@@ -1,0 +1,104 @@
+{
+  "config": {
+    "version": 201709131,
+    "runTimeMax": 60,
+    "luaUrl": "http://192.168.1.107:8080/aso/luaDate.zip",
+    "state": true
+  },
+  "blacklist": [
+    "com.jack.jun1"
+  ],
+  "taskList": [
+    {
+      "taskMode": "cpa",
+      "appName": "广点通",
+      "packageName": "com.jack.jun1",
+      "apkUrl": "http://cdn.vvbid.com/angel/GDTAD.apk",
+      "runNumberMax": 80,
+      "taskId": 123456789
+    },
+    {
+      "taskMode": "cpa",
+      "appName": "网易新闻",
+      "packageName": "com.jack.jun1",
+      "userName": "账号",
+      "userPassword": "密码",
+      "apkUrl": "http://cdn.vvbid.com/angel/GDTAD.apk",
+      "runNumberMax": 80,
+      "taskId": 123456789
+    },
+    {
+      "taskMode": "market",
+      "appName": "钱包超人",
+      "packageName": "com.jack.jun1",
+      "searchTxt": "借钱钱包",
+      "marketUrl": "http://cdn.vvbid.com/angel/GDTAD.apk",
+      "marketPackName": "com.xiaomi.market",
+      "runNumberMax": 80,
+      "taskId": 123456789,
+      "findSet": {
+        "appIcon": {
+          "color": [
+            "0xffffff",
+            "0xffffff"
+          ],
+          "string": [
+            "2|-91|0xff4158,-92|16|0xff4158,96|7|0xff455c,-2|98|0xff455c,0|71|0xffffff,-2|-57|0xffffff,-85|-24|0xffffff,88|-23|0xffffff,71|-22|0xff4158",
+            "-74|-86|0xff4158,85|-77|0xff4158,0|53|0xff4158,1|76|0xffffff,12|22|0xff4158,38|24|0xffffff,27|-38|0xffffff,20|-33|0xff4158,34|-44|0xff4158"
+          ]
+        },
+        "appDec": {
+          "color": [
+            "0xfbfbfb",
+            "0xfbfbfb"
+          ],
+          "string": [
+            "-165|-50|0x000000,-143|-70|0xffffff,-143|-68|0x030303,-104|-60|0x545454,-60|-55|0x000000,-41|-56|0x555555,-44|7|0x000000,19|-10|0x020202,132|6|0xfcfcfc",
+            "-163|18|0x000000,-162|6|0xffffff,-15|2|0x000000,20|11|0xffffff,124|-1|0x010101,133|-3|0xffffff,158|0|0x030303,168|3|0xffffff,186|3|0x000000"
+          ]
+        }
+      }
+    }
+  ],
+  "vpn": {
+    "userName": "miuiad19",
+    "userPwd": "miuiad19"
+  },
+  "info": {
+    "phone": "13629304032",
+    "hardware": " Qualcomm MSM8974PRO-AC",
+    "userAgent": "User-Agent: Dalvik/1.6.0 (Linux; U; Android 4.4.4; EBEN M2 )",
+    "wifiname": "d9ea25dc5c",
+    "cpu_abi2": "armeabi",
+    "sdkInt": "18",
+    "androidId": "07c9eb800e0c04dc",
+    "iccid": "89860367518594695520",
+    "mac": "3d:a9:a2:6b:0a:e1",
+    "fingerprint": "unknown",
+    "imei": "990002459414080",
+    "bluetouth": "",
+    "opType": "1",
+    "bootloader": "unknown",
+    "display": "bf307b3f6433",
+    "board": "unknown",
+    "dayTime": "2017-07-23",
+    "product": "msm8974",
+    "cpumodel": "ARMv7 Processor rev 4 (v7l)",
+    "cpu_abi": "armeabi-v7a",
+    "ram": "915008",
+    "manufacturer": "ERENEBEN",
+    "device": "msm8974",
+    "ua": "Mozilla/5.0 (Linux; U; Android 4.4.4; zh-cn; EBEN M2 Build/14975f9e406d) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",
+    "brand": "8848",
+    "incremental": "unknown",
+    "clientIp": "118.124.38.76",
+    "imsi": "460036751859469",
+    "serial": "726501e8",
+    "release": "4.4.4",
+    "cellid": "0",
+    "lac": "0",
+    "width": "720",
+    "height": "1280",
+    "dpi": "320"
+  }
+}
