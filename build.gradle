@@ -1,0 +1,24 @@
+allprojects {
+    group 'com.learning'
+    version '1.0'
+}
+
+subprojects {
+    buildscript {
+        repositories {
+            jcenter {
+                url "http://jcenter.bintray.com/"
+            }
+        }
+        dependencies {
+            classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.7.RELEASE")
+        }
+    }
+    repositories {
+        jcenter {
+            url "http://jcenter.bintray.com/"
+        }
+    }
+
+
+}

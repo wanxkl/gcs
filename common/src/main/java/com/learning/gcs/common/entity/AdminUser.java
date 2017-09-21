@@ -1,5 +1,9 @@
 package com.learning.gcs.common.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -9,12 +13,17 @@ import java.io.Serializable;
  * @created 2017/9/13 1:21
  * @description
  */
+@Entity
+@Table(name = "AdminUser")
+@NamedQuery(name = "AdminUser", query = "SELECT a FROM AdminUser a")
 public class AdminUser extends BaseEntity implements Serializable{
     private static final long serialVersionUID = 1660836200116410830L;
+    @Column(nullable = false, length = 32)
     private String userName;
+    @Column(nullable = false, length = 32)
     private String password;
-    private int userType;
-    private int userLevel;
+    private Integer userType;
+    private Integer userLevel;
 
     public String getUserName() {
         return userName;
@@ -32,19 +41,19 @@ public class AdminUser extends BaseEntity implements Serializable{
         this.password = password;
     }
 
-    public int getUserType() {
+    public Integer getUserType() {
         return userType;
     }
 
-    public void setUserType(int userType) {
+    public void setUserType(Integer userType) {
         this.userType = userType;
     }
 
-    public int getUserLevel() {
+    public Integer getUserLevel() {
         return userLevel;
     }
 
-    public void setUserLevel(int userLevel) {
+    public void setUserLevel(Integer userLevel) {
         this.userLevel = userLevel;
     }
 }
