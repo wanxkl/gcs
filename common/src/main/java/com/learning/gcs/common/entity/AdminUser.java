@@ -16,11 +16,11 @@ import java.util.Date;
 @NamedQuery(name = "AdminUser", query = "SELECT a FROM AdminUser a")
 public class AdminUser extends BaseEntity implements Serializable{
     private static final long serialVersionUID = 1660836200116410830L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true, nullable = false)
-    private int id;
-
+    private Integer id;
     @Column(nullable = false, length = 32)
     private String userName;
     @Column(nullable = false, length = 32)
@@ -29,34 +29,28 @@ public class AdminUser extends BaseEntity implements Serializable{
     private Integer userLevel;
     private Date createTime = new Date();
     private Date updateTime = new Date();
-    @Override
-    public int getId() {
-        return id;
-    }
 
-    @Override
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Override
     public Date getCreateTime() {
         return createTime;
     }
 
-    @Override
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
-    @Override
     public Date getUpdateTime() {
         return updateTime;
     }
 
-    @Override
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getUserName() {

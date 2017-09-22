@@ -2,6 +2,7 @@ package com.learning.gcs.web.controller;
 
 import com.learning.gcs.common.entity.AdminUser;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -15,14 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class AdminUserController {
     @RequestMapping("/")
-    @ResponseBody
-    AdminUser home() {
+    String home(Model model) {
         AdminUser adminUser =new AdminUser();
         adminUser.setId(1);
-        adminUser.setPassword("password");
-        adminUser.setUserName("username");
+        adminUser.setPassword("密码");
+        adminUser.setUserName("张三");
         adminUser.setUserLevel(1);
         adminUser.setUserType(1);
-        return adminUser;
+        model.addAttribute("user",adminUser);
+        return "index";
     }
 }
