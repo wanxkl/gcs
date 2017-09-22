@@ -48,6 +48,15 @@ public class GcsTask implements Serializable{
 
     @Column(nullable = false,columnDefinition = "int(8) COMMENT '任务状态 0：暂停 1：启用 '")
     private Integer taskStatus;
+    @Column(nullable = false,columnDefinition = "varchar(1024) COMMENT '任务机器ID 空值为全部 '")
+    private String machineIds;
+    @Column(nullable = false,columnDefinition = "int(8) COMMENT '新增留存曲线ID'")
+    private Integer newAddRemainCurveId;
+    @Column(nullable = false,columnDefinition = "int(8) COMMENT '日常留存曲线ID'")
+    private Integer nichijouRemainCurveId;
+    @Column(nullable = false,columnDefinition = "int(8) COMMENT '月留存曲线ID'")
+    private Integer RemainCurveId;
+
 
     public Integer getId() {
         return id;
@@ -151,5 +160,37 @@ public class GcsTask implements Serializable{
 
     public void setTaskStatus(Integer taskStatus) {
         this.taskStatus = taskStatus;
+    }
+
+    public String getMachineIds() {
+        return machineIds;
+    }
+
+    public void setMachineIds(String machineIds) {
+        this.machineIds = machineIds;
+    }
+
+    public Integer getNewAddRemainCurveId() {
+        return newAddRemainCurveId;
+    }
+
+    public void setNewAddRemainCurveId(Integer newAddRemainCurveId) {
+        this.newAddRemainCurveId = newAddRemainCurveId;
+    }
+
+    public Integer getNichijouRemainCurveId() {
+        return nichijouRemainCurveId;
+    }
+
+    public void setNichijouRemainCurveId(Integer nichijouRemainCurveId) {
+        this.nichijouRemainCurveId = nichijouRemainCurveId;
+    }
+
+    public Integer getRemainCurveId() {
+        return RemainCurveId;
+    }
+
+    public void setRemainCurveId(Integer remainCurveId) {
+        RemainCurveId = remainCurveId;
     }
 }
