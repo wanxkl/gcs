@@ -1,45 +1,94 @@
-package com.learning.gcs.gateway.bean;
+package com.learning.gcs.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class TaskInfo {
+import javax.persistence.*;
+
+@Entity
+@Table(name = "GcsDeviceInfo")
+@NamedQuery(name = "GcsDeviceInfo", query = "SELECT a FROM GcsDeviceInfo a")
+public class GcsDeviceInfo {
+    @Id
+    @Column(unique = true, nullable = false,columnDefinition = "varchar(32) comment 'IMEI 唯一' ")
+    private String imei;
+    @Column(columnDefinition = "varchar(16) comment '手机号' ")
     private String phone;
+    @Column(columnDefinition = "varchar(64) comment '硬件信息' ")
     private String hardware;
+    @Column(columnDefinition = "varchar(128) comment '用户UA' ")
     private String userAgent;
+    @Column(columnDefinition = "varchar(32) comment 'wifi名称' ")
     private String wifiname;
-//    @JsonIgnoreProperties(ignoreUnknown = true)
+    //    @JsonIgnoreProperties(ignoreUnknown = true)
+    @Column(columnDefinition = "varchar(16) comment 'cpu处理器2' ")
     @JsonProperty("cpu_abi2")
     private String cpuAbi2;
+    @Column(columnDefinition = "varchar(8) comment 'SDK版本号' ")
     private String sdkInt;
+    @Column(columnDefinition = "varchar(16) comment 'AndroidID' ")
     private String androidId;
+    @Column(columnDefinition = "varchar(32) comment 'ICCID' ")
     private String iccid;
+    @Column(columnDefinition = "varchar(32) comment 'MAC地址' ")
     private String mac;
+    @Column(columnDefinition = "varchar(64) comment '指纹' ")
     private String fingerprint;
-    private String imei;
+    @Column(columnDefinition = "varchar(64) comment '蓝牙' ")
     private String bluetouth;
+    @Column(columnDefinition = "varchar(64) comment '系统类型' ")
     private String opType;
+    @Column(columnDefinition = "varchar(64) comment '' ")
     private String bootloader;
+    @Column(columnDefinition = "varchar(64) comment '' ")
     private String display;
+    @Column(columnDefinition = "varchar(64) comment '品牌' ")
     private String board;
+    @Column(columnDefinition = "varchar(16) comment '系统类型' ")
     private String dayTime;
+    @Column(columnDefinition = "varchar(32) comment '产品' ")
     private String product;
+    @Column(columnDefinition = "varchar(32) comment 'cpu型号' ")
     private String cpumodel;
-    private String cpu_abi;
+    @JsonProperty("cpu_abi2")
+    @Column(columnDefinition = "varchar(32) comment 'cpu处理器' ")
+    private String cpuAbi;
+    @Column(columnDefinition = "varchar(32) comment 'ram存储容量' ")
     private String ram;
-
+    @Column(columnDefinition = "varchar(32) comment '生产商' ")
     private String manufacturer;
+    @Column(columnDefinition = "varchar(32) comment '' ")
     private String device;
+    @Column(columnDefinition = "varchar(128) comment '系统UA' ")
     private String ua;
+    @Column(columnDefinition = "varchar(64) comment '品牌' ")
     private String brand;
+    @Column(columnDefinition = "varchar(128) comment '' ")
     private String incremental;
+    @Column(columnDefinition = "varchar(64) comment '客户端IP（无用字段）' ")
     private String clientIp;
+    @Column(columnDefinition = "varchar(32) comment 'IMSI' ")
     private String imsi;
+    @Column(columnDefinition = "varchar(32) comment '系列号' ")
     private String serial;
+    @Column(columnDefinition = "varchar(32) comment 'cellid' ")
     private String cellid;
+    @Column(columnDefinition = "varchar(32) comment 'lac' ")
     private String lac;
+    @Column(columnDefinition = "varchar(8) comment '宽度' ")
     private String width;
+    @Column(columnDefinition = "varchar(8) comment '高度' ")
     private String height;
+    @Column(columnDefinition = "varchar(8) comment 'dpi' ")
     private String dpi;
+
+
+    public String getImei() {
+        return imei;
+    }
+
+    public void setImei(String imei) {
+        this.imei = imei;
+    }
 
     public String getPhone() {
         return phone;
@@ -121,14 +170,6 @@ public class TaskInfo {
         this.fingerprint = fingerprint;
     }
 
-    public String getImei() {
-        return imei;
-    }
-
-    public void setImei(String imei) {
-        this.imei = imei;
-    }
-
     public String getBluetouth() {
         return bluetouth;
     }
@@ -193,12 +234,12 @@ public class TaskInfo {
         this.cpumodel = cpumodel;
     }
 
-    public String getCpu_abi() {
-        return cpu_abi;
+    public String getCpuAbi() {
+        return cpuAbi;
     }
 
-    public void setCpu_abi(String cpu_abi) {
-        this.cpu_abi = cpu_abi;
+    public void setCpuAbi(String cpuAbi) {
+        this.cpuAbi = cpuAbi;
     }
 
     public String getRam() {
