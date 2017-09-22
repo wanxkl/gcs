@@ -22,13 +22,13 @@ import java.util.List;
 public class MyRepositoryImpl<T, ID extends Serializable>
         extends SimpleJpaRepository<T, ID> implements MyRepository<T, ID> {
 
-  private EntityManager em;
+  private final EntityManager em;
 
-  // There are two constructors to choose from, either can be used.
-  public MyRepositoryImpl(Class<T> domainClass, EntityManager entityManager) {
-    super(domainClass, entityManager);
+  public MyRepositoryImpl(JpaEntityInformation entityInformation,
+                          EntityManager entityManager) {
+    super(entityInformation, entityManager);
 
-    // This is the recommended method for accessing inherited class dependencies.
+    // Keep the EntityManager around to used from the newly introduced methods.
     this.em = entityManager;
   }
 
