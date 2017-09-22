@@ -14,7 +14,7 @@ import java.util.Date;
 @Entity
 @Table(name = "AdminUser")
 @NamedQuery(name = "AdminUser", query = "SELECT a FROM AdminUser a")
-public class AdminUser extends BaseEntity implements Serializable{
+public class AdminUser implements Serializable{
     private static final long serialVersionUID = 1660836200116410830L;
 
     @Id
