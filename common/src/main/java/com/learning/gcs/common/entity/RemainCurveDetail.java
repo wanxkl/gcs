@@ -17,7 +17,7 @@ public class RemainCurveDetail implements Serializable{
     @Column(nullable = false,columnDefinition = "float(8) COMMENT '比重'")
     private Float percent;
     @Column(nullable = false,columnDefinition = "int(8) COMMENT '时间距离'")
-    private Integer distince;
+    private Integer distance;
 
 
     public Integer getId() {
@@ -44,11 +44,11 @@ public class RemainCurveDetail implements Serializable{
         this.percent = percent;
     }
 
-    public Integer getDistince() {
-        return distince;
+    public Integer getDistance() {
+        return distance;
     }
 
-    public void setDistince(Integer distince) {
-        this.distince = distince;
+    public void setDistance(Integer distance) {
+        this.distance = distance;
     }
 }
