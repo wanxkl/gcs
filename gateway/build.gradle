@@ -11,7 +11,7 @@ dependencies {
 //    compile("org.springframework.boot:spring-boot-starter-data-redis")
 
     compile "mysql:mysql-connector-java:5.1.29"
-
+    compile project(':common')
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile(
             "org.springframework.boot:spring-boot-starter-test",
