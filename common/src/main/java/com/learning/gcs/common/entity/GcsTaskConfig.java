@@ -1,6 +1,7 @@
 package com.learning.gcs.common.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "GcsTaskConfig")
@@ -19,6 +20,8 @@ public class GcsTaskConfig {
     private String luaUrl;
     @Column(nullable = false,columnDefinition = "tinyint(1) COMMENT '配置状态 1:true 0:false'")
     private boolean state;
+    private Date createTime = new Date();
+
 
     public Integer getId() {
         return id;
@@ -58,5 +61,13 @@ public class GcsTaskConfig {
 
     public void setState(boolean state) {
         this.state = state;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

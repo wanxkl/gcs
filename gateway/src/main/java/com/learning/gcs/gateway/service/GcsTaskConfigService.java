@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public interface GcsTaskConfigService {
 
-    GcsTaskConfig  getGcsTaskConfig() throws IOException;
+    GcsTaskConfig  getGcsTaskConfig();
 
     void save(GcsTaskConfig gcsTaskConfig);
 }

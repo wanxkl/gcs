@@ -2,7 +2,6 @@ package com.learning.gcs.gateway.controller;
 
 import com.learning.gcs.gateway.bean.Result;
 import com.learning.gcs.gateway.bean.Task;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

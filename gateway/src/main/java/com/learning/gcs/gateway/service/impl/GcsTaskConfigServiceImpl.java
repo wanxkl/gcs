@@ -1,5 +1,6 @@
 package com.learning.gcs.gateway.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.learning.gcs.common.entity.GcsTaskConfig;
 import com.learning.gcs.common.redis.KeyUtil;
@@ -25,15 +26,23 @@ public class GcsTaskConfigServiceImpl implements GcsTaskConfigService {
     private ObjectMapper objectMapper;
 
     @Override
-    public GcsTaskConfig getGcsTaskConfig() throws IOException {
+    public GcsTaskConfig getGcsTaskConfig(){
         GcsTaskConfig gcsTaskConfig = null;
         Object o  = redisReader.get(KeyUtil.KEY_TASK_CONFIG);
 
         if(o==null){
             gcsTaskConfig = gcsTaskConfigRepository.findOneByOrderByIdDesc();
-            redisWriter.set(KeyUtil.KEY_TASK_CONFIG,objectMapper.writeValueAsBytes(gcsTaskConfig));
+            try {
+                redisWriter.set(KeyUtil.KEY_TASK_CONFIG,objectMapper.writeValueAsBytes(gcsTaskConfig));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
         }else{
-            gcsTaskConfig = objectMapper.readValue(o.toString(),GcsTaskConfig.class);
+            try {
+                gcsTaskConfig = objectMapper.readValue(o.toString(),GcsTaskConfig.class);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         return gcsTaskConfig;

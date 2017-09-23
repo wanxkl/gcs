@@ -1,27 +1,26 @@
 package com.learning.gcs.gateway.bean;
 
+import com.learning.gcs.common.entity.GcsDeviceInfo;
 import com.learning.gcs.common.entity.GcsTask;
+import com.learning.gcs.common.entity.GcsTaskConfig;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class Task {
 
-    private TaskConfig config;
+    private GcsTaskConfig config;
     private List<GcsTask> taskList;
 
     private TaskVpn vpn;
-    private TaskInfo info;
+    private GcsDeviceInfo info;
     private List<String> blackList;
 
-    public TaskConfig getConfig() {
-        if(config==null){
-            setConfig(new TaskConfig());
-        }
+    public GcsTaskConfig getConfig() {
         return config;
     }
 
-    public void setConfig(TaskConfig config) {
+    public void setConfig(GcsTaskConfig config) {
         this.config = config;
     }
 
@@ -48,11 +47,11 @@ public class Task {
         this.vpn = vpn;
     }
 
-    public TaskInfo getInfo() {
+    public GcsDeviceInfo getInfo() {
         return info;
     }
 
-    public void setInfo(TaskInfo info) {
+    public void setInfo(GcsDeviceInfo info) {
         this.info = info;
     }
 
