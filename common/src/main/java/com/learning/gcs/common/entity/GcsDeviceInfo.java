@@ -1,6 +1,6 @@
 package com.learning.gcs.common.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+//import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,7 +22,7 @@ public class GcsDeviceInfo implements Serializable{
     private String wifiname;
     //    @JsonIgnoreProperties(ignoreUnknown = true)
     @Column(columnDefinition = "varchar(16) comment 'cpu处理器2' ")
-    @JsonProperty("cpu_abi2")
+   // @JsonProperty("cpu_abi2")
     private String cpuAbi2;
     @Column(columnDefinition = "varchar(8) comment 'SDK版本号' ")
     private String sdkInt;
@@ -50,7 +50,7 @@ public class GcsDeviceInfo implements Serializable{
     private String product;
     @Column(columnDefinition = "varchar(32) comment 'cpu型号' ")
     private String cpumodel;
-    @JsonProperty("cpu_abi2")
+    //@JsonProperty("cpu_abi2")
     @Column(columnDefinition = "varchar(32) comment 'cpu处理器' ")
     private String cpuAbi;
     @Column(columnDefinition = "varchar(32) comment 'ram存储容量' ")
