@@ -26,4 +26,15 @@ public class AdminUserController {
         model.addAttribute("user",adminUser);
         return "index";
     }
+    @RequestMapping("/table")
+    String table(Model model) {
+        AdminUser adminUser =new AdminUser();
+        adminUser.setId(1);
+        adminUser.setPassword("密码");
+        adminUser.setUserName("张三");
+        adminUser.setUserLevel(1);
+        adminUser.setUserType(1);
+        model.addAttribute("user",adminUser);
+        return "table";
+    }
 }
