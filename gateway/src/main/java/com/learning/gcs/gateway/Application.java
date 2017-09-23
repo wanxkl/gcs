@@ -8,16 +8,20 @@ import com.learning.gcs.common.repository.MyRepositoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.AutoConfigurationExcludeFilter;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.context.TypeExcludeFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
-@EnableTransactionManagement
 @EnableJpaRepositories(
         basePackages = "com.learning.gcs.common.repository",
         repositoryBaseClass = MyRepositoryImpl.class
@@ -25,6 +29,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableScheduling
 @EntityScan(basePackages = "com.learning.gcs.common.entity")
+@ComponentScan(basePackages = "com.learning.gcs",
+        excludeFilters = {
+        @ComponentScan.Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),
+        @ComponentScan.Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) })
 public class Application  {
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
@@ -40,14 +48,5 @@ public class Application  {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         return objectMapper;
-    }
-
-    @Bean
-    public RedisReader getRedisReader(){
-        return new RedisReader();
-    }
-    @Bean
-    public RedisWriter getRedisWriter(){
-        return new RedisWriter();
     }
 }

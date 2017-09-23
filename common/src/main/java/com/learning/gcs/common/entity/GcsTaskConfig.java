@@ -1,12 +1,13 @@
 package com.learning.gcs.common.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "GcsTaskConfig")
 @NamedQuery(name = "GcsTaskConfig", query = "SELECT a FROM GcsTaskConfig a")
-public class GcsTaskConfig {
+public class GcsTaskConfig implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,11 +1,12 @@
 package com.learning.gcs.common.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "Machine")
 @NamedQuery(name = "Machine", query = "SELECT a FROM Machine a")
-public class Machine {
+public class Machine implements Serializable{
 
     @Id
     @Column(unique = true, nullable = false,columnDefinition = "int(11) comment '主键ID,机器号' ")

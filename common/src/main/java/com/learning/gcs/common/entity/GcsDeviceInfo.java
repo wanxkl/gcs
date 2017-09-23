@@ -3,11 +3,12 @@ package com.learning.gcs.common.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "GcsDeviceInfo")
 @NamedQuery(name = "GcsDeviceInfo", query = "SELECT a FROM GcsDeviceInfo a")
-public class GcsDeviceInfo {
+public class GcsDeviceInfo implements Serializable{
     @Id
     @Column(unique = true, nullable = false,columnDefinition = "varchar(32) comment 'IMEI 唯一' ")
     private String imei;

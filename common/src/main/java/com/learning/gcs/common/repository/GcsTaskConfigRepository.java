@@ -4,5 +4,5 @@ import com.learning.gcs.common.entity.GcsTaskConfig;
 
 public interface GcsTaskConfigRepository extends MyRepository<GcsTaskConfig,Integer>{
 
-    GcsTaskConfig findOneByOrderByIdDesc();
+    GcsTaskConfig findTopByOrderByIdDesc();
 }
