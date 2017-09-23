@@ -2,6 +2,8 @@ package com.learning.gcs.gateway;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.learning.gcs.common.redis.RedisReader;
+import com.learning.gcs.common.redis.RedisWriter;
 import com.learning.gcs.common.repository.MyRepositoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +11,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -37,5 +40,14 @@ public class Application  {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         return objectMapper;
+    }
+
+    @Bean
+    public RedisReader getRedisReader(){
+        return new RedisReader();
+    }
+    @Bean
+    public RedisWriter getRedisWriter(){
+        return new RedisWriter();
     }
 }

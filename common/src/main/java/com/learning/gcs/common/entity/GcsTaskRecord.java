@@ -2,6 +2,7 @@ package com.learning.gcs.common.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "GcsTaskRecord")
@@ -27,6 +28,8 @@ public class GcsTaskRecord implements Serializable{
     private Integer logStatus;
     @Column(nullable = false,columnDefinition = "int(8) comment '日活跃次数' ")
     private Integer dailyActiveTimes;
+    private Date createTime = new Date();
+
 
     public Integer getId() {
         return id;
@@ -98,5 +101,13 @@ public class GcsTaskRecord implements Serializable{
 
     public void setDailyActiveTimes(Integer dailyActiveTimes) {
         this.dailyActiveTimes = dailyActiveTimes;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

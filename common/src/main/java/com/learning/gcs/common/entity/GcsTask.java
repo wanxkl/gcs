@@ -48,6 +48,8 @@ public class GcsTask implements Serializable{
 
     @Column(nullable = false,columnDefinition = "int(8) COMMENT '任务状态 0：暂停 1：启用 '")
     private Integer taskStatus;
+    @Column(nullable = false,columnDefinition = "int(8) COMMENT '任务数量'")
+    private Integer taskCount;
     @Column(nullable = false,columnDefinition = "varchar(1024) COMMENT '任务机器ID 空值为全部 '")
     private String machineIds;
     @Column(nullable = false,columnDefinition = "int(8) COMMENT '新增留存曲线ID'")
@@ -192,5 +194,13 @@ public class GcsTask implements Serializable{
 
     public void setRemainCurveId(Integer remainCurveId) {
         RemainCurveId = remainCurveId;
+    }
+
+    public Integer getTaskCount() {
+        return taskCount;
+    }
+
+    public void setTaskCount(Integer taskCount) {
+        this.taskCount = taskCount;
     }
 }

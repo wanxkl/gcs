@@ -23,4 +23,12 @@ public class RedisWriter {
         redisTemplate.delete(key);
     }
 
+    void setSet(Object ...values){
+        redisTemplate.opsForSet().add(values);
+    }
+
+    void deleteSetValue(Object key,Object value){
+        redisTemplate.opsForSet().remove(key,value);
+    }
+
 }

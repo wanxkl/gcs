@@ -16,6 +16,13 @@ public class AdminUserServiceTest {
 
     @Autowired
     private AdminUserService adminUserService;
+
+
+    @Test
+    public void printBean() throws Exception {
+        System.out.println(adminUserService);
+    }
+
     @Test
     public void save() throws Exception {
 

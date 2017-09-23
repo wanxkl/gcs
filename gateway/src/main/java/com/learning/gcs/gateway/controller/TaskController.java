@@ -2,12 +2,14 @@ package com.learning.gcs.gateway.controller;
 
 import com.learning.gcs.gateway.bean.Result;
 import com.learning.gcs.gateway.bean.Task;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/task")
+@ControllerAdvice
 public class TaskController {
 
     @RequestMapping("/get")
