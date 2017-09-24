@@ -45,10 +45,6 @@ startScripts {
 }
 applicationDistribution.from("src/main/resources/") {
     into "conf"
-
-    exclude "application.properties"
-    exclude "banner.txt"
-    exclude "logback.groovy"
 }
 
 jar{
