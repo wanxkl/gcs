@@ -6,3 +6,4 @@
           \/        \/        \/       \/          \/         \/
 
       form:http://patorjk.com/software/taag
+      Application-version:${application.version}

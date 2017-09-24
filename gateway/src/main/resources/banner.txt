@@ -11,3 +11,4 @@
              \______  /\____|__  /____|   /_______  / \__/\  /\____|__  / ______|
                     \/         \/                 \/       \/         \/\/
       form:http://patorjk.com/software/taag
+      Application-version:${application.version}

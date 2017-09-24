@@ -34,12 +34,14 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
         @ComponentScan.Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),
         @ComponentScan.Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) })
 public class Application  {
+
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
         logger.info("Project Begin");
+
     }
 
 
