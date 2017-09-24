@@ -2,12 +2,16 @@ package com.learning.gcs.common.entity;
 
 //import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "GcsDeviceInfo")
 @NamedQuery(name = "GcsDeviceInfo", query = "SELECT a FROM GcsDeviceInfo a")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GcsDeviceInfo implements Serializable{
     @Id
     @Column(unique = true, nullable = false,columnDefinition = "varchar(32) comment 'IMEI 唯一' ")
@@ -20,9 +24,8 @@ public class GcsDeviceInfo implements Serializable{
     private String userAgent;
     @Column(columnDefinition = "varchar(32) comment 'wifi名称' ")
     private String wifiname;
-    //    @JsonIgnoreProperties(ignoreUnknown = true)
     @Column(columnDefinition = "varchar(16) comment 'cpu处理器2' ")
-   // @JsonProperty("cpu_abi2")
+    @JsonProperty("cpu_abi2")
     private String cpuAbi2;
     @Column(columnDefinition = "varchar(8) comment 'SDK版本号' ")
     private String sdkInt;
@@ -32,7 +35,7 @@ public class GcsDeviceInfo implements Serializable{
     private String iccid;
     @Column(columnDefinition = "varchar(32) comment 'MAC地址' ")
     private String mac;
-    @Column(columnDefinition = "varchar(64) comment '指纹' ")
+    @Column(columnDefinition = "varchar(128) comment '指纹' ")
     private String fingerprint;
     @Column(columnDefinition = "varchar(64) comment '蓝牙' ")
     private String bluetouth;
@@ -48,9 +51,9 @@ public class GcsDeviceInfo implements Serializable{
     private String dayTime;
     @Column(columnDefinition = "varchar(32) comment '产品' ")
     private String product;
-    @Column(columnDefinition = "varchar(32) comment 'cpu型号' ")
+    @Column(columnDefinition = "varchar(64) comment 'cpu型号' ")
     private String cpumodel;
-    //@JsonProperty("cpu_abi2")
+    @JsonProperty("cpu_abi")
     @Column(columnDefinition = "varchar(32) comment 'cpu处理器' ")
     private String cpuAbi;
     @Column(columnDefinition = "varchar(32) comment 'ram存储容量' ")
@@ -59,7 +62,7 @@ public class GcsDeviceInfo implements Serializable{
     private String manufacturer;
     @Column(columnDefinition = "varchar(32) comment '' ")
     private String device;
-    @Column(columnDefinition = "varchar(128) comment '系统UA' ")
+    @Column(columnDefinition = "varchar(256) comment '系统UA' ")
     private String ua;
     @Column(columnDefinition = "varchar(64) comment '品牌' ")
     private String brand;
@@ -74,6 +77,7 @@ public class GcsDeviceInfo implements Serializable{
     @Column(columnDefinition = "varchar(32) comment 'cellid' ")
     private String cellid;
     @Column(columnDefinition = "varchar(32) comment 'lac' ")
+    @JsonProperty("location")
     private String lac;
     @Column(columnDefinition = "varchar(8) comment '宽度' ")
     private String width;
