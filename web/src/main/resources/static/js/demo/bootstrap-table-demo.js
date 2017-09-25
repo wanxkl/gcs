@@ -82,51 +82,7 @@ function buildTable($el, cells, rows) {
 
   // Example Bootstrap Table From Data
   // ---------------------------------
-  (function() {
-    var bt_data = [{
-      "Tid": "1",
-      "First": "奔波儿灞",
-      "sex": "男",
-      "Score": "50"
-    }, {
-      "Tid": "2",
-      "First": "灞波儿奔",
-      "sex": "男",
-      "Score": "94"
-    }, {
-      "Tid": "3",
-      "First": "作家崔成浩",
-      "sex": "男",
-      "Score": "80"
-    }, {
-      "Tid": "4",
-      "First": "韩寒",
-      "sex": "男",
-      "Score": "67"
-    }, {
-      "Tid": "5",
-      "First": "郭敬明",
-      "sex": "男",
-      "Score": "100"
-    }, {
-      "Tid": "6",
-      "First": "马云",
-      "sex": "男",
-      "Score": "77"
-    }, {
-      "Tid": "7",
-      "First": "范爷",
-      "sex": "女",
-      "Score": "87"
-    }];
 
-
-    $('#exampleTableFromData').bootstrapTable({
-      data: bt_data,
-      // mobileResponsive: true,
-      height: "250"
-    });
-  })();
 
   // Example Bootstrap Table Columns
   // -------------------------------
@@ -174,6 +130,7 @@ function buildTable($el, cells, rows) {
   // ------------------------------
   (function() {
     $('#exampleTableEvents').bootstrapTable({
+      //url: "localhost:8080/task/findTasks",
       url: "js/demo/bootstrap_table_test.json",
       search: true,
       pagination: true,
@@ -190,9 +147,10 @@ function buildTable($el, cells, rows) {
     });
 
     var $result = $('#examplebtTableEventsResult');
-
+    var  taskDelete= '';
     $('#exampleTableEvents').on('all.bs.table', function(e, name, args) {
-        console.log('Event:', name, ', data:', args);
+        console.log('Event......自定义:',name, ', data:', args);
+
       })
       .on('click-row.bs.table', function(e, row, $element) {
         $result.text('Event: click-row.bs.table');

@@ -2,8 +2,8 @@ package com.learning.gcs.common.entity;
 
 //import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+/*import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;*/
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "GcsDeviceInfo")
 @NamedQuery(name = "GcsDeviceInfo", query = "SELECT a FROM GcsDeviceInfo a")
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 public class GcsDeviceInfo implements Serializable{
     @Id
     @Column(unique = true, nullable = false,columnDefinition = "varchar(32) comment 'IMEI 唯一' ")
@@ -25,7 +25,7 @@ public class GcsDeviceInfo implements Serializable{
     @Column(columnDefinition = "varchar(32) comment 'wifi名称' ")
     private String wifiname;
     @Column(columnDefinition = "varchar(16) comment 'cpu处理器2' ")
-    @JsonProperty("cpu_abi2")
+   // @JsonProperty("cpu_abi2")
     private String cpuAbi2;
     @Column(columnDefinition = "varchar(8) comment 'SDK版本号' ")
     private String sdkInt;
@@ -53,7 +53,7 @@ public class GcsDeviceInfo implements Serializable{
     private String product;
     @Column(columnDefinition = "varchar(64) comment 'cpu型号' ")
     private String cpumodel;
-    @JsonProperty("cpu_abi")
+    //@JsonProperty("cpu_abi")
     @Column(columnDefinition = "varchar(32) comment 'cpu处理器' ")
     private String cpuAbi;
     @Column(columnDefinition = "varchar(32) comment 'ram存储容量' ")
@@ -77,7 +77,7 @@ public class GcsDeviceInfo implements Serializable{
     @Column(columnDefinition = "varchar(32) comment 'cellid' ")
     private String cellid;
     @Column(columnDefinition = "varchar(32) comment 'lac' ")
-    @JsonProperty("location")
+   // @JsonProperty("location")
     private String lac;
     @Column(columnDefinition = "varchar(8) comment '宽度' ")
     private String width;
