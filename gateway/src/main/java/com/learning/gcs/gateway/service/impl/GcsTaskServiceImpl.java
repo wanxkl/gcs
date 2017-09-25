@@ -5,22 +5,33 @@ import com.learning.gcs.common.repository.GcsTaskRepository;
 import com.learning.gcs.gateway.service.GcsTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
 public class GcsTaskServiceImpl implements GcsTaskService{
+
+    private List<Object> list;
+
     @Autowired
     private GcsTaskRepository gcsTaskRepository;
 
     @Override
     public List<GcsTask> findAll() {
-        return gcsTaskRepository.findAll();
+        return null;
     }
 
     @Override
     public List<Object> getValidTaskIds(String deviceId) {
-        return null;
+        //TODO 这里需要计算出可用的任务ID
+        if(ObjectUtils.isEmpty(list)){
+            list = new LinkedList<>();
+            list.add(1);
+        }
+
+        return list;
     }
 
     @Override
@@ -36,6 +47,11 @@ public class GcsTaskServiceImpl implements GcsTaskService{
 
     @Override
     public GcsTask getByTaskId(Integer taskId) {
-        return null;
+        return gcsTaskRepository.findOne(taskId);
+    }
+
+    @Override
+    public GcsTask save(GcsTask gcsTask) {
+        return gcsTaskRepository.save(gcsTask);
     }
 }

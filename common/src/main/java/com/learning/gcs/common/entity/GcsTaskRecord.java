@@ -31,6 +31,14 @@ public class GcsTaskRecord implements Serializable{
     private Date createTime = new Date();
 
 
+    public GcsTaskRecord() {
+    }
+
+    public GcsTaskRecord(Integer taskId, String imei) {
+        this.taskId = taskId;
+        this.imei = imei;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -3,6 +3,7 @@ package com.learning.gcs.gateway.bean;
 public class TaskSimple {
 
     private int taskId;
+    private String TaskMode;
     private String appName;
     private String packageName;
     private String apkUrl;
@@ -16,6 +17,14 @@ public class TaskSimple {
 
     public void setTaskId(int taskId) {
         this.taskId = taskId;
+    }
+
+    public String getTaskMode() {
+        return TaskMode;
+    }
+
+    public void setTaskMode(String taskMode) {
+        TaskMode = taskMode;
     }
 
     public String getAppName() {

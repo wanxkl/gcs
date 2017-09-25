@@ -1,5 +1,6 @@
 package com.learning.gcs.gateway.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.learning.gcs.common.entity.GcsDeviceInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,10 +16,13 @@ public class GcsDeviceInfoServiceTest {
     private static final Logger logger = LoggerFactory.getLogger(GcsDeviceInfoServiceTest.class);
     @Autowired
     private GcsDeviceInfoService gcsDeviceInfoService;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
     public void getByTaskId() throws Exception {
-            gcsDeviceInfoService.getByTaskId(1);
+        GcsDeviceInfo gcs = gcsDeviceInfoService.getByTaskId(1);
+        System.out.println(objectMapper.writeValueAsString(gcs));
 
     }
 

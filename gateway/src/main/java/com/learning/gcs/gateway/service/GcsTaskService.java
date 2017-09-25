@@ -16,5 +16,7 @@ public interface GcsTaskService {
 
     GcsTask getByTaskId(Integer taskId);
 
+    GcsTask save(GcsTask gcsTask);
+
 
 }

@@ -1,5 +1,8 @@
 package com.learning.gcs.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -7,7 +10,6 @@ import java.io.Serializable;
 @Table(name = "GcsTask")
 @NamedQuery(name = "GcsTask", query = "SELECT a FROM GcsTask a")
 public class GcsTask implements Serializable{
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true, nullable = false,columnDefinition = "int(11) comment '主键ID' ")
@@ -50,7 +52,7 @@ public class GcsTask implements Serializable{
     private Integer taskStatus;
     @Column(nullable = false,columnDefinition = "int(8) COMMENT '任务数量'")
     private Integer taskCount;
-    @Column(nullable = false,columnDefinition = "varchar(1024) COMMENT '任务机器ID 空值为全部 '")
+    @Column(columnDefinition = "varchar(1024) COMMENT '任务机器ID 空值为全部 '")
     private String machineIds;
     @Column(nullable = false,columnDefinition = "int(8) COMMENT '新增留存曲线ID'")
     private Integer newAddRemainCurveId;

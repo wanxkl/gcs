@@ -8,31 +8,29 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Task {
-
-    private GcsTaskConfig config;
-    private List<GcsTask> taskList;
-
+    private TaskConfig config;
+    private List<TaskSimple> taskList;
     private TaskVpn vpn;
     private GcsDeviceInfo info;
     private List<String> blackList;
 
-    public GcsTaskConfig getConfig() {
+    public TaskConfig getConfig() {
         return config;
     }
 
-    public void setConfig(GcsTaskConfig config) {
+    public void setConfig(TaskConfig config) {
         this.config = config;
     }
 
-    public List<GcsTask> getTaskList() {
+    public List<TaskSimple> getTaskList() {
         if(taskList==null){
-            setTaskList(new LinkedList<GcsTask>());
+            setTaskList(new LinkedList<TaskSimple>());
         }
 
         return taskList;
     }
 
-    public void setTaskList(List<GcsTask> taskList) {
+    public void setTaskList(List<TaskSimple> taskList) {
         this.taskList = taskList;
     }
 
@@ -56,6 +54,9 @@ public class Task {
     }
 
     public List<String> getBlackList() {
+        if(blackList==null){
+            blackList = new LinkedList<>();
+        }
         return blackList;
     }
 

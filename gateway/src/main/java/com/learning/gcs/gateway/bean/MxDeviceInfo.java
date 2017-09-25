@@ -2,12 +2,12 @@ package com.learning.gcs.gateway.bean;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class TaskInfo {
+public class MxDeviceInfo {
+    private String imei;
     private String phone;
     private String hardware;
     private String userAgent;
     private String wifiname;
-//    @JsonIgnoreProperties(ignoreUnknown = true)
     @JsonProperty("cpu_abi2")
     private String cpuAbi2;
     private String sdkInt;
@@ -15,7 +15,6 @@ public class TaskInfo {
     private String iccid;
     private String mac;
     private String fingerprint;
-    private String imei;
     private String bluetouth;
     private String opType;
     private String bootloader;
@@ -24,9 +23,9 @@ public class TaskInfo {
     private String dayTime;
     private String product;
     private String cpumodel;
-    private String cpu_abi;
+    @JsonProperty("cpu_abi")
+    private String cpuAbi;
     private String ram;
-
     private String manufacturer;
     private String device;
     private String ua;
@@ -35,11 +34,22 @@ public class TaskInfo {
     private String clientIp;
     private String imsi;
     private String serial;
-    private String cellid;
-    private String lac;
-    private String width;
-    private String height;
+    private String screen;
+    private String location;
     private String dpi;
+    private String xgver;
+    @JsonProperty("index_num")
+    private String indexNum;
+
+    private String release;
+
+    public String getImei() {
+        return imei;
+    }
+
+    public void setImei(String imei) {
+        this.imei = imei;
+    }
 
     public String getPhone() {
         return phone;
@@ -121,14 +131,6 @@ public class TaskInfo {
         this.fingerprint = fingerprint;
     }
 
-    public String getImei() {
-        return imei;
-    }
-
-    public void setImei(String imei) {
-        this.imei = imei;
-    }
-
     public String getBluetouth() {
         return bluetouth;
     }
@@ -193,12 +195,12 @@ public class TaskInfo {
         this.cpumodel = cpumodel;
     }
 
-    public String getCpu_abi() {
-        return cpu_abi;
+    public String getCpuAbi() {
+        return cpuAbi;
     }
 
-    public void setCpu_abi(String cpu_abi) {
-        this.cpu_abi = cpu_abi;
+    public void setCpuAbi(String cpuAbi) {
+        this.cpuAbi = cpuAbi;
     }
 
     public String getRam() {
@@ -273,36 +275,20 @@ public class TaskInfo {
         this.serial = serial;
     }
 
-    public String getCellid() {
-        return cellid;
+    public String getScreen() {
+        return screen;
     }
 
-    public void setCellid(String cellid) {
-        this.cellid = cellid;
+    public void setScreen(String screen) {
+        this.screen = screen;
     }
 
-    public String getLac() {
-        return lac;
+    public String getLocation() {
+        return location;
     }
 
-    public void setLac(String lac) {
-        this.lac = lac;
-    }
-
-    public String getWidth() {
-        return width;
-    }
-
-    public void setWidth(String width) {
-        this.width = width;
-    }
-
-    public String getHeight() {
-        return height;
-    }
-
-    public void setHeight(String height) {
-        this.height = height;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getDpi() {
@@ -311,5 +297,27 @@ public class TaskInfo {
 
     public void setDpi(String dpi) {
         this.dpi = dpi;
+    }
+
+    public String getXgver() {
+        return xgver;
+    }
+
+    public void setXgver(String xgver) {
+        this.xgver = xgver;
+    }
+
+    public String getIndexNum() {
+        return indexNum;
+    }
+
+    public void setIndexNum(String indexNum) {
+        this.indexNum = indexNum;
+    }
+    public String getRelease() {
+        return release;
+    }
+    public void setRelease(String release) {
+        this.release = release;
     }
 }
