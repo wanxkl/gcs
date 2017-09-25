@@ -7,4 +7,5 @@ import java.util.List;
 public interface GcsTaskRepository extends MyRepository<GcsTask,Integer>{
     @Override
     List<GcsTask> findAll();
+    boolean updateById();
 }

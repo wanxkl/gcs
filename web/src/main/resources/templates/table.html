@@ -37,11 +37,43 @@
                                 <table id="exampleTableEvents" data-height="400" data-mobile-responsive="true">
                                     <thead>
                                         <tr>
+                                            <!--idint(11) NOT NULL主键ID
+                                            apk_urlvarchar(64) NOT NULL任务APK下载地址
+                                            app_namevarchar(32) NOT NULL任务名称
+                                            find_setvarchar(1024) NULL脚本辅助信息（taskMode=market时不为空
+                                            market_pack_namevarchar(128) NULL市场包名（taskMode=market时不为空
+                                            market_urlvarchar(128) NULL市场URL（taskMode=market时不为空
+                                            package_namevarchar(32) NULL任务包名(taskMode=cpa时不为空)
+                                            run_numbervarchar(64) NOT NULL任务重试次数
+                                            search_txtvarchar(64) NULL搜索关键字（taskMode=market时不为空
+                                            task_modevarchar(64) NOT NULL任务类型名称
+                                            task_mode_codeint(8) NOT NULL任务类型编码
+                                            task_statusint(8) NOT NULL任务状态 0：暂停 1：启用
+                                            weightint(8) NOT NULL权重：1-10
+                                            remain_curve_idint(8) NOT NULL月留存曲线ID
+                                            machine_idsvarchar(1024) NOT NULL任务机器ID 空值为全部
+                                            new_add_remain_curve_idint(8) NOT NULL新增留存曲线ID
+                                            nichijou_remain_curve_idint(8) NOT NULL日常留存曲线ID
+                                            task_countint(8) NOT NULL任务数量-->
                                             <th data-field="state" data-checkbox="true"></th>
                                             <th data-field="id">ID</th>
-                                            <th data-field="name">名称</th>
-                                            <th data-field="price">价格</th>
-                                            <th data-field="do">操作</th>
+                                            <th data-field="apk_url">APK下载地址</th>
+                                            <th data-field="app_name">任务名称</th>
+                                            <th data-field="find_set">脚本辅助信息</th>
+                                            <th data-field="market_pack_name">市场包名</th>
+                                            <th data-field="market_url">市场URL</th>
+                                            <th data-field="package_name">任务包名</th>
+                                            <th data-field="run_number">任务重试次数</th>
+                                            <th data-field="search_txt">搜索关键字</th>
+                                            <th data-field="task_mode">任务类型名称</th>
+                                            <th data-field="task_mode_code">任务类型编码</th>
+                                            <th data-field="task_status">任务状态</th>
+                                            <th data-field="weight">权重</th>
+                                            <th data-field="remain_curve_id">月留存曲线ID</th>
+                                            <th data-field="machine_id">任务机器ID</th>
+                                            <th data-field="new_add_remain_curve_id">新增留存曲线ID</th>
+                                            <th data-field="nichijou_remain_curve_id">日常留存曲线ID</th>
+                                            <th data-field="task_count">任务数量</th>
                                         </tr>
                                     </thead>
                                 </table>
