@@ -20,9 +20,8 @@ public class MachineServiceImpl implements MachineService{
     @Override
     public List<Object> getTaskIdsByDeviceId(String deviceId) {
 
-        Object [] set = redisReader.getSetValues(KeyUtil.generatDeviceIdKey(deviceId));
+        Object [] set = redisReader.getSetValues(KeyUtil.generateDeviceIdKey(deviceId));
 
         return Arrays.asList(set);
-
     }
 }

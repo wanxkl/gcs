@@ -2,6 +2,7 @@ package com.learning.gcs.common.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.support.atomic.RedisAtomicInteger;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
@@ -21,6 +22,13 @@ public class RedisWriter {
 
         stringRedisTemplate.opsForValue().set(key, value);
     }
+
+
+    public Integer getAndSetAtomic(String key){
+        RedisAtomicInteger atomicInteger = new RedisAtomicInteger(key,stringRedisTemplate.getConnectionFactory());
+        return  atomicInteger.getAndAdd(1);
+    }
+
 
     public void delete(String key) {
         stringRedisTemplate.delete(key);

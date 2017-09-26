@@ -23,7 +23,8 @@ public class GcsTaskServiceImpl implements GcsTaskService{
 
     @Override
     public boolean updateGcsTaskById(GcsTask gcsTask, int id) {
-        return gcsTaskRepository.updateById(gcsTask.getAppName(),id);
+//        return gcsTaskRepository.updateById(gcsTask.getAppName(),id);
+        return false;
     }
 
     @Override

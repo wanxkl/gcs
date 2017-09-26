@@ -54,7 +54,7 @@ public class TaskController {
         gcsTask.setMarketUrl(market_url);
         gcsTask.setPackageName(package_name);
         gcsTask.setSearchTxt(search_txt);
-        gcsTask.setRunNumber(run_number);
+//        gcsTask.setRunNumber(run_number);
         gcsTaskService.add(gcsTask);
     }
 }

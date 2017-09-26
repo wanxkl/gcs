@@ -48,7 +48,7 @@ public class RemainCurveServiceTest {
 //        logger.debug(objectMapper.writeValueAsString(details));
 //        redisWriter.set(KeyUtil.generatRemainCurveKey("1"),objectMapper.writeValueAsString(details));
 //        Thread.sleep(1000);
-        String ret = redisReader.get(KeyUtil.generatRemainCurveKey("1")).toString();
+        String ret = redisReader.get(KeyUtil.generateRemainCurveIdKey(1)).toString();
 
         List<RemainCurveDetail> d = objectMapper.readValue(ret, ObjectMapperUtil.getCollectionType(objectMapper,List.class,RemainCurveDetail.class));
 
@@ -84,5 +84,12 @@ public class RemainCurveServiceTest {
 
     }
 
+    @Test
+    public void getRemainCurveDetailByRemainCurveId() throws Exception {
 
+        List<RemainCurveDetail> list = remainCurveDetailService.getRemainCurveDetailByRemainCurveId(1);
+
+        logger.debug("list:{}",objectMapper.writeValueAsString(list));
+
+    }
 }
