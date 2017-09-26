@@ -88,7 +88,7 @@ function buildTable($el, cells, rows) {
   // -------------------------------
   (function() {
     $('#exampleTableColumns').bootstrapTable({
-      url: "js/demo/bootstrap_table_test.json",
+      url: "http://localhost:8080/findTasks",
       height: "400",
       iconSize: 'outline',
       showColumns: true,
@@ -108,30 +108,15 @@ function buildTable($el, cells, rows) {
 
   // Example Bootstrap Table Toolbar
   // -------------------------------
-  (function() {
-    $('#exampleTableToolbar').bootstrapTable({
-      url: "js/demo/bootstrap_table_test2.json",
-      search: true,
-      showRefresh: true,
-      showToggle: true,
-      showColumns: true,
-      toolbar: '#exampleToolbar',
-      iconSize: 'outline',
-      icons: {
-        refresh: 'glyphicon-repeat',
-        toggle: 'glyphicon-list-alt',
-        columns: 'glyphicon-list'
-      }
-    });
-  })();
+
 
 
   // Example Bootstrap Table Events
   // ------------------------------
   (function() {
     $('#exampleTableEvents').bootstrapTable({
-      //url: "localhost:8080/task/findTasks",
-      url: "js/demo/bootstrap_table_test.json",
+      url: "http://localhost:8080/findTasks",
+//      url: "js/demo/bootstrap_table_test.json",
       search: true,
       pagination: true,
       showRefresh: true,
@@ -147,32 +132,30 @@ function buildTable($el, cells, rows) {
     });
 
     var $result = $('#examplebtTableEventsResult');
-    var  taskDelete= '';
+    var  taskDeleteId= '';
+    var ids = new Array();
+    var href = "/updateTask?id="
     $('#exampleTableEvents').on('all.bs.table', function(e, name, args) {
-        console.log('Event......自定义:',name, ', data:', args);
-
+        //console.log('Event......自定义:',name, ', data:', args);
       })
-      .on('click-row.bs.table', function(e, row, $element) {
-        $result.text('Event: click-row.bs.table');
-      })
-      .on('dbl-click-row.bs.table', function(e, row, $element) {
-        $result.text('Event: dbl-click-row.bs.table');
-      })
-      .on('sort.bs.table', function(e, name, order) {
+     .on('check.bs.table', function(e, row) {
+                console.log(row.id)
+               // href+row.id;
+           })
+      .on('uncheck.bs.table', function(e, row) {
+                console.log(row)
+           })
+        .on('check-all.bs.table', function(e) {
+                console.log(e)
+           })
+           .on('uncheck-all.bs.table', function(e) {
+                console.log(e)
+           })
+    //$("#updateTask").attr("href","");
+      /*.on('sort.bs.table', function(e, name, order) {
         $result.text('Event: sort.bs.table');
       })
-      .on('check.bs.table', function(e, row) {
-        $result.text('Event: check.bs.table');
-      })
-      .on('uncheck.bs.table', function(e, row) {
-        $result.text('Event: uncheck.bs.table');
-      })
-      .on('check-all.bs.table', function(e) {
-        $result.text('Event: check-all.bs.table');
-      })
-      .on('uncheck-all.bs.table', function(e) {
-        $result.text('Event: uncheck-all.bs.table');
-      })
+
       .on('load-success.bs.table', function(e, data) {
         $result.text('Event: load-success.bs.table');
       })
@@ -187,6 +170,6 @@ function buildTable($el, cells, rows) {
       })
       .on('search.bs.table', function(e, text) {
         $result.text('Event: search.bs.table');
-      });
+      });*/
   })();
 })(document, window, jQuery);

@@ -22,23 +22,22 @@ public class GcsTaskServiceImpl implements GcsTaskService{
     }
 
     @Override
-    public boolean updateGcsTaskById(GcsTask gcsTask, int id) {
-        return gcsTaskRepository.updateById(gcsTask.getAppName(),id);
+    public void updateGcsTaskById(Integer id, String appName, String apkUrl, Integer runNumber, Integer weight, Integer taskModeCode, String taskMode, String packageName, String marketUrl, String marketPackName, String searchTxt, String findSet, Integer taskStatus, Integer taskCount, String machineIds, Integer newAddRemainCurveId, Integer nichijouRemainCurveId, Integer remainCurveId) {
+        //gcsTaskRepository.updateById(id,appName,apkUrl,runNumber,weight,taskModeCode,taskMode,packageName,marketUrl,marketPackName,searchTxt,findSet,taskStatus,taskCount,machineIds,newAddRemainCurveId,nichijouRemainCurveId,remainCurveId);
     }
 
     @Override
-    public boolean add(GcsTask gcsTask) {
+    public void add(GcsTask gcsTask) {
         gcsTaskRepository.save(gcsTask);
-        return true;
     }
 
     @Override
-    public boolean deleteById(int[] ids) {
+    public void deleteById(int[] ids) {
         int i = 0;
         for (i=0;i<ids.length;i++){
             int id = ids[i];
             gcsTaskRepository.delete(id);
         }
-         return true;
+
     }
 }

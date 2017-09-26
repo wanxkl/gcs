@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
 
@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 
-    <title> - Bootstrap Table</title>
+    <title> 修改任务</title>
     <meta name="keywords" content=""/>
     <meta name="description" content=""/>
 
@@ -29,138 +29,127 @@
             <div class="col-sm-12">
                 <!-- Example Events -->
                 <div class="example-wrap">
-                    <h4 class="example-title">添加任务</h4>
+                    <h4 class="example-title">修改任务</h4>
                     <div class="example">
                         <div class="alert alert-success" id="examplebtTableEventsResult" role="alert">
 
-                            <form class="form-horizontal" method="get" action="/saveTask">
-                                <!--apk_urlvarchar(64) NOT NULL任务APK下载地址
-                                app_namevarchar(32) NOT NULL任务名称
-                                find_setvarchar(1024) NULL脚本辅助信息（taskMode=market时不为空
-                                market_pack_namevarchar(128) NULL市场包名（taskMode=market时不为空
-                                market_urlvarchar(128) NULL市场URL（taskMode=market时不为空
-                                package_namevarchar(32) NULL任务包名(taskMode=cpa时不为空)
-                                run_numbervarchar(64) NOT NULL任务重试次数
-                                search_txtvarchar(64) NULL搜索关键字（taskMode=market时不为空
-                                task_modevarchar(64) NOT NULL任务类型名称
-                                task_mode_codeint(8) NOT NULL任务类型编码
-                                task_statusint(8) NOT NULL任务状态 0：暂停 1：启用
-                                weightint(8) NOT NULL权重：1-10
-                                remain_curve_idint(8) NOT NULL月留存曲线ID
-                                machine_idsvarchar(1024) NOT NULL任务机器ID 空值为全部
-                                new_add_remain_curve_idint(8) NOT NULL新增留存曲线ID
-                                nichijou_remain_curve_idint(8) NOT NULL日常留存曲线ID
-                                task_countint(8) NOT NULL任务数量-->
+                            <form class="form-horizontal" method="get" action="/updateGcsTask">
+                                <div class="form-group">
+                                    <lable class="col-sm-2 control-lable">ID：</lable>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" readonly="readonly" name="id" th:value="${gcsTask.id}"/>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <lable class="col-sm-2 control-lable">APK下载地址：</lable>
                                     <div class="col-sm-8">
-                                        <input class="form-control" name="apk_url"/>
+                                        <input class="form-control" name="apk_url" th:value="${gcsTask.apkUrl}"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <lable class="col-sm-2 control-lable">任务名称：</lable>
                                     <div class="col-sm-8">
-                                        <input class="form-control" name="app_name"/>
+                                        <input class="form-control" name="app_name" th:value="${gcsTask.appName}"/>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-lable">脚本辅助信息：</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" name="find_set"/>
+                                        <input class="form-control" name="find_set" th:value="${gcsTask.findSet}"/>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-lable">市场包名：</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" name="market_pack_name"/>
+                                        <input class="form-control" name="market_pack_name" th:value="${gcsTask.marketPackName}"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-lable">市场URL：</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" name="market_url"/>
+                                        <input class="form-control" name="market_url" th:value="${gcsTask.marketUrl}"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-lable">任务包名：</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" name="package_name"/>
+                                        <input class="form-control" name="package_name" th:value="${gcsTask.packageName}"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-lable">任务重试次数：</label>
                                     <div class="col-sm-8">
-                                    <input class="form-control" name="run_number"/>
+                                        <input class="form-control" name="run_number" th:value="${gcsTask.runNumber}"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-lable">搜索关键字：</label>
                                     <div class="col-sm-8">
-                                    <input class="form-control" name="search_txt"/>
+                                        <input class="form-control" name="search_txt" th:value="${gcsTask.searchTxt}"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-lable">任务类型名称：</label>
                                     <div class="col-sm-8">
-                                    <input class="form-control" name="task_mode"/>
+                                        <input class="form-control" name="task_mode" th:value="${gcsTask.taskMode}"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-lable">任务类型编码：</label>
                                     <div class="col-sm-8">
-                                    <input class="form-control" name="task_mode_code"/>
+                                        <input class="form-control" name="task_mode_code" th:value="${gcsTask.taskModeCode}"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-lable">任务状态：</label>
                                     <div class="col-sm-8">
-                                    <input class="form-control" name="task_status"/>
+                                        <input class="form-control" name="task_status" th:value="${gcsTask.taskStatus}"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-lable">权重：</label>
                                     <div class="col-sm-8">
-                                    <input class="form-control" name="weight"/>
+                                        <input class="form-control" name="weight" th:value="${gcsTask.weight}"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-lable">月留存曲线ID：</label>
                                     <div class="col-sm-8">
-                                    <input class="form-control" name="remain_curve_id"/>
+                                        <input class="form-control" name="remain_curve_id" th:value="${gcsTask.remainCurveId}"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-lable">任务机器ID：</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" name="machine_ids"/>
+                                        <input class="form-control" name="machine_ids" th:value="${gcsTask.machineIds}"/>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-lable">新增留存曲线ID：</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" name="newAddCurveId"/>
+                                        <input class="form-control" name="newAddCurveId" th:value="${gcsTask.newAddRemainCurveId}"/>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-lable">日常留存曲线ID：</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" name="nichijou_remain_curve_id"/>
+                                        <input class="form-control" name="nichijou_remain_curve_id" th:value="${gcsTask.nichijouRemainCurveId}"/>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-lable">任务数量：</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" name="task_count"  precision="2"/>
+                                        <input class="form-control" name="task_count"  precision="2" th:value="${gcsTask.taskCount}"/>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <input  class="form-control" type="submit" value="添加"/>
+                                    <input  class="form-control" type="submit" value="提交修改"/>
                                 </div>
 
                             </form>

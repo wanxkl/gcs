@@ -21,7 +21,7 @@ public class GcsTask implements Serializable{
     @Column(nullable = false,columnDefinition = "varchar(64) COMMENT '任务APK下载地址'")
     private String apkUrl;
 
-    @Column(nullable = false,columnDefinition = "int(8) COMMENT '任务重试次数'")
+    @Column(nullable = false,columnDefinition = "int() COMMENT '任务重试次数'")
     private Integer runNumber;
 
     @Column(nullable = false,columnDefinition = "int(8) COMMENT '权重：1-10'")
@@ -59,7 +59,7 @@ public class GcsTask implements Serializable{
     @Column(nullable = false,columnDefinition = "int(8) COMMENT '日常留存曲线ID'")
     private Integer nichijouRemainCurveId;
     @Column(nullable = false,columnDefinition = "int(8) COMMENT '月留存曲线ID'")
-    private Integer RemainCurveId;
+    private Integer remainCurveId;
 
 
     public Integer getId() {
@@ -191,11 +191,11 @@ public class GcsTask implements Serializable{
     }
 
     public Integer getRemainCurveId() {
-        return RemainCurveId;
+        return remainCurveId;
     }
 
     public void setRemainCurveId(Integer remainCurveId) {
-        RemainCurveId = remainCurveId;
+        remainCurveId = remainCurveId;
     }
 
     public Integer getTaskCount() {

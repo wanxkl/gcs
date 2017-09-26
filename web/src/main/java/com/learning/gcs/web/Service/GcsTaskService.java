@@ -21,23 +21,23 @@ public interface GcsTaskService {
 
     /**
      * 通过id修改任务
-     * @param gcsTask 任务实体
+     * @param
      * @param id 任务id
      * @return 修改是否成功
      */
-    boolean updateGcsTaskById(GcsTask gcsTask,int id);
+    void updateGcsTaskById(Integer id, String appName, String apkUrl, Integer runNumber, Integer weight, Integer taskModeCode, String taskMode, String packageName, String marketUrl, String marketPackName, String searchTxt, String findSet, Integer taskStatus, Integer taskCount, String machineIds, Integer newAddRemainCurveId, Integer nichijouRemainCurveId, Integer remainCurveId);
 
     /**
      * 添加任务
      * @param gcsTask 任务实体
-     * @return 添加成功或者失败
+     *
      */
-    boolean add(GcsTask gcsTask);
+    void add(GcsTask gcsTask);
 
     /**
      * t通过id修改任务
      * @param ids 任务id
-     * @return 修改结果  true成功
+     *
      */
-    boolean deleteById(int[] ids);
+    void deleteById(int[] ids);
 }
