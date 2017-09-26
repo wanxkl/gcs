@@ -41,7 +41,7 @@ public class GcsDeviceInfoServiceImpl implements GcsDeviceInfoService{
 
         gcsDeviceInfoRepository.save(gcsDeviceInfo);
         try {
-            redisWriter.set(KeyUtil.generatDeviceImeiKey(gcsDeviceInfo.getImei()),
+            redisWriter.set(KeyUtil.generateDeviceImeiKey(gcsDeviceInfo.getImei()),
                     objectMapper.writeValueAsString(gcsDeviceInfo),
                     2, TimeUnit.DAYS);
         } catch (JsonProcessingException e) {

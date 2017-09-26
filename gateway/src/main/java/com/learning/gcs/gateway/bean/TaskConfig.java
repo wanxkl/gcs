@@ -6,6 +6,13 @@ public class TaskConfig {
     private String luaUrl;
     private boolean state;
 
+    public TaskConfig() {
+    }
+
+    public TaskConfig(boolean state) {
+        this.state = state;
+    }
+
     public int getVersion() {
         return version;
     }

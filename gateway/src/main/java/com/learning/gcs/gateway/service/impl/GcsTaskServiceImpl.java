@@ -1,6 +1,8 @@
 package com.learning.gcs.gateway.service.impl;
 
 import com.learning.gcs.common.entity.GcsTask;
+import com.learning.gcs.common.redis.KeyUtil;
+import com.learning.gcs.common.redis.RedisWriter;
 import com.learning.gcs.common.repository.GcsTaskRepository;
 import com.learning.gcs.gateway.service.GcsTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class GcsTaskServiceImpl implements GcsTaskService{
 
     @Autowired
     private GcsTaskRepository gcsTaskRepository;
+
+    @Autowired
+    private RedisWriter redisWriter;
 
     @Override
     public List<GcsTask> findAll() {
@@ -53,5 +58,15 @@ public class GcsTaskServiceImpl implements GcsTaskService{
     @Override
     public GcsTask save(GcsTask gcsTask) {
         return gcsTaskRepository.save(gcsTask);
+    }
+
+    @Override
+    public Integer updateTaskCountById(Integer taskId,Integer taskCount) {
+        Integer changedCount = gcsTaskRepository.updateTaskCountById(taskId,taskCount);
+
+
+        if(changedCount > 0){
+        }
+        return changedCount;
     }
 }

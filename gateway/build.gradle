@@ -35,7 +35,7 @@ compileJava.options.encoding = 'UTF-8'
 mainClassName = "com.learning."+$BASE_NAME+".Application"
 
 startScripts {
-    defaultJvmOpts = ['-server', '-Xmx4096m', '-Xms4096m', '-Xmn2048m']
+    defaultJvmOpts = ['-server', '-Xmx512m', '-Xms512m', '-Xmn256m']
     doLast {
         def windowsScriptFile = file getWindowsScript()
         def unixScriptFile = file getUnixScript()
@@ -60,9 +60,9 @@ jar{
     }
 }
 
-//processResources {
-//    exclude "application.properties"
-//    exclude "application.yml"
-//    exclude "banner.txt"
-//    exclude "logback.groovy"
-//}
+processResources {
+    exclude "application.properties"
+    exclude "application.yml"
+    exclude "banner.txt"
+    exclude "logback.groovy"
+}

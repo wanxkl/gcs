@@ -2,23 +2,29 @@ package com.learning.gcs.gateway.service.impl;
 
 import com.learning.gcs.common.entity.GcsTask;
 import com.learning.gcs.common.entity.GcsTaskRecord;
-import com.learning.gcs.common.repository.GcsTaskRecordRepository;
+import com.learning.gcs.common.entity.RemainCurveDetail;
 import com.learning.gcs.gateway.adapter.TaskConfigAdapter;
 import com.learning.gcs.gateway.adapter.TaskSimpleAdapter;
 import com.learning.gcs.gateway.bean.Result;
 import com.learning.gcs.gateway.bean.Task;
+import com.learning.gcs.gateway.bean.TaskConfig;
 import com.learning.gcs.gateway.service.*;
 import com.learning.gcs.gateway.util.Constant;
+import com.learning.gcs.gateway.util.TimeUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
-public class TaskServiceImpl implements TaskService{
+public class TaskServiceImpl implements TaskService {
+    private static final Logger logger = LoggerFactory.getLogger(TaskServiceImpl.class);
     @Autowired
-    private MachineService   machineService;
+    private MachineService machineService;
     @Autowired
     private GcsTaskService gcsTaskService;
     @Autowired
@@ -29,38 +35,78 @@ public class TaskServiceImpl implements TaskService{
     private GcsDeviceInfoService gcsDeviceInfoService;
     @Autowired
     private GcsTaskRecordService gcsTaskRecordService;
+    @Autowired
+    private RemainCurveDetailService remainCurveDetailService;
+    @Autowired
+    private CountService countService;
 
     @Override
-    public Task get(String deviceId) {
+    public Task get(String deviceId) throws IOException {
         Task task = null;
-
+        boolean hasTask = false;
         //通过deviceId获取可做任务
         //可做任务：deviceId任务列表&当前时间可做任务
-
         List<Object> validTaskId = gcsTaskService.getValidTaskIds(deviceId);
 
-        if(!ObjectUtils.isEmpty(validTaskId)){
+        //
 
+        if (!ObjectUtils.isEmpty(validTaskId)) {
             task = new Task();
             for (Object o : validTaskId) {
                 GcsTask gcsTask = gcsTaskService.getByTaskId(Integer.valueOf(o.toString()));
-                task.getTaskList().add(new TaskSimpleAdapter(gcsTask).build());
-                task.getBlackList().add(gcsTask.getPackageName());
-                if(gcsTask.getTaskModeCode() == 2 ) {
-                    task.getBlackList().add(gcsTask.getMarketPackName());
+                if (!taskIsDone(gcsTask)) {
+
+                    hasTask = true;
+                    task.getTaskList().add(new TaskSimpleAdapter(gcsTask).build());
+                    task.getBlackList().add(gcsTask.getPackageName());
+                    if (gcsTask.getTaskModeCode() == 2) {
+                        task.getBlackList().add(gcsTask.getMarketPackName());
+                    }
                 }
             }
-            task.setVpn(vpnService.getVpnByDeviceId(deviceId));
-            task.setConfig(new TaskConfigAdapter(gcsTaskConfigService.getGcsTaskConfig()).build());
-            task.setInfo(gcsDeviceInfoService.getByTaskId(Integer.valueOf(validTaskId.get(0).toString())));
+            if (hasTask) {
+                task.setVpn(vpnService.getVpnByDeviceId(deviceId));
+                task.setConfig(new TaskConfigAdapter(gcsTaskConfigService.getGcsTaskConfig()).build());
+                task.setInfo(gcsDeviceInfoService.getByTaskId(Integer.valueOf(validTaskId.get(0).toString())));
+            }else {
+                task.setConfig(new TaskConfig(false));
+            }
 
         }
 
         return task;
     }
 
+
+    private boolean taskIsDone(GcsTask gcsTask) throws IOException {
+        int taskCount = gcsTask.getTaskCount();
+        int hour = Integer.parseInt(TimeUtil.getCurrentHour());
+        float percent = getPercent(hour, gcsTask.getNewAddRemainCurveId());
+        int hourTaskCount  = (int)(taskCount * percent * 0.01f);
+        if (countService.getTaskCount(gcsTask.getId(), hour) <= hourTaskCount) {
+            int doneCount = countService.getAndSetTaskCount(gcsTask.getId(),hour);
+            logger.info("任务进行中：当前ID:{},总任务:{},小时:{},计划数:{},完成数:{}",gcsTask.getId(),taskCount,hour, hourTaskCount,doneCount);
+            return false;
+        }else{
+            logger.info("任务结束：当前ID:{},总任务:{},小时:{},计划数:{},完成数:{}",gcsTask.getId(),taskCount,hour,hourTaskCount,countService.getTaskCount(gcsTask.getId(), hour));
+        }
+        return true;
+    }
+
+    private float getPercent(int hour, Integer remainCurveId) throws IOException {
+        List<RemainCurveDetail> details = remainCurveDetailService.getRemainCurveDetailByRemainCurveId(1);
+        for (RemainCurveDetail detail : details) {
+            if (hour == detail.getDistance()) {
+                return detail.getPercent();
+            }
+        }
+        return 0;
+    }
+
     @Override
     public List<GcsTask> getCurrentTaskList() {
+
+
         return null;
     }
 
@@ -71,13 +117,14 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public Result saveGcsTaskRecord(String deviceId, String imei, int taskId,int rt) {
-        GcsTaskRecord gcsTaskRecord = new GcsTaskRecord(taskId,imei);
+    public Result saveGcsTaskRecord(String deviceId, String imei, int taskId, int rt) {
+        GcsTaskRecord gcsTaskRecord = new GcsTaskRecord(taskId, imei);
         gcsTaskRecord.setDailyActiveTimes(0);
         gcsTaskRecord.setRt(rt);
         gcsTaskRecord.setDailyActiveTimes(0);
         gcsTaskRecord.setLogStatus(0);
         gcsTaskRecordService.save(gcsTaskRecord);
+
         return Constant.RESULT_SUCCESS;
     }
 }
