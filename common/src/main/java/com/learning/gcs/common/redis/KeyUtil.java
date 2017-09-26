@@ -9,13 +9,7 @@ public class KeyUtil {
     private static final String  PREFIX_TASK_ID = "task_Id:";
     private static final String  DIVISION = ":";
 
-
-
-
-
     public static final String  KEY_TASK_CONFIG = "task_config";
-
-
 
     public static String generateDeviceImeiKey(String key){
         return PREFIX_DEVICE_IMEI+key;

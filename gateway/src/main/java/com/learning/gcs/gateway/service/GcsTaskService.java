@@ -18,5 +18,6 @@ public interface GcsTaskService {
 
     GcsTask save(GcsTask gcsTask);
 
+    Integer updateTaskCountById(Integer taskId,Integer taskCount);
 
 }
