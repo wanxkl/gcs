@@ -38,8 +38,6 @@ public class Application  {
         logger.info("Project Begin");
 
     }
-
-
     @Bean
     public ObjectMapper getObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();

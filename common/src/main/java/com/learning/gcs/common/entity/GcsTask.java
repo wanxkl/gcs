@@ -21,7 +21,7 @@ public class GcsTask implements Serializable{
     @Column(nullable = false,columnDefinition = "varchar(64) COMMENT '任务APK下载地址'")
     private String apkUrl;
 
-    @Column(nullable = false,columnDefinition = "varchar(64) COMMENT '任务重试次数'")
+    @Column(nullable = false,columnDefinition = "int(8) COMMENT '任务重试次数'")
     private Integer runNumber;
 
     @Column(nullable = false,columnDefinition = "int(8) COMMENT '权重：1-10'")
