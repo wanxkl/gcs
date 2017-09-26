@@ -1,5 +1,7 @@
 package com.learning.gcs.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -13,6 +15,7 @@ public class RemainCurveDetail implements Serializable{
     @Column(unique = true, nullable = false)
     private Integer id;
     @ManyToOne
+    @JsonIgnore
     private RemainCurve remainCurve;
     @Column(nullable = false,columnDefinition = "float(8) COMMENT '比重'")
     private Float percent;
