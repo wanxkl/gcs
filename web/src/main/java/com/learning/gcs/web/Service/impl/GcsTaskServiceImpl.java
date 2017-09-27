@@ -32,12 +32,7 @@ public class GcsTaskServiceImpl implements GcsTaskService{
     }
 
     @Override
-    public void deleteById(int[] ids) {
-        int i = 0;
-        for (i=0;i<ids.length;i++){
-            int id = ids[i];
-            gcsTaskRepository.delete(id);
-        }
-
+    public void deleteById(int id) {
+        gcsTaskRepository.delete(id);
     }
 }

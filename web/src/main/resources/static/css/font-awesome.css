@@ -11,6 +11,14 @@
   font-weight: normal;
   font-style: normal;
 }
+#myModal{
+    background-color: #ffffff;
+}
+.control-lable{
+        color: #52b353;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+}
 .fa {
   display: inline-block;
   font: normal normal normal 14px/1 FontAwesome;

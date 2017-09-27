@@ -51,3 +51,9 @@ function WinMove() {
         })
         .disableSelection();
 };
+function aClick(gcsId){
+
+
+console.log(gcsId)
+    //$("#update").parent.parent.childNode
+};

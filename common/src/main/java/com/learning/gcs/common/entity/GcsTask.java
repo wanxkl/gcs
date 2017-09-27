@@ -21,7 +21,7 @@ public class GcsTask implements Serializable{
     @Column(nullable = false,columnDefinition = "varchar(64) COMMENT '任务APK下载地址'")
     private String apkUrl;
 
-    @Column(nullable = false,columnDefinition = "int() COMMENT '任务重试次数'")
+    @Column(nullable = false,columnDefinition = "int(8) COMMENT '任务重试次数'")
     private Integer runNumber;
 
     @Column(nullable = false,columnDefinition = "int(8) COMMENT '权重：1-10'")
@@ -36,16 +36,16 @@ public class GcsTask implements Serializable{
     @Column(columnDefinition = "varchar(32) COMMENT '任务包名(taskMode=cpa时不为空)'")
     private String packageName;
 
-    @Column(columnDefinition = "varchar(128) COMMENT '市场URL（taskMode=market时不为空'")
+    @Column(columnDefinition = "varchar(128) COMMENT '市场URL（taskMode=market时不为空)'")
     private String marketUrl;
 
-    @Column(columnDefinition = "varchar(128) COMMENT '市场包名（taskMode=market时不为空'")
+    @Column(columnDefinition = "varchar(128) COMMENT '市场包名（taskMode=market时不为空)'")
     private String marketPackName;
 
-    @Column(columnDefinition = "varchar(64) COMMENT '搜索关键字（taskMode=market时不为空'")
+    @Column(columnDefinition = "varchar(64) COMMENT '搜索关键字（taskMode=market时不为空)'")
     private String searchTxt;
 
-    @Column(columnDefinition = "varchar(1024) COMMENT '脚本辅助信息（taskMode=market时不为空'")
+    @Column(columnDefinition = "varchar(1024) COMMENT '脚本辅助信息（taskMode=market时不为空)'")
     private String findSet;
 
     @Column(nullable = false,columnDefinition = "int(8) COMMENT '任务状态 0：暂停 1：启用 '")
@@ -195,7 +195,7 @@ public class GcsTask implements Serializable{
     }
 
     public void setRemainCurveId(Integer remainCurveId) {
-        remainCurveId = remainCurveId;
+        this.remainCurveId = remainCurveId;
     }
 
     public Integer getTaskCount() {

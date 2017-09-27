@@ -36,8 +36,8 @@ public interface GcsTaskService {
 
     /**
      * t通过id修改任务
-     * @param ids 任务id
+     * @param id 任务id
      *
      */
-    void deleteById(int[] ids);
+    void deleteById(int id);
 }
