@@ -25,7 +25,7 @@ public class TimeUtil {
     }
     public static String getFormatDateDistinceNow(Integer distainct){
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH,-distainct);
+        calendar.add(Calendar.DAY_OF_MONTH,-distainct);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(FORMAT_DATE);
         return simpleDateFormat.format(calendar.getTime());
     }

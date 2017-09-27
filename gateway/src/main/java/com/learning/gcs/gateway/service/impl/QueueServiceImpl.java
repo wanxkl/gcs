@@ -56,8 +56,8 @@ public class QueueServiceImpl implements QueueService {
 
     @Override
     public Integer generateQueueByTaskIdAndHour(Integer taskId, Integer hour) throws IOException {
-
-
+        //生成下一个小时的队列
+        hour += 1;
         int queueCount = 0;
         //redisWriter.leftPush(KeyUtil.generateQueueKey(1),"1");
         //生成当前任务，下一个小时的任务队列
@@ -66,7 +66,7 @@ public class QueueServiceImpl implements QueueService {
         List<RemainCurveDetail> remainCurve = remainCurveDetailService.getRemainCurveDetailByRemainCurveId(gcsTask.getRemainCurveId());
         //留存日曲线
         List<RemainCurveDetail> nichijouRemainCurve = remainCurveDetailService.getRemainCurveDetailByRemainCurveId(gcsTask.getNichijouRemainCurveId());
-        float hourPercnet = getRemainCurveDetailByHour(nichijouRemainCurve, hour);
+        float hourPercent = getRemainCurveDetailByHour(nichijouRemainCurve, hour);
 
         for (RemainCurveDetail remainCurveDetail : remainCurve) {
             int distinct = remainCurveDetail.getDistance();
@@ -74,7 +74,7 @@ public class QueueServiceImpl implements QueueService {
             String remainDate = TimeUtil.getFormatDateDistinceNow(distinct);
             List<GcsTaskRecord> list = gcsTaskRecordService.findByTaskIdAndRtAndCreateDate(taskId, remainDate, distinct);
             if (list.size() > 0) {
-                int endIndex = (int) (list.size() * percent * 0.01 * hourPercnet * 0.01);
+                int endIndex = (int) (list.size() * percent * 0.01 * hourPercent * 0.01);
                 list.subList(0, endIndex == list.size() ? endIndex - 1 : endIndex);
                 for (GcsTaskRecord gcsTaskRecord : list) {
                     redisWriter.leftPush(KeyUtil.generateQueueKey(taskId), gcsTaskRecord.getImei());
@@ -84,7 +84,6 @@ public class QueueServiceImpl implements QueueService {
             }
 
         }
-
         return queueCount;
     }
 
