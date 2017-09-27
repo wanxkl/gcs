@@ -31,4 +31,10 @@ public interface GcsTaskRepository extends MyRepository<GcsTask,Integer>{
                            @Param("newAddRemainCurveId")Integer newAddRemainCurveId,
                            @Param("nichijouRemainCurveId")Integer nichijouRemainCurveId,
                            @Param("remainCurveId")Integer remainCurveId);
+
+
+    @Transactional
+    @Modifying
+    @Query("update GcsTask g set g.taskCount = :taskCount where g.id = :taskId")
+    Integer updateTaskCountById(@Param("taskId") Integer taskId,@Param("taskCount") Integer taskCount);
 }

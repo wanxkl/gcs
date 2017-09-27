@@ -20,4 +20,7 @@ public interface GcsTaskService {
 
     Integer updateTaskCountById(Integer taskId,Integer taskCount);
 
+
+
+
 }

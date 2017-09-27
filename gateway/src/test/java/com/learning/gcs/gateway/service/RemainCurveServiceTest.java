@@ -1,13 +1,10 @@
 package com.learning.gcs.gateway.service;
 
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.learning.gcs.common.entity.RemainCurve;
 import com.learning.gcs.common.entity.RemainCurveDetail;
-import com.learning.gcs.common.redis.KeyUtil;
 import com.learning.gcs.common.redis.RedisReader;
 import com.learning.gcs.common.redis.RedisWriter;
-import com.learning.gcs.gateway.util.ObjectMapperUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -16,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.LinkedList;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -48,14 +42,28 @@ public class RemainCurveServiceTest {
 //        logger.debug(objectMapper.writeValueAsString(details));
 //        redisWriter.set(KeyUtil.generatRemainCurveKey("1"),objectMapper.writeValueAsString(details));
 //        Thread.sleep(1000);
-        String ret = redisReader.get(KeyUtil.generateRemainCurveIdKey(1)).toString();
+        //String ret = redisReader.get(KeyUtil.generateRemainCurveIdKey(1)).toString();
 
-        List<RemainCurveDetail> d = objectMapper.readValue(ret, ObjectMapperUtil.getCollectionType(objectMapper,List.class,RemainCurveDetail.class));
+        //List<RemainCurveDetail> d = objectMapper.readValue(ret, ObjectMapperUtil.getCollectionType(objectMapper,List.class,RemainCurveDetail.class));
+
+        List<RemainCurveDetail> d = remainCurveDetailService.getRemainCurveDetailByRemainCurveId(1);
+
+        RemainCurve remainCurve = remainCurveService.findOne(3);
+
+        RemainCurveDetail temp = null;
+        for (int i = 0; i <7 ; i++) {
+            temp = d.get(i);
+            temp.setId(null);
+            temp.setRemainCurve(remainCurve);
+            remainCurveDetailService.save(temp);
+        }
+
 
         logger.debug("d:{}", d.size());
         for (RemainCurveDetail remainCurveDetail : d) {
             logger.debug("{}:{}:{}", remainCurveDetail.getId(), remainCurveDetail.getDistance(),remainCurveDetail.getPercent());
         }
+
 
     }
 
@@ -63,14 +71,17 @@ public class RemainCurveServiceTest {
     @Test
     public void save() throws Exception {
         RemainCurve remainCurve = new RemainCurve();
-        remainCurve.setRemainName("新增日曲线");
-        remainCurve.setRemainType(0);
+        remainCurve.setRemainName("通用留存日曲线");
+        remainCurve.setRemainType(1);
 
         RemainCurveDetail remainCurveDetail = null;
 
 
         RemainCurve remainCurve1 = remainCurveService.save(remainCurve);
         logger.debug(objectMapper.writeValueAsString(remainCurve1));
+
+
+
 
 
         for (int i = 0; i < 24; i++) {
