@@ -1,7 +1,7 @@
 package com.learning.gcs.gateway.service.impl;
 
+import com.learning.gcs.common.util.TimeUtil;
 import com.learning.gcs.gateway.service.ScheduleService;
-import com.learning.gcs.gateway.util.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -13,6 +13,6 @@ public class ScheduleServiceImpl implements ScheduleService{
     @Scheduled(cron = "0 0 0 * * ?")
     @Override
     public void clearTaskHourCount() {
-        logger.info("开始清空TaskHourCount:{}", TimeUtil.getFormatDate());
+        logger.info("开始清空TaskHourCount:{}", TimeUtil.getFormatTime());
     }
 }

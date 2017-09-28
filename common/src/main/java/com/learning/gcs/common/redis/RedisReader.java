@@ -1,9 +1,12 @@
 package com.learning.gcs.common.redis;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.support.atomic.RedisAtomicInteger;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
+
 @Component
 public class RedisReader {
     @Autowired
@@ -19,8 +22,10 @@ public class RedisReader {
         return stringRedisTemplate.opsForSet().members(key).toArray();
     }
 
-    public Integer getAtomic(String key){
-        RedisAtomicInteger atomicInteger = new RedisAtomicInteger(key,stringRedisTemplate.getConnectionFactory());
-        return  atomicInteger.get();
+    public Integer getAtomic(String key) {
+        RedisAtomicInteger atomicInteger = new RedisAtomicInteger(key, stringRedisTemplate.getConnectionFactory());
+        return atomicInteger.get();
     }
+
+
 }

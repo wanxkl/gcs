@@ -6,6 +6,8 @@ import com.learning.gcs.gateway.service.GcsTaskRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class GcsTaskRecordServiceImpl implements GcsTaskRecordService{
 
@@ -15,5 +17,10 @@ public class GcsTaskRecordServiceImpl implements GcsTaskRecordService{
     @Override
     public GcsTaskRecord save(GcsTaskRecord gcsTaskRecord) {
         return gcsTaskRecordRepository.save(gcsTaskRecord);
+    }
+
+    @Override
+    public List<GcsTaskRecord> findByTaskIdAndRtAndCreateDate(Integer taskId, String createDate,Integer rt) {
+        return gcsTaskRecordRepository.findByTaskIdAndCreateDateAndRt(taskId,createDate,rt);
     }
 }

@@ -29,7 +29,7 @@ def $BASE_NAME = 'gcs.gateway'
 def $VERSION = 1.0
 def $MANIFEST_VERSION = 1.1
 def gradle_build_time() {
-    return new Date().format("yyyy-MM-dd HH:mm:ss", TimeZone.getTimeZone("UTC"))
+    return new Date().format("yyyy-MM-dd HH:mm:ss", TimeZone.getTimeZone("Asia/Shanghai"))
 }
 compileJava.options.encoding = 'UTF-8'
 mainClassName = "com.learning."+$BASE_NAME+".Application"
@@ -59,10 +59,10 @@ jar{
         )
     }
 }
-
-processResources {
-    exclude "application.properties"
-    exclude "application.yml"
-    exclude "banner.txt"
-    exclude "logback.groovy"
-}
+//
+//processResources {
+//    exclude "application.properties"
+//    exclude "application.yml"
+//    exclude "banner.txt"
+//    exclude "logback.groovy"
+//}

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.learning.gcs.common.entity.GcsDeviceInfo;
 import com.learning.gcs.common.redis.KeyUtil;
+import com.learning.gcs.common.redis.RedisReader;
 import com.learning.gcs.common.redis.RedisWriter;
 import com.learning.gcs.common.repository.GcsDeviceInfoRepository;
 import com.learning.gcs.common.util.HttpUtil;
@@ -14,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -27,6 +29,8 @@ public class GcsDeviceInfoServiceImpl implements GcsDeviceInfoService{
 
     @Autowired
     private RedisWriter redisWriter;
+    @Autowired
+    private RedisReader redisReader;
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -53,6 +57,18 @@ public class GcsDeviceInfoServiceImpl implements GcsDeviceInfoService{
     @Override
     public GcsDeviceInfo save(GcsDeviceInfo gcsDeviceInfo) {
         return gcsDeviceInfoRepository.save(gcsDeviceInfo);
+    }
+
+    @Override
+    public GcsDeviceInfo get(String imei) throws IOException {
+        Object o = redisReader.get(KeyUtil.generateDeviceImeiKey(imei));
+
+        if(!ObjectUtils.isEmpty(o)){
+            return objectMapper.readValue(o.toString(),GcsDeviceInfo.class);
+        }
+
+
+        return null;
     }
 
     private GcsDeviceInfo newGcsDeviceInfo(Integer taskId) {

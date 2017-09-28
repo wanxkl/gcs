@@ -1,5 +1,7 @@
 package com.learning.gcs.common.entity;
 
+import com.learning.gcs.common.util.TimeUtil;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -17,7 +19,7 @@ public class GcsTaskRecord implements Serializable{
     @Column(nullable = false,columnDefinition = "varchar(32) comment 'IMEI' ")
     private String imei;
     @Column(nullable = false,columnDefinition = "varchar(32) comment '留存标示' ")
-    private Integer rt;
+    private Integer rt = 1;
     @Column(columnDefinition = "varchar(32) comment '用户名' ")
     private String userName;
     @Column(columnDefinition = "varchar(32) comment '用户密码' ")
@@ -29,6 +31,8 @@ public class GcsTaskRecord implements Serializable{
     @Column(nullable = false,columnDefinition = "int(8) comment '日活跃次数' ")
     private Integer dailyActiveTimes;
     private Date createTime = new Date();
+    @Column(columnDefinition = "varchar(16) comment '创建日期' ")
+    private String createDate = TimeUtil.getFormatDate();
 
 
     public GcsTaskRecord() {
@@ -117,5 +121,13 @@ public class GcsTaskRecord implements Serializable{
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 }
