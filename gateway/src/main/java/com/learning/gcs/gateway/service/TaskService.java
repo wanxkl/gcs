@@ -20,4 +20,5 @@ public interface TaskService {
     Result saveGcsTaskRecord(String deviceId,String imei,int taskId,int rt);
 
 
+    Boolean isAddUser(Integer taskId,String addUser);
 }

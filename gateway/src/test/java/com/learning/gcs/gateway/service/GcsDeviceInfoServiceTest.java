@@ -34,4 +34,10 @@ public class GcsDeviceInfoServiceTest {
 
     }
 
+    @Test
+    public void findById() throws Exception {
+        String imei = "99000846602926";
+        GcsDeviceInfo gcsDeviceInfo  = gcsDeviceInfoService.findById(imei);
+        logger.debug("Result:{}",gcsDeviceInfo);
+    }
 }

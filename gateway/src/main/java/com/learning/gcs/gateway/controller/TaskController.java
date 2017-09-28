@@ -39,9 +39,13 @@ public class TaskController {
      }
 
     @RequestMapping("/record")
-    Result record(@RequestParam(value = "asoId") String deviceId,@RequestParam String imei,@RequestParam int taskId,@RequestParam(defaultValue = "0") int rt){
+    Result record(@RequestParam(value = "asoId") String deviceId,@RequestParam String imei,@RequestParam int taskId){
 
-        return taskService.saveGcsTaskRecord(deviceId, imei, taskId,rt);
+        if(taskService.isAddUser(taskId,imei)){
+            taskService.saveGcsTaskRecord(deviceId, imei, taskId,1);
+        }
+
+        return Constant.RESULT_SUCCESS;
     }
 
 }

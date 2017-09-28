@@ -9,8 +9,11 @@ public class KeyUtil {
     private static final String  PREFIX_TASK_ID = "task_Id:";
     private static final String  DIVISION = ":";
     private static final String  PREFIX_QUEUE = "queue:";
+    private static final String  PREFIX_IP = "ip:";
 
     public static final String  KEY_TASK_CONFIG = "task_config";
+
+
 
     public static String generateDeviceImeiKey(String key){
         return PREFIX_DEVICE_IMEI+key;
@@ -27,8 +30,12 @@ public class KeyUtil {
     public static String generateRemainTaskIdHourCountKey(Integer taskId,Integer hour){
         return PREFIX_TASK_ID+taskId+DIVISION+hour;
     }
-
-    public static String generateQueueKey(Integer taskId){
-        return PREFIX_QUEUE+taskId;
+    public static String generateQueueKey(Integer taskId,Integer hour){
+        return PREFIX_QUEUE+taskId+DIVISION+hour;
     }
+
+    public static String generateIpKey(Integer taskId){
+        return PREFIX_IP+taskId;
+    }
+
 }

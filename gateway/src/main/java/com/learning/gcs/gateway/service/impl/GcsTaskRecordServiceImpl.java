@@ -23,4 +23,14 @@ public class GcsTaskRecordServiceImpl implements GcsTaskRecordService{
     public List<GcsTaskRecord> findByTaskIdAndRtAndCreateDate(Integer taskId, String createDate,Integer rt) {
         return gcsTaskRecordRepository.findByTaskIdAndCreateDateAndRt(taskId,createDate,rt);
     }
+
+    @Override
+    public Integer updateRtByTaskIdAndImei(Integer taskId, String imei) {
+        return gcsTaskRecordRepository.updateRtByTaskIdAndImei(taskId,imei);
+    }
+
+    @Override
+    public Long countByTaskIdAndImei(Integer taskId, String imei) {
+        return gcsTaskRecordRepository.countByTaskIdAndImei(taskId, imei);
+    }
 }

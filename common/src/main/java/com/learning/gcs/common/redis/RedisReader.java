@@ -27,5 +27,8 @@ public class RedisReader {
         return atomicInteger.get();
     }
 
+    public Long getQueueSize(String key){
+        return  stringRedisTemplate.opsForList().size(key);
+    }
 
 }
