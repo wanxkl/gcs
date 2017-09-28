@@ -1,3 +1,14 @@
+$("#timeIn").bootstrapDatepickr({
+    format: 'yyyy-mm-dd',
+    pickDate: true,
+    pickTime: true,
+    hourStep: 1,
+    minuteStep: 15,
+    secondStep: 30,
+    todayHighlight: true,
+    startDate:'2017-1-1',
+    endDate:'2117-12-31'
+});
 $(function () {
     var lineChart = echarts.init(document.getElementById("echarts-line-chart"));
     var lineoption = {
@@ -31,16 +42,21 @@ $(function () {
 
     };
     lineChart.setOption(lineoption);
-
+     $(window).resize(lineChart.resize);
     // 异步加载数据
-    var time = $("#timeIn");
-        var taskName = $("#taskName");
+    var date = new Date();
+    var year = date.getFullYear();
+    var mm = date.getMonth()+1;
+    var day = date.getDate();
+    var timeInVal = year+"-"+mm+"-"+day;
+    $("#timeIn").val(timeInVal);
+    var time = $("#timeIn").val();
+        var taskName = $("#taskName").val();
         console.log(time,"time","taskname",taskName);
-        $.get("/countDayChart",{"time":time,"taskName":taskName},function(data){return data},"json").done(function (data) {
+        $.get("/countDayChart",{"timeIn":time,"taskName":taskName},function(data){return data},"json").done(function (data) {
                 // 填入数据
                 console.log(data)
                 lineChart.setOption({
-
                     series : [
                                 {
                                     name:'新增用户',
@@ -59,9 +75,10 @@ $(function () {
                                     }
                                 }
                             ]
+
              });
 
-    $(window).resize(lineChart.resize);
+
 });
 
 });

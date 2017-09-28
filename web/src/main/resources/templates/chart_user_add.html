@@ -3,20 +3,21 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 
     <title> - 百度ECHarts</title>
-    <meta name="keywords" content="">
-    <meta name="description" content="">
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
 
-    <link rel="shortcut icon" href="favicon.ico">
-    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet"/>
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet"/>
 
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet"/>
+    <link href="css/style.css?v=4.1.0" rel="stylesheet"/>
+    <link href="css/bootstrapDatepickr-1.0.0.css" rel="stylesheet"/>
 
 </head>
 
@@ -24,6 +25,14 @@
 <div class="row  border-bottom white-bg dashboard-header">
     <div class="col-sm-12">
         <p>这里可以按照TaskID 和 日期 查询</p>
+        <form method="get">
+            <label  class="control-lable">时间：</label>
+            <input  class="control-lable" readonly="readonly" id="timeIn"/>
+            <label class="control-lable">   </label>
+            <label class="control-lable">任务名称：</label>
+            <input class="control-lable" type="text" id="taskName"/>
+            <button onclick="getCharts()" >查询</button>
+        </form>
     </div>
 
 </div>
@@ -45,7 +54,7 @@
 <!-- 全局js -->
 <script src="js/jquery.min.js?v=2.1.4"></script>
 <script src="js/bootstrap.min.js?v=3.3.6"></script>
-
+<script src="js/bootstrapDatepickr-1.0.0.js"></script>
 
 <!-- ECharts -->
 <script src="js/plugins/echarts/echarts-all.js"></script>
