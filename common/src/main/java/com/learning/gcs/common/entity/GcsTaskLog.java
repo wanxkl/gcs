@@ -7,8 +7,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "GcsTaskRecord")
-@NamedQuery(name = "GcsTaskRecord", query = "SELECT a FROM GcsTaskRecord a")
+@Table(name = "GcsTaskLog")
+@NamedQuery(name = "GcsTaskLog", query = "SELECT a FROM GcsTaskLog a")
 public class GcsTaskLog implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
