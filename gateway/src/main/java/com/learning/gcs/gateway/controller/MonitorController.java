@@ -1,7 +1,9 @@
 package com.learning.gcs.gateway.controller;
 
 import com.learning.gcs.gateway.bean.Result;
+import com.learning.gcs.gateway.bean.TaskStatus;
 import com.learning.gcs.gateway.service.GcsTaskService;
+import com.learning.gcs.gateway.service.TaskStatusService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,10 @@ public class MonitorController {
     private static final Logger logger = LoggerFactory.getLogger(MonitorController.class);
     @Autowired
     private GcsTaskService gcsTaskService;
+
+    @Autowired
+    private TaskStatusService taskStatusService;
+
     @Value("${com.learning.gcs.gateway.scheduleToggle}")
     private String scheduleToggle;
     @RequestMapping("/setTaskCount/{taskId}/{taskCount}")
@@ -38,4 +44,13 @@ public class MonitorController {
             return "NotFound";
         }
     }
+
+    @RequestMapping("/task/status/{taskId}")
+    TaskStatus getTaskStatus(@PathVariable("taskId") Integer taskIsd){
+
+
+
+        return null;
+    }
+
 }

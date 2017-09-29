@@ -40,7 +40,7 @@ public class TaskServiceImpl implements TaskService {
     private RemainCurveDetailService remainCurveDetailService;
     @Autowired
     private CountService countService;
-
+    @Autowired
     private QueueService queueService;
 
     @Override
