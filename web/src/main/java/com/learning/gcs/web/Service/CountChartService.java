@@ -10,4 +10,5 @@ public interface CountChartService {
      * @return 用户数集合
      */
     public List<Integer> findIncreasUsers(String taskName,String time);
+    List<Integer> findRemainUsers(String taskName,String time);
 }
