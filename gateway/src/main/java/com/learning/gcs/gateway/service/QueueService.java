@@ -10,9 +10,12 @@ import java.io.IOException;
 public interface QueueService {
 
     //从任务队列中获取任务的设备信息
-    GcsDeviceInfo getDeviceInfoByTaskId(Integer taskId) throws IOException;
+    GcsDeviceInfo getDeviceInfoByTaskId(Integer taskId,Integer hour) throws IOException;
 
     //通过任务ID和小时生成队列
     Integer generateQueueByTaskIdAndHour(Integer taskId,Integer hour) throws IOException;
+
+    //通过任务ID 生成全天24小时任务队列
+    Integer generateQueueByTaskId(Integer taskId);
 
 }

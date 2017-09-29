@@ -3,6 +3,7 @@ package com.learning.gcs.gateway.service.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.learning.gcs.common.entity.GcsDeviceInfo;
+import com.learning.gcs.common.entity.GcsTaskRecord;
 import com.learning.gcs.common.redis.KeyUtil;
 import com.learning.gcs.common.redis.RedisReader;
 import com.learning.gcs.common.redis.RedisWriter;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -61,14 +63,27 @@ public class GcsDeviceInfoServiceImpl implements GcsDeviceInfoService{
 
     @Override
     public GcsDeviceInfo get(String imei) throws IOException {
+        GcsDeviceInfo gcsDeviceInfo =null;
         Object o = redisReader.get(KeyUtil.generateDeviceImeiKey(imei));
 
         if(!ObjectUtils.isEmpty(o)){
-            return objectMapper.readValue(o.toString(),GcsDeviceInfo.class);
+            gcsDeviceInfo = objectMapper.readValue(o.toString(),GcsDeviceInfo.class);
+        }else{
+            gcsDeviceInfo = gcsDeviceInfoRepository.findByImei(imei);
+            redisWriter.set(KeyUtil.generateDeviceImeiKey(imei),objectMapper.writeValueAsString(gcsDeviceInfo));
         }
 
+        return gcsDeviceInfo;
+    }
 
-        return null;
+    @Override
+    public List<GcsDeviceInfo> findAll() {
+        return gcsDeviceInfoRepository.findAll();
+    }
+
+    @Override
+    public GcsDeviceInfo findById(String imei) {
+        return gcsDeviceInfoRepository.findByImei(imei);
     }
 
     private GcsDeviceInfo newGcsDeviceInfo(Integer taskId) {

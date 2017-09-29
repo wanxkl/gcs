@@ -42,10 +42,10 @@ public class QueueServiceImpl implements QueueService {
     private GcsTaskRecordService gcsTaskRecordService;
 
     @Override
-    public GcsDeviceInfo getDeviceInfoByTaskId(Integer taskId) throws IOException {
+    public GcsDeviceInfo getDeviceInfoByTaskId(Integer taskId,Integer hour) throws IOException {
         //获取队列中下一个imei
         //通过imei获取设备信息
-        Object o = redisWriter.rightPop(KeyUtil.generateQueueKey(taskId));
+        Object o = redisWriter.rightPop(KeyUtil.generateQueueKey(taskId, hour));
 
         if (!ObjectUtils.isEmpty(o)) {
             String imei = o.toString();
@@ -56,10 +56,8 @@ public class QueueServiceImpl implements QueueService {
 
     @Override
     public Integer generateQueueByTaskIdAndHour(Integer taskId, Integer hour) throws IOException {
-        //生成下一个小时的队列
-        hour += 1;
+
         int queueCount = 0;
-        //redisWriter.leftPush(KeyUtil.generateQueueKey(1),"1");
         //生成当前任务，下一个小时的任务队列
         GcsTask gcsTask = gcsTaskService.getByTaskId(taskId);
         //留存曲线
@@ -68,23 +66,30 @@ public class QueueServiceImpl implements QueueService {
         List<RemainCurveDetail> nichijouRemainCurve = remainCurveDetailService.getRemainCurveDetailByRemainCurveId(gcsTask.getNichijouRemainCurveId());
         float hourPercent = getRemainCurveDetailByHour(nichijouRemainCurve, hour);
 
+        String key = KeyUtil.generateQueueKey(taskId,hour);
+        //先清空当前队列
+        redisWriter.delete(key);
+
         for (RemainCurveDetail remainCurveDetail : remainCurve) {
             int distinct = remainCurveDetail.getDistance();
             float percent = remainCurveDetail.getPercent();
             String remainDate = TimeUtil.getFormatDateDistinceNow(distinct);
             List<GcsTaskRecord> list = gcsTaskRecordService.findByTaskIdAndRtAndCreateDate(taskId, remainDate, distinct);
             if (list.size() > 0) {
-                int endIndex = (int) (list.size() * percent * 0.01 * hourPercent * 0.01);
-                list.subList(0, endIndex == list.size() ? endIndex - 1 : endIndex);
-                for (GcsTaskRecord gcsTaskRecord : list) {
-                    redisWriter.leftPush(KeyUtil.generateQueueKey(taskId), gcsTaskRecord.getImei());
+                int endIndex = (int) Math.rint(list.size() * percent * 0.01 * hourPercent * 0.01);
+                List<GcsTaskRecord> subList =  list.subList(0, endIndex == list.size() ? endIndex - 1 : endIndex);
+                for (GcsTaskRecord gcsTaskRecord : subList) {
+                    redisWriter.leftPush(key, gcsTaskRecord.getImei());
                     queueCount++;
                 }
-
             }
-
         }
         return queueCount;
+    }
+
+    @Override
+    public Integer generateQueueByTaskId(Integer taskId) {
+        return null;
     }
 
     private Float getRemainCurveDetailByHour(List<RemainCurveDetail> list, int hour) {

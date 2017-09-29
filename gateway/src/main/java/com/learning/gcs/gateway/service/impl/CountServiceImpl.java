@@ -35,4 +35,15 @@ public class CountServiceImpl implements CountService{
     public Integer getAndSetTaskCount(Integer taskId, Integer hour) {
         return redisWriter.getAndSetAtomic(KeyUtil.generateRemainTaskIdHourCountKey(taskId,hour));
     }
+
+    @Override
+    public Integer deleteTaskCount(Integer taskId, Integer hour) {
+        return null;
+    }
+
+    @Override
+    public Integer deleteTaskCount() {
+        Integer deleteCount = redisWriter.deleteKeys(KeyUtil.KEYS_PATTERN_TASKID_COUNT);
+        return deleteCount;
+    }
 }

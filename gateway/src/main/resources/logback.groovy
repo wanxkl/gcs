@@ -75,5 +75,5 @@ appender("ERROR_FILE", RollingFileAppender) {
     charset = Charset.forName("UTF-8")
   }
 }
-logger("com.learning.gcs", INFO, ["CONSOLE", "ERROR_FILE", "DEBUG_FILE", "INFO_FILE"])
-root(ERROR,[])
+logger("com.learning.gcs", DEBUG, [ "ERROR_FILE", "DEBUG_FILE", "INFO_FILE"])
+root(ERROR,["CONSOLE"])

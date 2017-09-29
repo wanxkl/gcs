@@ -10,4 +10,8 @@ public interface CountService {
 
     Integer getAndSetTaskCount(Integer taskId,Integer hour);
 
+    Integer deleteTaskCount(Integer taskId,Integer hour);
+
+    Integer deleteTaskCount();
+
 }

@@ -1,5 +1,6 @@
 package com.learning.gcs.gateway.service.impl;
 
+import com.learning.gcs.common.entity.GcsDeviceInfo;
 import com.learning.gcs.common.entity.GcsTask;
 import com.learning.gcs.common.entity.GcsTaskRecord;
 import com.learning.gcs.common.entity.RemainCurveDetail;
@@ -40,35 +41,47 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private CountService countService;
 
+    private QueueService queueService;
+
     @Override
     public Task get(String deviceId) throws IOException {
-        Task task = null;
-        boolean hasTask = false;
+        Task  task = new Task();
+        GcsDeviceInfo gcsDeviceInfo = null;
+        Integer hour = Integer.valueOf(TimeUtil.getCurrentHour());
+
         //通过deviceId获取可做任务
         //可做任务：deviceId任务列表&当前时间可做任务
         List<Object> validTaskId = gcsTaskService.getValidTaskIds(deviceId);
 
-        //
-
         if (!ObjectUtils.isEmpty(validTaskId)) {
-            task = new Task();
             for (Object o : validTaskId) {
-                GcsTask gcsTask = gcsTaskService.getByTaskId(Integer.valueOf(o.toString()));
-                if (!taskIsDone(gcsTask)) {
+                Integer taskId = Integer.valueOf(o.toString());
+                GcsTask gcsTask = gcsTaskService.getByTaskId(taskId);
+                task.getTaskList().add(new TaskSimpleAdapter(gcsTask).build());
+                task.getBlackList().add(gcsTask.getPackageName());
+                if (gcsTask.getTaskModeCode() == 2) {
+                    task.getBlackList().add(gcsTask.getMarketPackName());
+                }
 
-                    hasTask = true;
-                    task.getTaskList().add(new TaskSimpleAdapter(gcsTask).build());
-                    task.getBlackList().add(gcsTask.getPackageName());
-                    if (gcsTask.getTaskModeCode() == 2) {
-                        task.getBlackList().add(gcsTask.getMarketPackName());
+                //从留存队列中获取任务设备信息
+                gcsDeviceInfo = queueService.getDeviceInfoByTaskId(taskId, hour);
+                if (!ObjectUtils.isEmpty(gcsDeviceInfo)) {
+                    //开始做留存任务
+                    //记录设备已完成当次留存任务
+                    gcsTaskRecordService.updateRtByTaskIdAndImei(taskId,gcsDeviceInfo.getImei());
+                } else {
+                    //当前小时留存已经做完，开始新增任务
+                    if (!taskIsDone(gcsTask)) {
+                        gcsDeviceInfo = gcsDeviceInfoService.getByTaskId(Integer.valueOf(validTaskId.get(0).toString()));
                     }
                 }
             }
-            if (hasTask) {
+
+            if (!ObjectUtils.isEmpty(gcsDeviceInfo)) {
                 task.setVpn(vpnService.getVpnByDeviceId(deviceId));
                 task.setConfig(new TaskConfigAdapter(gcsTaskConfigService.getGcsTaskConfig()).build());
-                task.setInfo(gcsDeviceInfoService.getByTaskId(Integer.valueOf(validTaskId.get(0).toString())));
-            }else {
+                task.setInfo(gcsDeviceInfo);
+            } else {
                 task.setConfig(new TaskConfig(false));
             }
 
@@ -82,13 +95,13 @@ public class TaskServiceImpl implements TaskService {
         int taskCount = gcsTask.getTaskCount();
         int hour = Integer.parseInt(TimeUtil.getCurrentHour());
         float percent = getPercent(hour, gcsTask.getNewAddRemainCurveId());
-        int hourTaskCount  = (int)(taskCount * percent * 0.01f);
+        int hourTaskCount = (int) (taskCount * percent * 0.01f);
         if (countService.getTaskCount(gcsTask.getId(), hour) <= hourTaskCount) {
-            int doneCount = countService.getAndSetTaskCount(gcsTask.getId(),hour);
-            logger.info("任务进行中：当前ID:{},总任务:{},小时:{},计划数:{},完成数:{}",gcsTask.getId(),taskCount,hour, hourTaskCount,doneCount);
+            int doneCount = countService.getAndSetTaskCount(gcsTask.getId(), hour);
+            logger.info("任务进行中：当前ID:{},总任务:{},小时:{},计划数:{},完成数:{}", gcsTask.getId(), taskCount, hour, hourTaskCount, doneCount);
             return false;
-        }else{
-            logger.info("任务结束：当前ID:{},总任务:{},小时:{},计划数:{},完成数:{}",gcsTask.getId(),taskCount,hour,hourTaskCount,countService.getTaskCount(gcsTask.getId(), hour));
+        } else {
+            logger.info("任务结束：当前ID:{},总任务:{},小时:{},计划数:{},完成数:{}", gcsTask.getId(), taskCount, hour, hourTaskCount, countService.getTaskCount(gcsTask.getId(), hour));
         }
         return true;
     }
@@ -126,5 +139,10 @@ public class TaskServiceImpl implements TaskService {
         gcsTaskRecordService.save(gcsTaskRecord);
 
         return Constant.RESULT_SUCCESS;
+    }
+
+    @Override
+    public Boolean isAddUser(Integer taskId, String addUser) {
+        return gcsTaskRecordService.countByTaskIdAndImei(taskId, addUser)==0?true:false;
     }
 }
