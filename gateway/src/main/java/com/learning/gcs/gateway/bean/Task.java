@@ -56,6 +56,7 @@ public class Task {
     public List<String> getBlackList() {
         if(blackList==null){
             blackList = new LinkedList<>();
+            blackList.add("com.android.chrome");
         }
         return blackList;
     }
