@@ -5,15 +5,16 @@ public class KeyUtil {
     private static final String  PREFIX_DEVICE_IMEI = "imei:";
     private static final String  PREFIX_DEVICE_ID = "device_id:";
     private static final String  PREFIX_REMAIN_CURVE_ID = "remain_curve:";
-    private static final String  PREFIX_TASK_ID_COUNT = "task_Id_count:";
+    private static final String   PREFIX_TASK_ID_COUNT = "task_Id_count:";
     private static final String  PREFIX_TASK_ID = "task_Id:";
     private static final String  DIVISION = ":";
+    private static final String  PATTERN_STAR = "*";
     private static final String  PREFIX_QUEUE = "queue:";
     private static final String  PREFIX_IP = "ip:";
 
     public static final String  KEY_TASK_CONFIG = "task_config";
 
-
+    public static final String KEYS_PATTERN_TASKID_COUNT = PREFIX_TASK_ID_COUNT+PATTERN_STAR;
 
     public static String generateDeviceImeiKey(String key){
         return PREFIX_DEVICE_IMEI+key;
@@ -30,6 +31,8 @@ public class KeyUtil {
     public static String generateRemainTaskIdHourCountKey(Integer taskId,Integer hour){
         return PREFIX_TASK_ID+taskId+DIVISION+hour;
     }
+
+
     public static String generateQueueKey(Integer taskId,Integer hour){
         return PREFIX_QUEUE+taskId+DIVISION+hour;
     }
