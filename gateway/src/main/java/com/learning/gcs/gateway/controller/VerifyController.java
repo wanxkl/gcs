@@ -30,7 +30,6 @@ public class VerifyController {
         if(StringUtils.isEmpty(ip)){
             ip = request.getRemoteAddr();
         }
-        logger.info("当前ip:{}",ip);
         String key = KeyUtil.generateIpKey(taskId);
 
         boolean isExist =  stringRedisTemplate.opsForSet().members(key).contains(ip);

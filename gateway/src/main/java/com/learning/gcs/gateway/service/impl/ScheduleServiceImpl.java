@@ -32,6 +32,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     private CountService countService;
 
+
     //每天0点执行
     @Scheduled(cron = "0 0 0 * * ?")
 //    @Scheduled(cron = "0/5 * * * * ?")
@@ -51,14 +52,14 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public void generateCurrentHourTask() {
         logger.info("检查开关状态:{}", scheduleToggle);
-        logger.info("开始生成小时队列:{}", TimeUtil.getFormatTime());
         if (Constant.SCHEDULE_TOGGLE_ENABLE.equals(scheduleToggle)) {
+            logger.info("开始生成小时队列:{}", TimeUtil.getFormatTime());
             List<GcsTask> taskList = gcsTaskService.findAll();
             Integer hour = Integer.parseInt(TimeUtil.getCurrentHour());
             for (GcsTask gcsTask : taskList) {
                 try {
-                    queueService.generateQueueByTaskIdAndHour(gcsTask.getId(), hour);
-                    logger.info("生成:-{}:{}-任务成功({})", gcsTask.getId(), gcsTask.getAppName(), TimeUtil.getFormatTime());
+                    Integer queueCount = queueService.generateQueueByTaskIdAndHour(gcsTask.getId(), hour);
+                    logger.info("生成:-{}:{}-任务成功({})", gcsTask.getId(), gcsTask.getAppName(), queueCount);
                 } catch (IOException e) {
                     e.printStackTrace();
                     logger.error("生成:-{}:{}-任务异常({}):{}", gcsTask.getId(), gcsTask.getAppName(), TimeUtil.getFormatTime(), e);

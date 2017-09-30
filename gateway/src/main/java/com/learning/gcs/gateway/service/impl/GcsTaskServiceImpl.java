@@ -25,7 +25,7 @@ public class GcsTaskServiceImpl implements GcsTaskService{
 
     @Override
     public List<GcsTask> findAll() {
-        return null;
+        return gcsTaskRepository.findAll();
     }
 
     @Override
