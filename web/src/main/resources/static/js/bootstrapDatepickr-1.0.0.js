@@ -3,9 +3,9 @@
 	
 	var pluginName = 'bootstrapDatepickr';
     var defaults = {
-		date_format: "Y-m-d"
+		date_format: "d/m/Y"
 	};
-
+	
 	// The actual plugin constructor
     function Plugin( element, options ) {
         this.element = element;
@@ -19,8 +19,7 @@
             'current_year': new Date().getFullYear(),
 			'selected_date': '',
 			'allowed_formats': ['d', 'do', 'D', 'j', 'l', 'w', 'F', 'm', 'M', 'n', 'U', 'y', 'Y'],
-			/*'month_name': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],*/
-			'month_name': ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
+			'month_name': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
 			'date_formatting': {
 				'weekdays': {
 					'shorthand': ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
