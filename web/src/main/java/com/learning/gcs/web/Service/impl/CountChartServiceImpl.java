@@ -68,19 +68,52 @@ public class CountChartServiceImpl implements CountChartService{
     }
 
     @Override
-    public List findTask(int pageSize,int pageNo) {
+    public Page findTask(int pageSize,int pageNo) {
         String hql = "from GcsTaskLog";
         Page page= gcsTaskLogRepository.findByHql(hql,pageSize,pageNo);
-        List list = page.getContent();
-        return list;
+        return page;
     }
 
     @Override
-    public int findPages(int pageSize,int pageNo) {
-        String hql = "from GcsTaskLog";
-        Page page= gcsTaskLogRepository.findByHql(hql,pageSize,pageNo);
-        List list = page.getContent();
-        Iterator it = list.iterator();
-        return page.getTotalPages();
+    public List pages(int pageNo,int pageCount) {
+        List pageList = new ArrayList();
+        if (pageCount<=9){
+            for(int i=1;i<=pageCount;i++){
+                pageList.add(i);
+            }
+        }else {
+            if (pageNo<=4){
+                pageList.add(1);
+                pageList.add(2);
+                pageList.add(3);
+                pageList.add(4);
+                pageList.add(5);
+                pageList.add(6);
+                pageList.add(7);
+                pageList.add(8);
+                pageList.add(9);
+            } else if (pageNo<=pageCount-4&&pageNo>4){
+                pageList.add(pageNo-4);
+                pageList.add(pageNo-3);
+                pageList.add(pageNo-2);
+                pageList.add(pageNo-1);
+                pageList.add(pageNo);
+                pageList.add(pageNo+1);
+                pageList.add(pageNo+2);
+                pageList.add(pageNo+3);
+                pageList.add(pageNo+4);
+            }else{
+                pageList.add(pageCount-8);
+                pageList.add(pageCount-7);
+                pageList.add(pageCount-6);
+                pageList.add(pageCount-5);
+                pageList.add(pageCount-4);
+                pageList.add(pageCount-3);
+                pageList.add(pageCount-2);
+                pageList.add(pageCount-1);
+                pageList.add(pageCount);
+            }
+        }
+        return pageList;
     }
 }

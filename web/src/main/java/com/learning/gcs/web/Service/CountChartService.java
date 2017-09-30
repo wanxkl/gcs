@@ -1,5 +1,7 @@
 package com.learning.gcs.web.Service;
 
+import org.springframework.data.domain.Page;
+
 import java.util.List;
 
 public interface CountChartService {
@@ -23,11 +25,14 @@ public interface CountChartService {
      *
      * @return 任务集合
      */
-    List findTask(int pageSize,int pageNo);
+    Page findTask(int pageSize, int pageNo);
+
     /**
-     *
-     * @return 页数
+     * 获取页码
+     * @param pageNo
+     * @param pageCount
+     * @return
      */
-    int findPages(int pageSize,int pageNo);
+    List pages(int pageNo,int pageCount);
 
 }
