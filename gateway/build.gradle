@@ -59,10 +59,10 @@ jar{
         )
     }
 }
-//
-//processResources {
-//    exclude "application.properties"
-//    exclude "application.yml"
-//    exclude "banner.txt"
-//    exclude "logback.groovy"
-//}
+
+processResources {
+    exclude "application.properties"
+    exclude "application.yml"
+    exclude "banner.txt"
+    exclude "logback.groovy"
+}

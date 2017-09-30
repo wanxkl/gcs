@@ -40,6 +40,8 @@ public class TaskController {
         Task task = null;
         try {
             task = taskService.get(deviceId);
+            task.getInfo().setSdkInt("19");
+            task.getInfo().setDeviceRelease("4.4");
         } catch (IOException e) {
             logger.error("获取Task任务失败:{}", e.getMessage());
             task.setConfig(new TaskConfig(false));
