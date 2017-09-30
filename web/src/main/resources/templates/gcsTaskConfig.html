@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+    <title> 任务配置</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+
+    <link rel="shortcut icon" href="favicon.ico"/> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet"/>
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet"/>
+    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet"/>
+    <link href="css/animate.css" rel="stylesheet"/>
+    <link href="css/style.css?v=4.1.0" rel="stylesheet"/>
+
+
+</head>
+
+<body class="gray-bg">
+
+<div class="ibox float-e-margins">
+
+    <div class="ibox-content">
+        <div class="row row-lg">
+            <div class="col-sm-12">
+                <!-- Example Events -->
+                <div class="example-wrap">
+                    <h4 class="example-title">任务配置列表</h4>
+                    <div class="example">
+                        <!--<div class="alert alert-success" id="examplebtTableEventsResult" role="alert">
+                            查询结果
+                        </div>-->
+                        <table id="exampleTableEvents" class="table" data-mobile-responsive="true">
+                            <thead>
+                            <tr>
+                                <th data-field="state" data-checkbox="true"></th>
+                                <th>ID</th>
+                                <th>创建时间</th>
+                                <th>脚本更新地址</th>
+                                <th>重试次数</th>
+                                <th>配置状态</th>
+                                <th>配置信息版本号</th>
+                                <th>操作</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td></td>
+                                <td th:text="${gcsTaskConfig.id}" id="${gcs.id}">1</td>
+                                <td th:text="${gcsTaskConfig.createTime}">1</td>
+                                <td th:text="${gcsTaskConfig.luaUrl}">1</td>
+                                <td th:text="${gcsTaskConfig.runTimeMax}">1</td>
+                                <td th:text="${gcsTaskConfig.state}">1</td>
+                                <td th:text="${gcsTaskConfig.version}">1</td>
+                                <td>
+                                    <a id="updateGcsTaskConfig" data-toggle="modal" data-target="#update" onclick="updateGcsTaskConfig()" >配置</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- End Example Events -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+
+<!--修改任务窗口-->
+<div id="update" class="modal fade " aria-labelledby="配置任务" aria-hidden="true">
+    <div class="modal-dialog alert-success">
+        <div class="modal-content alert-success">
+            <div class="modal-header">
+                <h4 class="modal-title">配置任务</h4>
+            </div>
+            <div class="modal-body alert-success">
+                <form class="form-horizontal" method="get" action="/updateGcsTaskConfig">
+                    <div class="form-group">
+                        <lable class="col-sm-3 control-lable">ID：</lable>
+                        <div class="col-sm-7">
+                            <input id="configId" class="form-control" readonly="readonly" name="id"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <lable  class="col-sm-3 control-lable">创建时间：</lable>
+                        <div class="col-sm-7">
+                            <input readonly="readonly" id="configTime" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <lable class="col-sm-3 control-lable">脚本更新地址：</lable>
+                        <div class="col-sm-7">
+                            <input id="luaUrl" class="form-control" name="luaUrl"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">重试次数：</label>
+                        <div class="col-sm-7">
+                            <input id="runTimeMax" class="form-control" name="runTimeMax"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">配置状态：</label>
+                        <div class="col-sm-7">
+                            <input   id="configState" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">配置信息版本号：</label>
+                        <div class="col-sm-7">
+                            <input id="version" class="form-control" name="version"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input  class="form-control" type="submit" value="提交配置"/>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+<!-- 自定义js -->
+<script src="js/gcsTaskConfig.js?v=1.0.0"></script>
+
+
+<!-- Bootstrap table -->
+<script src="js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script src="js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+
+<!-- Peity -->
+
+
+
+
+
+</body>
+
+</html>
