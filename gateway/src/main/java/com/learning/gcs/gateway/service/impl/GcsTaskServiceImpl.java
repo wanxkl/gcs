@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,10 +31,19 @@ public class GcsTaskServiceImpl implements GcsTaskService{
 
     @Override
     public List<Object> getValidTaskIds(String deviceId) {
-        //TODO 这里需要计算出可用的任务ID
+      /*  //TODO 这里需要计算出可用的任务ID
         if(ObjectUtils.isEmpty(list)){
             list = new LinkedList<>();
             list.add(1);
+        }*/
+
+        List<Object>  list = null;
+        List<GcsTask> gcsTasks = gcsTaskRepository.findByTaskStatus(1);
+        if(!ObjectUtils.isEmpty(gcsTasks)){
+            list = new ArrayList<>();
+            for (GcsTask gcsTask : gcsTasks) {
+                list.add(gcsTask.getId());
+            }
         }
 
         return list;

@@ -74,10 +74,12 @@ public class QueueServiceImpl implements QueueService {
             int distinct = remainCurveDetail.getDistance();
             float percent = remainCurveDetail.getPercent();
             String remainDate = TimeUtil.getFormatDateDistinceNow(distinct);
+            //TODO 这里最好用缓存处理
+            List<GcsTaskRecord> all = gcsTaskRecordService.findByTaskIdAndCreateDate(taskId,remainDate);
             List<GcsTaskRecord> list = gcsTaskRecordService.findByTaskIdAndRtAndCreateDate(taskId, remainDate, distinct);
             if (list.size() > 0) {
-                int endIndex = (int) Math.rint(list.size() * percent * 0.01 * hourPercent * 0.01);
-                List<GcsTaskRecord> subList =  list.subList(0, endIndex == list.size() ? endIndex - 1 : endIndex);
+                int endIndex = (int) Math.rint(all.size() * percent * 0.01 * hourPercent * 0.01);
+                List<GcsTaskRecord> subList =  list.subList(0, endIndex >= list.size() ? endIndex - 1 : endIndex);
                 for (GcsTaskRecord gcsTaskRecord : subList) {
                     redisWriter.leftPush(key, gcsTaskRecord.getImei());
                     queueCount++;

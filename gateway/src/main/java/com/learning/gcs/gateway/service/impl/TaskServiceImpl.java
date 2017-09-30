@@ -76,7 +76,6 @@ public class TaskServiceImpl implements TaskService {
                     }
                 }
             }
-
             if (!ObjectUtils.isEmpty(gcsDeviceInfo)) {
                 task.setVpn(vpnService.getVpnByDeviceId(deviceId));
                 task.setConfig(new TaskConfigAdapter(gcsTaskConfigService.getGcsTaskConfig()).build());
@@ -85,8 +84,9 @@ public class TaskServiceImpl implements TaskService {
                 task.setConfig(new TaskConfig(false));
             }
 
+        }else{
+            task.setConfig(new TaskConfig(false));
         }
-
         return task;
     }
 

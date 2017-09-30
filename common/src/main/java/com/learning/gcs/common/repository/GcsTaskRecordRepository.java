@@ -12,6 +12,8 @@ public interface GcsTaskRecordRepository extends MyRepository<GcsTaskRecord,Inte
 
     List<GcsTaskRecord> findByTaskIdAndCreateDateAndRt(Integer taskId,String createDate,Integer rt);
 
+    List<GcsTaskRecord> findByTaskIdAndCreateDate(Integer taskId,String createDate);
+
     @Transactional
     @Modifying
     @Query("update GcsTaskRecord g set g.rt = rt + 1 where g.taskId =:taskId and g.imei = :imei")

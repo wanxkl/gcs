@@ -13,6 +13,7 @@ import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,8 +41,10 @@ public class TaskController {
         Task task = null;
         try {
             task = taskService.get(deviceId);
-            task.getInfo().setSdkInt("19");
-            task.getInfo().setDeviceRelease("4.4");
+            if(!ObjectUtils.isEmpty(task.getInfo())){
+                task.getInfo().setSdkInt("19");
+                task.getInfo().setDeviceRelease("4.4");
+            }
         } catch (IOException e) {
             logger.error("获取Task任务失败:{}", e.getMessage());
             task.setConfig(new TaskConfig(false));

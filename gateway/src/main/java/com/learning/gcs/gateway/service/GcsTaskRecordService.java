@@ -11,6 +11,8 @@ public interface GcsTaskRecordService {
 
     List<GcsTaskRecord> findByTaskIdAndRtAndCreateDate(Integer taskId, String createDate,Integer rt);
 
+    List<GcsTaskRecord> findByTaskIdAndCreateDate(Integer taskId, String createDate);
+
     Integer updateRtByTaskIdAndImei(Integer taskId,String imei);
 
     Long countByTaskIdAndImei(Integer taskId,String imei);

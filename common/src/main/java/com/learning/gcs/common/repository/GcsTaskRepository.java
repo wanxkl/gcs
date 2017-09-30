@@ -37,4 +37,7 @@ public interface GcsTaskRepository extends MyRepository<GcsTask,Integer>{
     @Modifying
     @Query("update GcsTask g set g.taskCount = :taskCount where g.id = :taskId")
     Integer updateTaskCountById(@Param("taskId") Integer taskId,@Param("taskCount") Integer taskCount);
+
+
+    List<GcsTask> findByTaskStatus(Integer taskStatus);
 }
