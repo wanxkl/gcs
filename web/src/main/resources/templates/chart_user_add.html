@@ -28,7 +28,14 @@
         <input  class="control-lable" readonly="readonly" id="timeIn"/>
         <label class="control-lable">   </label>
         <label class="control-lable">任务名称：</label>
-        <input class="control-lable" type="text" id="taskName"/>
+        <input class="control-lable" type="text"  list="taskNames" id="taskName"/>
+        <datalist id="taskNames">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </datalist>
         <button onclick="clickAddChart()" >查询</button>
     </div>
 </div>
@@ -62,6 +69,7 @@
         </div>
     </div>
 </div>
+
 <!-- 全局js -->
 <script src="js/jquery.min.js?v=2.1.4"></script>
 <script src="js/bootstrap.min.js?v=3.3.6"></script>

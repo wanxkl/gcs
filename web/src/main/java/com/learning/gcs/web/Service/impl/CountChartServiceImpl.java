@@ -1,7 +1,11 @@
 package com.learning.gcs.web.Service.impl;
 
+import com.learning.gcs.common.entity.GcsTaskLog;
+import com.learning.gcs.common.repository.GcsTaskLogRepository;
+import com.learning.gcs.common.repository.GcsTaskRepository;
 import com.learning.gcs.web.Service.CountChartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.management.Query;
@@ -12,16 +16,18 @@ import java.util.*;
 public class CountChartServiceImpl implements CountChartService{
     @Autowired
     private EntityManager entityManager;
+    @Autowired
+    private GcsTaskLogRepository gcsTaskLogRepository;
     @Override
     public List findIncreasUsers(String taskName, String time) {
         String starteTime = time+" 00:00:00";
         String endTime = time+" 23:59:59";
         List list = new ArrayList();
-        String sql ="SELECT DATE_FORMAT(create_time,'%Y%H'), COUNT(create_time) counta FROM gcs_task_record  where create_time>='"+starteTime+"' and create_time<='"+endTime+"' ";
+        String sql ="SELECT DATE_FORMAT(create_time,'%Y%H') t, COUNT(create_time) counta FROM gcs_task_record  where create_time>='"+starteTime+"' and create_time<='"+endTime+"' ";
         if (taskName!=null&&!"".equals(taskName)){
-            sql+=" and taskId='"+taskName+"' ";
+            sql+=" and task_id='"+taskName+"' ";
         }
-        sql+=" GROUP BY create_time";
+        sql+=" GROUP BY t";
         //System.out.println(sql);
         javax.persistence.Query query = entityManager.createNativeQuery(sql);
         List chartY = query.getResultList();
@@ -43,7 +49,7 @@ public class CountChartServiceImpl implements CountChartService{
         String sql ="SELECT rt, COUNT(rt) FROM gcs_task_record WHERE create_time>='"+starteTime+"' and create_time<='"+endTime+"' ";
         //System.out.println(sql);
         if (taskName!=null&&!"".equals(taskName)){
-            sql+=" and taskName='"+taskName+"'";
+            sql+=" and task_id='"+taskName+"'";
         }
         sql+=" group by rt";
         javax.persistence.Query query = entityManager.createNativeQuery(sql);
@@ -57,9 +63,24 @@ public class CountChartServiceImpl implements CountChartService{
             sum+=Integer.parseInt(object[1].toString());
             list.add(sum);
         }
-        System.out.println(list);
         Collections.reverse(list);
-        System.out.println(list);
         return list;
+    }
+
+    @Override
+    public List findTask(int pageSize,int pageNo) {
+        String hql = "from GcsTaskLog";
+        Page page= gcsTaskLogRepository.findByHql(hql,pageSize,pageNo);
+        List list = page.getContent();
+        return list;
+    }
+
+    @Override
+    public int findPages(int pageSize,int pageNo) {
+        String hql = "from GcsTaskLog";
+        Page page= gcsTaskLogRepository.findByHql(hql,pageSize,pageNo);
+        List list = page.getContent();
+        Iterator it = list.iterator();
+        return page.getTotalPages();
     }
 }
