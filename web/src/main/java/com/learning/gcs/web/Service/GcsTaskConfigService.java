@@ -8,14 +8,13 @@ public interface GcsTaskConfigService  {
     /**
      * 查询任务列表最新一条数据
      *
-     * @param id
      * @return
      */
-    List<GcsTaskConfig> findNewGcsTaskConfig(int id);
+    GcsTaskConfig findNewGcsTaskConfig();
 
     /**
      * 修改表
      * @param id
      */
-    void updateById(int id);
+    void updateById(int id,String luaUrl,int runTimeMax,int version);
 }

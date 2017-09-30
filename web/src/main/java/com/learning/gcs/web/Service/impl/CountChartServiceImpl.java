@@ -69,7 +69,7 @@ public class CountChartServiceImpl implements CountChartService{
 
     @Override
     public Page findTask(int pageSize,int pageNo) {
-        String hql = "from GcsTaskLog";
+        String hql = "from GcsTaskLog order by createTime";
         Page page= gcsTaskLogRepository.findByHql(hql,pageSize,pageNo);
         return page;
     }
