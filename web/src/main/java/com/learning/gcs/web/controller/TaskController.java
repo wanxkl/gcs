@@ -15,12 +15,7 @@ import java.util.List;
 public class TaskController {
     @Autowired
     private GcsTaskService gcsTaskService;
-    @RequestMapping("/findOneTask")
-    public String findOneTask(Model model,@RequestParam(value = "id")int id){
-        GcsTask gcsTask = gcsTaskService.findById(id);
-        model.addAttribute("gcsTask",gcsTask);
-        return "update";
-    }
+
     @RequestMapping(value = "/updateGcsTask")
     public String updateGcsTask(Model model,@RequestParam("id")int id,
                               @RequestParam(value = "apk_url")String apk_url,
