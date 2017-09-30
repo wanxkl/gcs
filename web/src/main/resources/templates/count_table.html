@@ -70,9 +70,18 @@
                                 </tr>
                                 </tbody>
                             </table>
-                            <ul class="pagination" th:each="page:${pages}">
-                                <li><a th:href="@{'count_table?pageNo='+${page}}" th:text="${page}">8</a></li>
-                            </ul>
+                            <div class="pull-right" >
+                                <form method="get" action="count_table">
+                                    <ul class="pagination" th:each="page:${pages}">
+                                        <li><a th:href="@{'count_table?pageNo='+${page}}" th:text="${page}">8</a></li>
+                                    </ul>
+                                    <span  th:text="'共'+${pageCount}+'页,当前第'+${pageNo}+'页'"></span>
+                                    <span>到第</span>
+                                    <input type="search" style="width:3em" name="pageNo" />
+                                    <span>页</span>
+                                    <input  type="submit" value="确认"/>
+                                </form>
+                            </div>
                         </div>
                     </div>
                     <!-- End Example Events -->

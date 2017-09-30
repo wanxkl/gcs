@@ -3,6 +3,7 @@ package com.learning.gcs.web.controller;
 import com.learning.gcs.common.entity.GcsTaskLog;
 import com.learning.gcs.web.Service.CountChartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,15 +23,15 @@ public class CountController {
     }
     @RequestMapping("/count_table")
     public String countTable(Model model,@RequestParam("pageNo")int pageNo){
-        List<GcsTaskLog> list = countChartService.findTask(20,pageNo);
+        Page page= countChartService.findTask(15,pageNo);
+        List<GcsTaskLog> list = page.getContent();
         Iterator it = list.iterator();
-        int pages = countChartService.findPages(20,pageNo);
-        List pageList = new ArrayList();
-        for (int i=1;i<=pages;i++){
-            pageList.add(i);
-        }
+        int pageCount =page.getTotalPages();
+        List<Integer> pageList = countChartService.pages(pageNo,pageCount);
         model.addAttribute("gcsLogList",list);
         model.addAttribute("pages",pageList);
+        model.addAttribute("pageCount",pageCount);
+        model.addAttribute("pageNo",pageNo);
         return "count_table";
     }
 }
