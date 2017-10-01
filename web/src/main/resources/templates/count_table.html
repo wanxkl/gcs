@@ -43,14 +43,11 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>创建日期</th>
-                                    <th>日活跃次数</th>
                                     <th>设备id</th>
                                     <th>IMEI</th>
                                     <th>上次使用ip</th>
                                     <th>任务ID</th>
                                     <th>任务名称</th>
-                                    <th>用户名</th>
-                                    <th>用户密码</th>
                                     <th>脚本版本</th>
                                 </tr>
                                 </thead>
@@ -58,14 +55,11 @@
                                 <tr th:each="gcsLog:${gcsLogList}">
                                     <td th:text="${gcsLog.id}">1</td>
                                     <td th:text="${gcsLog.createTime}">1</td>
-                                    <td th:text="${gcsLog.dailyActiveTimes}">1</td>
                                     <td th:text="${gcsLog.deviceId}">1</td>
                                     <td th:text="${gcsLog.imei}">1</td>
                                     <td th:text="${gcsLog.ip}">1</td>
                                     <td th:text="${gcsLog.taskId}">1</td>
                                     <td th:text="${gcsLog.taskName}">1</td>
-                                    <td th:text="${gcsLog.userName}">1</td>
-                                    <td th:text="${gcsLog.userPassword}">1</td>
                                     <td th:text="${gcsLog.version}">1</td>
                                 </tr>
                                 </tbody>
