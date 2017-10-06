@@ -31,7 +31,7 @@ public class GcsTaskConfigServiceImpl implements GcsTaskConfigService {
         Object o  = redisReader.get(KeyUtil.KEY_TASK_CONFIG);
 
         if(o==null){
-            gcsTaskConfig = gcsTaskConfigRepository.findTopByOrderByIdDesc();
+            gcsTaskConfig = gcsTaskConfigRepository.findTopByOrderByCreateTimeDesc();
             try {
                 redisWriter.set(KeyUtil.KEY_TASK_CONFIG,objectMapper.writeValueAsString(gcsTaskConfig));
             } catch (JsonProcessingException e) {

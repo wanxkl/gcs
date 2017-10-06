@@ -7,7 +7,7 @@ server:
           enabled: true
           pattern: common
         background-processor-delay: 30
-        basedir: /tmp
+        basedir: c://tmp
         max-threads: 0
         protocol-header: x-forwarded-proto
         remote-ip-header: x-forwarded-for
@@ -53,7 +53,7 @@ spring:
         encoding: UTF-8
     redis:
         database: 0
-        host: 0o0o0o.cn
+        host: localhost
         password: ''
         port: 6379
     thymeleaf:
