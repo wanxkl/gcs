@@ -1,28 +1,11 @@
-security:
-    basic:
-        enabled: false
-        path: /**
-        realm: Spring
-    enable-csrf: false
-    headers:
-        cache: false
-        content-type: false
-        frame: false
-        hsts: all
-        xss: false
-    ignored: /**/**
-    require-ssl: false
-    sessions: stateless
-    user:
-        name: user
-        password: ''
-        role: USER
 server:
     port: 8080
-    session-timeout: 600
+    session:
+      timeout: 600
     tomcat:
-        access-log-enabled: true
-        access-log-pattern: common
+        accesslog:
+          enabled: true
+          pattern: common
         background-processor-delay: 30
         basedir: /tmp
         max-threads: 0
@@ -41,27 +24,16 @@ spring:
         continue-on-error: false
         data: data.sql
         driverClassName: com.mysql.jdbc.Driver
-        initial-size: 10
         initialize: false
         jmx-enabled: false
-        max-active: 100
-        max-idle: 8
-        max-wait: 300
-        min-evictable-idle-time-millis: 3000
-        min-idle: 8
         name: datasource
         password: cs105221791
         platform: mysql
         schema: schema.sql
         separator: ;
         sql-script-encoding: utf-8
-        test-on-borrow: false
-        test-on-return: false
-        test-while-idle: true
-        time-between-eviction-runs-millis: 3000
         url: jdbc:mysql://qdm112529519.my3w.com:3306/qdm112529519_db?useUnicode=true&characterEncoding=UTF-8
         username: qdm112529519
-        validation-query: select 1
     http:
         encoding:
             charset: UTF-8

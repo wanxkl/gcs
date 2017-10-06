@@ -2,23 +2,29 @@ allprojects {
     group 'com.learning'
     version '1.0'
 }
-
 subprojects {
     buildscript {
         repositories {
             jcenter {
                 url "http://jcenter.bintray.com/"
             }
+            maven {
+                url "https://plugins.gradle.org/m2/"
+            }
         }
         dependencies {
-            classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.7.RELEASE")
+            classpath "org.springframework.boot:spring-boot-gradle-plugin:1.5.7.RELEASE"
+            //classpath "com.gradle:build-scan-plugin:1.9"
+            //classpath "org.asciidoctor:asciidoctor-gradle-plugin:1.5.6"
+
         }
     }
     repositories {
         jcenter {
             url "http://jcenter.bintray.com/"
         }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
-
-
 }
