@@ -11,6 +11,8 @@ public class Machine implements Serializable{
     @Id
     @Column(unique = true, nullable = false,columnDefinition = "int(11) comment '主键ID,机器号' ")
     private Integer id;
+    @Column(nullable = false,columnDefinition = "varchar(16) comment '机器代码 asoId' ")
+    private String machineName;
     @Column(nullable = false,columnDefinition = "int(8) comment '生存状态 0：死亡 1：生存 2 :任务暂停' ")
     private Integer liveStatus;
 
@@ -20,6 +22,14 @@ public class Machine implements Serializable{
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getMachineName() {
+        return machineName;
+    }
+
+    public void setMachineName(String machineName) {
+        this.machineName = machineName;
     }
 
     public Integer getLiveStatus() {
