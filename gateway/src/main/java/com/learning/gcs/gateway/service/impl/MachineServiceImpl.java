@@ -1,14 +1,18 @@
 package com.learning.gcs.gateway.service.impl;
 
+import com.learning.gcs.common.entity.GcsTask;
+import com.learning.gcs.common.entity.Machine;
 import com.learning.gcs.common.redis.KeyUtil;
 import com.learning.gcs.common.redis.RedisReader;
 import com.learning.gcs.common.redis.RedisWriter;
+import com.learning.gcs.common.repository.MachineRepository;
 import com.learning.gcs.gateway.service.MachineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class MachineServiceImpl implements MachineService{
@@ -17,11 +21,36 @@ public class MachineServiceImpl implements MachineService{
     private RedisWriter redisWriter;
     @Autowired
     private RedisReader redisReader;
+    @Autowired
+    private MachineRepository machineRepository;
     @Override
-    public List<Object> getTaskIdsByDeviceId(String deviceId) {
+    public Set<Object> getTaskIdsByDeviceId(String deviceId) {
 
-        Object [] set = redisReader.getSetValues(KeyUtil.generateDeviceIdKey(deviceId));
+        Set<Object> set = redisReader.getSetValues(KeyUtil.generateDeviceIdKey(deviceId));
 
-        return Arrays.asList(set);
+        if(ObjectUtils.isEmpty(set)){
+            Machine machine =machineRepository.findByMachineName(deviceId);
+            if(!ObjectUtils.isEmpty(machine)){
+                List<GcsTask> gcsTasks = machine.getGcsTasks();
+                if(!ObjectUtils.isEmpty(gcsTasks)){
+                    String key = KeyUtil.generateDeviceIdKey(deviceId);
+                    gcsTasks.stream().forEach(c->{
+                        redisWriter.setSet(key,c.getId()+"");
+                    });
+                    return redisReader.getSetValues(KeyUtil.generateDeviceIdKey(deviceId));
+                }
+            }
+        }
+        return set;
+    }
+
+    @Override
+    public void save(Machine machine) {
+        machineRepository.save(machine);
+    }
+
+    @Override
+    public List<Machine> findAll() {
+        return machineRepository.findAll();
     }
 }

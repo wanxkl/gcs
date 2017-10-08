@@ -17,6 +17,10 @@ public class RedisWriter {
         stringRedisTemplate.opsForValue().set(key, value, time, timeUnit);
     }
 
+    public void setSet(String key, Object value){
+        stringRedisTemplate.opsForSet().add(key,value);
+    }
+
     public void set(String key, Object value) {
         stringRedisTemplate.opsForValue().set(key, value);
     }
@@ -30,15 +34,6 @@ public class RedisWriter {
         stringRedisTemplate.delete(key);
     }
 
-
-    public String leftPop(String key) {
-        Object o = stringRedisTemplate.opsForList().leftPop(key);
-
-        if (!ObjectUtils.isEmpty(o)) {
-            return o.toString();
-        }
-        return null;
-    }
 
     public String rightPop(String key) {
         Object o = stringRedisTemplate.opsForList().rightPop(key);

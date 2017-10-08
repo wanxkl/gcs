@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class GcsTaskServiceTest {
@@ -23,6 +21,8 @@ public class GcsTaskServiceTest {
 
     @Autowired
     private GcsTaskService gcsTaskService;
+    @Autowired
+    private MachineService machineService;
 
     @Test
     public void save() throws Exception {
@@ -42,6 +42,8 @@ public class GcsTaskServiceTest {
         gcsTask.setNichijouRemainCurveId(1);
         gcsTask.setRemainCurveId(2);
         gcsTask.setMachineIds(null);
+
+        gcsTask.setMachines(machineService.findAll());
         gcsTaskService.save(gcsTask);
     }
 

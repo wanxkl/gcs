@@ -1,10 +1,10 @@
 package com.learning.gcs.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "GcsTask")
@@ -51,17 +51,18 @@ public class GcsTask implements Serializable{
     @Column(nullable = false,columnDefinition = "int(8) COMMENT '任务状态 0：暂停 1：启用 '")
     private Integer taskStatus;
     @Column(nullable = false,columnDefinition = "int(8) COMMENT '任务数量'")
-    private Integer taskCount;
+    private Integer      taskCount;
     @Column(columnDefinition = "varchar(1024) COMMENT '任务机器ID 空值为全部 '")
-    private String machineIds;
+    private String       machineIds;
     @Column(nullable = false,columnDefinition = "int(8) COMMENT '新增留存曲线ID'")
-    private Integer newAddRemainCurveId;
+    private Integer      newAddRemainCurveId;
     @Column(nullable = false,columnDefinition = "int(8) COMMENT '日常留存曲线ID'")
-    private Integer nichijouRemainCurveId;
+    private Integer      nichijouRemainCurveId;
     @Column(nullable = false,columnDefinition = "int(8) COMMENT '月留存曲线ID'")
-    private Integer remainCurveId;
-
-
+    private Integer      remainCurveId;
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    private List<Machine> machines;
     public Integer getId() {
         return id;
     }
@@ -204,5 +205,13 @@ public class GcsTask implements Serializable{
 
     public void setTaskCount(Integer taskCount) {
         this.taskCount = taskCount;
+    }
+
+    public List<Machine> getMachines() {
+        return machines;
+    }
+
+    public void setMachines(List<Machine> machines) {
+        this.machines = machines;
     }
 }

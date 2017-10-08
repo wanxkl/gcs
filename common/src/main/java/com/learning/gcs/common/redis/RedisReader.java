@@ -1,11 +1,11 @@
 package com.learning.gcs.common.redis;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.support.atomic.RedisAtomicInteger;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
+
+import java.util.Set;
 
 @Component
 public class RedisReader {
@@ -18,8 +18,8 @@ public class RedisReader {
         return stringRedisTemplate.opsForValue().get(key);
     }
 
-    public Object[] getSetValues(String key) {
-        return stringRedisTemplate.opsForSet().members(key).toArray();
+    public Set<Object> getSetValues(String key) {
+        return stringRedisTemplate.opsForSet().members(key);
     }
 
     public Integer getAtomic(String key) {
