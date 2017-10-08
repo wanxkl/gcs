@@ -1,31 +1,35 @@
 package com.learning.gcs.gateway.bean;
 
 public class TaskConfig {
-    private int version;
-    private int runTimeMax;
+    private Integer version;
+    private Integer runTimeMax;
     private String luaUrl;
-    private boolean state;
-
+    private Boolean state;
+    private String message;
     public TaskConfig() {
     }
 
-    public TaskConfig(boolean state) {
+    public TaskConfig(Boolean state) {
         this.state = state;
     }
+    public TaskConfig(Boolean state,String message) {
+        this.state = state;
+        this.message = message;
+    }
 
-    public int getVersion() {
+    public Integer getVersion() {
         return version;
     }
 
-    public void setVersion(int version) {
+    public void setVersion(Integer version) {
         this.version = version;
     }
 
-    public int getRunTimeMax() {
+    public Integer getRunTimeMax() {
         return runTimeMax;
     }
 
-    public void setRunTimeMax(int runTimeMax) {
+    public void setRunTimeMax(Integer runTimeMax) {
         this.runTimeMax = runTimeMax;
     }
 
@@ -37,11 +41,19 @@ public class TaskConfig {
         this.luaUrl = luaUrl;
     }
 
-    public boolean isState() {
+    public Boolean getState() {
         return state;
     }
 
-    public void setState(boolean state) {
+    public void setState(Boolean state) {
         this.state = state;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

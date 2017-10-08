@@ -9,7 +9,6 @@ import com.learning.gcs.gateway.adapter.TaskConfigAdapter;
 import com.learning.gcs.gateway.adapter.TaskSimpleAdapter;
 import com.learning.gcs.gateway.bean.Result;
 import com.learning.gcs.gateway.bean.Task;
-import com.learning.gcs.gateway.bean.TaskConfig;
 import com.learning.gcs.gateway.service.*;
 import com.learning.gcs.gateway.util.Constant;
 import org.slf4j.Logger;
@@ -48,7 +47,6 @@ public class TaskServiceImpl implements TaskService {
         Task  task = new Task();
         GcsDeviceInfo gcsDeviceInfo = null;
         Integer hour = Integer.valueOf(TimeUtil.getCurrentHour());
-
         //通过deviceId获取可做任务
         //可做任务：deviceId任务列表&当前时间可做任务
         List<Object> validTaskId = gcsTaskService.getValidTaskIds(deviceId);
@@ -62,7 +60,6 @@ public class TaskServiceImpl implements TaskService {
                 if (gcsTask.getTaskModeCode() == 2) {
                     task.getBlackList().add(gcsTask.getMarketPackName());
                 }
-
                 //从留存队列中获取任务设备信息
                 gcsDeviceInfo = queueService.getDeviceInfoByTaskId(taskId, hour);
                 if (!ObjectUtils.isEmpty(gcsDeviceInfo)) {
@@ -81,11 +78,11 @@ public class TaskServiceImpl implements TaskService {
                 task.setConfig(new TaskConfigAdapter(gcsTaskConfigService.getGcsTaskConfig()).build());
                 task.setInfo(gcsDeviceInfo);
             } else {
-                task.setConfig(new TaskConfig(false));
+                task.setConfig(Constant.TASK_CONFIG_INVALID_DEVICE_INFO);
             }
 
         }else{
-            task.setConfig(new TaskConfig(false));
+            task.setConfig(Constant.TASK_CONFIG_INVALID_TASK);
         }
         return task;
     }

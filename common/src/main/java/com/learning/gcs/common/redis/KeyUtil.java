@@ -5,7 +5,7 @@ public class KeyUtil {
     private static final String  PREFIX_DEVICE_IMEI = "imei:";
     private static final String  PREFIX_DEVICE_ID = "device_id:";
     private static final String  PREFIX_REMAIN_CURVE_ID = "remain_curve:";
-    private static final String   PREFIX_TASK_ID_COUNT = "task_Id_count:";
+    private static final String  PREFIX_TASK_ID_COUNT = "task_Id_count:";
     private static final String  PREFIX_TASK_ID = "task_Id:";
     private static final String  DIVISION = ":";
     private static final String  PATTERN_STAR = "*";
