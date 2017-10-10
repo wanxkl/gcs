@@ -22,8 +22,8 @@ public class GcsTaskConfigServiceImpl implements GcsTaskConfigService {
     }
 
     @Override
-    public void updateById(int id,String luaUrl,int runTimeMax,int version) {
+    public void updateById(int id,String luaUrl,int runTimeMax,int version,boolean state) {
         redisWriter.delete(KeyUtil.KEY_TASK_CONFIG);
-        gcsTaskConfigRepository.updateById(id,luaUrl,runTimeMax,version);
+        gcsTaskConfigRepository.updateById(id,luaUrl,runTimeMax,version,state);
     }
 }

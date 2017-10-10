@@ -11,8 +11,8 @@ public interface GcsTaskConfigRepository extends MyRepository<GcsTaskConfig,Inte
 
     @Transactional
     @Modifying(clearAutomatically =true)
-    @Query("update GcsTaskConfig c set c.luaUrl=:luaUrl,c.runTimeMax=:runTimeMax,c.version=:version where c.id=:id limit 1")
-    void updateById(@Param("id") int id,@Param("luaUrl") String luaUrl, @Param("runTimeMax") int runTimeMax, @Param("version") int version);
+    @Query("update GcsTaskConfig c set c.luaUrl=:luaUrl,c.runTimeMax=:runTimeMax,c.version=:version,c.state=:state where c.id=:id limit 1")
+    void updateById(@Param("id") int id,@Param("luaUrl") String luaUrl, @Param("runTimeMax") int runTimeMax, @Param("version") int version,@Param("state") boolean state);
 
     GcsTaskConfig findTopByOrderByCreateTimeDesc();
 }
