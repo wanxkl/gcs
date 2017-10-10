@@ -11,5 +11,8 @@ public class Constant {
 
     public static final TaskConfig TASK_CONFIG_INVALID_TASK = new TaskConfig(false,"该asoId没有合适的Task");
     public static final TaskConfig TASK_CONFIG_INVALID_DEVICE_INFO = new TaskConfig(false,"TASK没有合适的DeviceInfo");
+    public static final TaskConfig TASK_CONFIG_DONE_HOUR = new TaskConfig(false,"当前小时任务已做完");
 
+    public static final Integer GCS_TASK_MODE_CODE_CPA = 1;
+    public static final Integer GCS_TASK_MODE_CODE_MARKET = 2;
 }

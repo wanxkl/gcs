@@ -54,7 +54,7 @@ spring:
     redis:
         database: 0
         host: localhost
-        password: ''
+        password:
         port: 6379
     thymeleaf:
         cache: false

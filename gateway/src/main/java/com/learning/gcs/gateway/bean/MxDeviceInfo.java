@@ -1,7 +1,8 @@
 package com.learning.gcs.gateway.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MxDeviceInfo {
     private String imei;
     private String phone;

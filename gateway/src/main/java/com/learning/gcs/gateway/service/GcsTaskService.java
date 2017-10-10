@@ -8,9 +8,9 @@ public interface GcsTaskService {
 
     List<GcsTask> findAll();
 
-    List<Object> getValidTaskIds(String  deviceId);
+    List<Integer> getValidTaskIds(String  deviceId);
 
-    List<Object> getCurrentTaskIds(Integer taskId);
+    List<Integer> getCurrentTaskIds(Integer taskId);
 
     GcsTask findByTaskId(Integer taskId);
 
@@ -19,8 +19,5 @@ public interface GcsTaskService {
     GcsTask save(GcsTask gcsTask);
 
     Integer updateTaskCountById(Integer taskId,Integer taskCount);
-
-
-
 
 }
