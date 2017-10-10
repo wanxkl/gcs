@@ -22,8 +22,9 @@ public class GcsTaskConfigController {
     public String updateGcsTaskConfig(Model model,@RequestParam("id") int id,
                               @RequestParam("luaUrl") String luaUrl,
                               @RequestParam("runTimeMax") int runTimeMax,
-                              @RequestParam("version") int version){
-        gcsTaskConfigService.updateById(id,luaUrl,runTimeMax,version);
+                              @RequestParam("version") int version,
+                              @RequestParam("state")boolean state){
+        gcsTaskConfigService.updateById(id,luaUrl,runTimeMax,version,state);
         GcsTaskConfig gcsTaskConfig = gcsTaskConfigService.findNewGcsTaskConfig();
         model.addAttribute("gcsTaskConfig",gcsTaskConfig);
         return "gcsTaskConfig";

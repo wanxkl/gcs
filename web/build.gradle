@@ -34,7 +34,7 @@ compileJava.options.encoding = 'UTF-8'
 mainClassName = "com.learning."+$BASE_NAME+".Application"
 
 startScripts {
-    defaultJvmOpts = ['-server', '-Xmx8192m', '-Xms8192m', '-Xmn8192m']
+    defaultJvmOpts = ['-server', '-Xmx2048m', '-Xms1024m', '-Xmn4096m']
     doLast {
         def windowsScriptFile = file getWindowsScript()
         def unixScriptFile = file getUnixScript()
@@ -59,11 +59,11 @@ jar{
     }
 }
 //distZip 打包需要放开
-//processResources {
-//    exclude "application.properties"
-//    exclude "banner.txt"
-//    exclude "logback.groovy"
-//}
+processResources {
+    exclude "application.properties"
+    exclude "banner.txt"
+    exclude "logback.groovy"
+}
 
 defaultTasks "copyResourceToStatic"
 

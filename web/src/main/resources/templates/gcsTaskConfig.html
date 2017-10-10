@@ -16,7 +16,7 @@
     <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet"/>
     <link href="css/animate.css" rel="stylesheet"/>
     <link href="css/style.css?v=4.1.0" rel="stylesheet"/>
-
+    <script src="js/gcsTaskConfig.js?v=1.0.0"></script>
 
 </head>
 
@@ -110,7 +110,10 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-lable">配置状态：</label>
                         <div class="col-sm-7">
-                            <input   id="configState" class="form-control" />
+                            <select class="form-control" id="configState" name="state">
+                                <option id="selectFalse" value="false">false</option>
+                                <option id="selectTrue" value="true">true</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -134,7 +137,7 @@
 <script src="js/bootstrap.min.js?v=3.3.6"></script>
 
 <!-- 自定义js -->
-<script src="js/gcsTaskConfig.js?v=1.0.0"></script>
+
 
 
 <!-- Bootstrap table -->

@@ -16,5 +16,5 @@ public interface GcsTaskConfigService  {
      * 修改表
      * @param id
      */
-    void updateById(int id,String luaUrl,int runTimeMax,int version);
+    void updateById(int id,String luaUrl,int runTimeMax,int version,boolean state);
 }
