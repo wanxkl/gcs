@@ -1,64 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-
 <head>
-
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-
-    <title> 任务列表</title>
+    <title>任务列表</title>
     <meta name="keywords" content=""/>
     <meta name="description" content=""/>
-
-    <link rel="shortcut icon" href="favicon.ico"/> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet"/>
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet"/>
     <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet"/>
     <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet"/>
     <link href="css/animate.css" rel="stylesheet"/>
     <link href="css/style.css?v=4.1.0" rel="stylesheet"/>
-    
-
 </head>
-
 <body class="gray-bg">
-
         <div class="ibox float-e-margins">
-
             <div class="ibox-content">
                 <div class="row row-lg">
                     <div class="col-sm-12">
-                        <!-- Example Events -->
                         <div class="example-wrap">
                             <h4 class="example-title">任务列表</h4>
                             <a class="btn btn-default"  data-toggle="modal" data-target="#add">添加任务</a>
                             <div class="example">
-                                <!--<div class="alert alert-success" id="examplebtTableEventsResult" role="alert">
-                                    查询结果
-                                </div>-->
                                 <table id="exampleTableEvents" class="table" data-mobile-responsive="true">
                                     <thead>
                                         <tr>
                                             <th data-field="state" data-checkbox="true"></th>
                                             <th>ID</th>
-                                            <!--<th data-field="apkUrl">APK下载地址</th>-->
-                                            <th>任务名称</th>
-                                            <!--<th data-field="findSet">脚本辅助信息</th>-->
-                                            <!--<th data-field="marketPackName">市场包名</th>-->
-                                            <!--<th data-field="market_url">市场URL</th>-->
-                                            <!--<th data-field="packageName">任务包名</th>-->
-                                            <th>任务重试次数</th>
-                                            <!--<th data-field="searchTxt">搜索关键字</th>-->
-                                            <th >任务类型名称</th>
-                                            <th>任务类型编码</th>
-                                            <th >任务状态</th>
-                                            <th >权重</th>
-                                            <!--<th data-field="remainCurveId">月留存曲线ID</th>-->
-                                            <!--<th data-field="machineIds">任务机器ID</th>-->
-                                            <!--<th data-field="newAddRemainCurveId">新增留存曲线ID</th>-->
-                                            <!--<th data-field="nichijouRemainCurveId">日常留存曲线ID</th>-->
-                                            <th>任务数量</th>
+                                            <th>名称</th>
+                                            <th>重试次数</th>
+                                            <th>类型</th>
+                                            <th>状态</th>
+                                            <th>权重</th>
+                                            <th>数量</th>
                                           <th>操作</th>
-
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -68,23 +43,22 @@
                                             <td th:text="${gcs.appName}">1</td>
                                             <td th:text="${gcs.runNumber}">1</td>
                                             <td th:text="${gcs.taskMode}">1</td>
-                                            <td th:text="${gcs.taskModeCode}">1</td>
-                                            <td th:text="${gcs.taskStatus}">1</td>
+                                            <td th:switch="${gcs.taskStatus}">
+                                                <p th:case="1">开启</p>
+                                                <p th:case="0">关闭</p>
+                                            </td>
                                             <td th:text="${gcs.weight}">1</td>
                                             <td th:text="${gcs.taskCount}">1111</td>
-                                            <td><a  th:onclick="'updateTask('+${gcs.id}+')'" data-toggle="modal" data-target="#updateTask">修改</a><a th:href="@{'deleteTask?id='+${gcs.id}}">删除</a></td>
+                                            <td><a  th:onclick="'updateTask('+${gcs.id}+')'" data-toggle="modal" data-target="#updateTask">修改</a>&nbsp; <a th:href="@{'deleteTask?id='+${gcs.id}}">删除</a></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <!-- End Example Events -->
                     </div>
                 </div>
             </div>
         </div>
-        <!-- End Panel Other -->
-
         <!--添加任务模态窗-->
         <div id="add" class="modal fade " aria-labelledby="添加任务" aria-hidden="true">
             <div class="modal-dialog alert-success">
@@ -94,119 +68,133 @@
                     </div>
                     <div class="modal-body alert-success">
                         <form id="addForm" class="form-horizontal" method="get" action="/saveTask">
-
-                            <div class="form-group">
-                                <lable class="col-sm-3 control-lable">APK下载地址：</lable>
-                                <div class="col-sm-7">
-                                    <input class="form-control" name="apk_url"/>
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <lable class="col-sm-3 control-lable">任务名称：</lable>
                                 <div class="col-sm-7">
-                                    <input class="form-control" name="app_name"/>
+                                    <input class="form-control" name="appName"/>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-lable">脚本辅助信息：</label>
-                                <div class="col-sm-7">
-                                    <input class="form-control" name="find_set"/>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-3 control-lable">市场包名：</label>
-                                <div class="col-sm-7">
-                                    <input class="form-control" name="market_pack_name"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-lable">市场URL：</label>
-                                <div class="col-sm-7">
-                                    <input class="form-control" name="market_url"/>
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-lable">任务包名：</label>
                                 <div class="col-sm-7">
-                                    <input class="form-control" name="package_name"/>
+                                    <input class="form-control" name="packageName"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-lable">任务重试次数：</label>
                                 <div class="col-sm-7">
-                                    <input class="form-control" name="run_number"/>
+                                    <input class="form-control" name="runNumber"/>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-lable">搜索关键字：</label>
-                                <div class="col-sm-7">
-                                    <input class="form-control" name="search_txt"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-lable">任务类型名称：</label>
-                                <div class="col-sm-7">
-                                    <input class="form-control" name="task_mode"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-lable">任务类型编码：</label>
-                                <div class="col-sm-7">
-                                    <input class="form-control" name="task_mode_code"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-lable">任务状态：</label>
-                                <div class="col-sm-7">
-                                    <input class="form-control" name="task_status"/>
-                                </div>
-                            </div>
+
                             <div class="form-group">
                                 <label class="col-sm-3 control-lable">权重：</label>
                                 <div class="col-sm-7">
                                     <input class="form-control" name="weight"/>
                                 </div>
                             </div>
+
                             <div class="form-group">
-                                <label class="col-sm-3 control-lable">月留存曲线ID：</label>
+                                <lable class="col-sm-3 control-lable">任务APK下载地址：</lable>
                                 <div class="col-sm-7">
-                                    <input class="form-control" name="remain_curve_id"/>
+                                    <input class="form-control" name="apkUrl"/>
                                 </div>
                             </div>
+
+
                             <div class="form-group">
-                                <label class="col-sm-3 control-lable">任务机器ID：</label>
+                                <label class="col-sm-3 control-lable">任务数量：</label>
                                 <div class="col-sm-7">
-                                    <input class="form-control" name="machine_ids"/>
+                                    <input class="form-control" name="taskCount"  precision="2"/>
                                 </div>
                             </div>
 
                             <div class="form-group">
+                                <label class="col-sm-3 control-lable">任务类型名称：</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control" name="taskModeCode" id="taskModeCodeId" onchange="changedTaskModeCode()">
+                                        <option value="0">请选择</option>
+                                        <option value="1">Cpa</option>
+                                        <option value="2">Market</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <HR style="border:1 dashed #987cb9" width="100%" color="#987cb9"/>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-lable">市场包名：</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" name="marketPackName"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-lable">市场URL：</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" name="marketUrl"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-lable">搜索关键字：</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" name="searchTxt"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-lable">脚本辅助信息：</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" name="findSet"/>
+                                </div>
+                            </div>
+                            <HR style="border:1 dashed #987cb9" width="100%" color="#987cb9"/>
+
+                            <div class="form-group">
                                 <label class="col-sm-3 control-lable">新增留存曲线ID：</label>
                                 <div class="col-sm-7">
-                                    <input class="form-control" name="newAddCurveId"/>
+                                    <select class="form-control" name="newAddRemainCurveId">
+                                        <option value="0">请选择</option>
+                                        <option value="1" selected="selected">通用新增曲线</option>
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-lable">日常留存曲线ID：</label>
                                 <div class="col-sm-7">
-                                    <input class="form-control" name="nichijou_remain_curve_id"/>
+                                    <select class="form-control" name="nichijouRemainCurveId">
+                                        <option value="0">请选择</option>
+                                        <option value="1">通用日常曲线</option>
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-lable">任务数量：</label>
+                                <label class="col-sm-3 control-lable">月留存曲线ID：</label>
                                 <div class="col-sm-7">
-                                    <input class="form-control" name="task_count"  precision="2"/>
+                                    <select class="form-control" name="remainCurveId">
+                                        <option value="0">请选择</option>
+                                        <option value="1">通用月留存曲线</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-lable">任务机器ID：</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" name="machineIds" value="全部" disabled="disabled"/>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <input  class="form-control" type="submit" value="添加"/>
                             </div>
-
+                            <!-- 隐藏属性-->
+                            <div>
+                                <input type="hidden" name="taskStatus" value="1"/>
+                                <input type="hidden" name="taskMode" id="taskModeId" value="1"/>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -353,18 +341,18 @@
     <script src="js/content.js?v=1.0.0"></script>
     <script src="js/updateTask.js"></script>
 
-
     <!-- Bootstrap table -->
     <script src="js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
     <script src="js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
     <script src="js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 
     <!-- Peity -->
-
-
-    
-    
-
 </body>
-
+<script>
+    function changedTaskModeCode() {
+        var selectedTaskMode =  $('#taskModeCodeId option:selected').text();
+        console.log(selectedTaskMode);
+        $('#taskModeId').val(selectedTaskMode);
+    }
+</script>
 </html>
