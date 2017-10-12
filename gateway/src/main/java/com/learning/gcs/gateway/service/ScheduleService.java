@@ -6,4 +6,5 @@ public interface ScheduleService {
 
     void generateCurrentHourTask();
 
+    void synPhoneNumber();
 }

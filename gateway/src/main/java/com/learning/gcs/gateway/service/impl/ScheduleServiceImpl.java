@@ -2,21 +2,15 @@ package com.learning.gcs.gateway.service.impl;
 
 import com.learning.gcs.common.entity.GcsTask;
 import com.learning.gcs.common.util.TimeUtil;
-import com.learning.gcs.gateway.service.CountService;
-import com.learning.gcs.gateway.service.GcsTaskService;
-import com.learning.gcs.gateway.service.QueueService;
-import com.learning.gcs.gateway.service.ScheduleService;
+import com.learning.gcs.gateway.service.*;
 import com.learning.gcs.gateway.util.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import javax.annotation.Resources;
 import java.io.IOException;
 import java.util.List;
 
@@ -31,7 +25,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     private GcsTaskService gcsTaskService;
     @Autowired
     private CountService countService;
-
+    @Autowired
+    private PhoneNumberService phoneNumberService;
 
     //每天0点执行
     @Scheduled(cron = "0 0 0 * * ?")
@@ -66,5 +61,19 @@ public class ScheduleServiceImpl implements ScheduleService {
                 }
             }
         }
+    }
+
+    @Scheduled(cron = "0 0/1 * * * ?")
+    @Override
+    public void synPhoneNumber() {
+        logger.info("检查开关状态:{}", scheduleToggle);
+        if (Constant.SCHEDULE_TOGGLE_ENABLE.equals(scheduleToggle)) {
+            logger.info("开始执行synPhoneNumber():", TimeUtil.getFormatTime());
+            long beginTime = System.currentTimeMillis();
+            Integer synCount = phoneNumberService.synPhoneNumber();
+            long totalTime = System.currentTimeMillis() - beginTime;
+            logger.info("结束执行synPhoneNumber():同步手机号个数：{},耗时:{}",synCount,totalTime);
+        }
+
     }
 }

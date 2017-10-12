@@ -15,4 +15,11 @@ public class Constant {
 
     public static final Integer GCS_TASK_MODE_CODE_CPA = 1;
     public static final Integer GCS_TASK_MODE_CODE_MARKET = 2;
+
+    public static final String CHARSET = "UTF-8";
+
+
+    public static final String HOST_SYN_PHONE_NUMBER = "http://42.96.169.232:8081/sp/getLatelyTel?latelyTime=1&opType=";
+    public static final String HOST_SYN_PHONE_CAPTCHA = "http://42.96.169.232:8081/sp/getLatelyCode";
+
 }
