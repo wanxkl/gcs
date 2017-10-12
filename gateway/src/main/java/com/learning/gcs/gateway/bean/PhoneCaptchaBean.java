@@ -17,6 +17,21 @@ public class PhoneCaptchaBean implements Serializable{
 
     private String captcha;
 
+    public PhoneCaptchaBean() {
+    }
+
+    public PhoneCaptchaBean buildPhoneNumber(String phoneNumber){
+        this.phoneNumber = phoneNumber;
+        this.ret = 1;
+        return this;
+    }
+
+    public PhoneCaptchaBean buildCaptcha(String captcha){
+        this.captcha = captcha;
+        this.ret = 1;
+        return this;
+    }
+
     public Integer getRet() {
         return ret;
     }

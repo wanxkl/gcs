@@ -107,7 +107,7 @@ public class PhoneNumberServiceImpl implements PhoneNumberService{
     @Override
     public PhoneCaptcha findByPhoneNumberAndKeyword(String phoneNumber,Integer captchaLength, String keyword) {
         PhoneCaptcha phoneCaptcha =  phoneCaptchaRepository.findByPhoneNumber(phoneNumber);
-        String url = Constant.HOST_SYN_PHONE_CAPTCHA + "?imei="+phoneCaptcha.getImsi()+"&codeDecimal="+captchaLength+"&keyWord="+keyword;
+        String url = Constant.HOST_SYN_PHONE_CAPTCHA + "?imsi="+phoneCaptcha.getImsi()+"&codeDecimal="+captchaLength+"&keyWord="+keyword;
 
         String ret =  HttpUtil.sendGet(url,Constant.CHARSET);
         logger.info("url:{}",url);
