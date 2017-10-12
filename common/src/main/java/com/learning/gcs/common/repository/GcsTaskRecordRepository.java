@@ -18,7 +18,5 @@ public interface GcsTaskRecordRepository extends MyRepository<GcsTaskRecord,Inte
     @Modifying
     @Query("update GcsTaskRecord g set g.rt = rt + 1 where g.taskId =:taskId and g.imei = :imei")
     Integer updateRtByTaskIdAndImei(@Param("taskId") Integer taskId,@Param("imei") String imei);
-
     Long countByTaskIdAndImei(Integer taskId,String imei);
-
 }

@@ -2,8 +2,10 @@ package com.learning.gcs.web.Service.impl;
 
 import com.learning.gcs.common.entity.GcsTaskLog;
 import com.learning.gcs.common.repository.GcsTaskLogRepository;
+import com.learning.gcs.common.repository.GcsTaskRecordRepository;
 import com.learning.gcs.common.repository.GcsTaskRepository;
 import com.learning.gcs.web.Service.CountChartService;
+import com.learning.gcs.web.util.CountUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -23,20 +25,18 @@ public class CountChartServiceImpl implements CountChartService{
         String starteTime = time+" 00:00:00";
         String endTime = time+" 23:59:59";
         List list = new ArrayList();
-        String sql ="SELECT DATE_FORMAT(create_time,'%Y%H') t, COUNT(create_time) counta FROM gcs_task_record  where create_time>='"+starteTime+"' and create_time<='"+endTime+"' ";
+        String sql ="SELECT DATE_FORMAT(create_time,'%H') t, IFNULL(COUNT(create_time),0) counta FROM gcs_task_record  where create_time>='"+starteTime+"' and create_time<='"+endTime+"' ";
         if (taskName!=null&&!"".equals(taskName)){
             sql+=" and task_id='"+taskName+"' ";
         }
         sql+=" GROUP BY t";
-        //System.out.println(sql);
         javax.persistence.Query query = entityManager.createNativeQuery(sql);
         List chartY = query.getResultList();
         Iterator it = chartY.iterator();
+        int i=0;
         while (it.hasNext()){
-            //System.out.println(it.next());
             Object[] object =(Object[]) it.next();
-            list.add(Integer.parseInt(object[1].toString()));
-            //System.out.println(object[1].toString());
+            CountUtil.fillZero(list,object,i,23);
         }
         return list;
     }
@@ -58,6 +58,7 @@ public class CountChartServiceImpl implements CountChartService{
         int sum = 0;
         Collections.reverse(chartY);
         Iterator it = chartY.iterator();
+        System.out.println(list);
         while (it.hasNext()){
             Object[] object =(Object[]) it.next();
             sum+=Integer.parseInt(object[1].toString());
