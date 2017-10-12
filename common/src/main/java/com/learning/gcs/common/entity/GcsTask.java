@@ -36,6 +36,9 @@ public class GcsTask implements Serializable{
     @Column(columnDefinition = "varchar(32) COMMENT '任务包名(taskMode=cpa时不为空)'")
     private String packageName;
 
+    @Column(columnDefinition = "varchar(64) COMMENT '市场名字（taskMode=market时不为空)'")
+    private String marketName;
+
     @Column(columnDefinition = "varchar(128) COMMENT '市场URL（taskMode=market时不为空)'")
     private String marketUrl;
 
@@ -213,5 +216,13 @@ public class GcsTask implements Serializable{
 
     public void setMachines(List<Machine> machines) {
         this.machines = machines;
+    }
+
+    public String getMarketName() {
+        return marketName;
+    }
+
+    public void setMarketName(String marketName) {
+        this.marketName = marketName;
     }
 }

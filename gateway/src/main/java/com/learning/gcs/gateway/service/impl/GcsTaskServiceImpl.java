@@ -19,15 +19,14 @@ public class GcsTaskServiceImpl implements GcsTaskService {
     private GcsTaskRepository gcsTaskRepository;
     @Autowired
     private MachineService    machineService;
-
     @Override
     public List<GcsTask> findAll() {
         return gcsTaskRepository.findAll();
     }
 
     @Override
-    public List<Object> getValidTaskIds(String deviceId) {
-        List<Object> list = null;
+    public List<Integer> getValidTaskIds(String deviceId) {
+        List<Integer> list = null;
         List<GcsTask> gcsTasks = gcsTaskRepository.findByTaskStatus(1);
         if (!ObjectUtils.isEmpty(gcsTasks)) {
             Set<Object> set = machineService.getTaskIdsByDeviceId(deviceId);
@@ -44,8 +43,8 @@ public class GcsTaskServiceImpl implements GcsTaskService {
     }
 
     @Override
-    public List<Object> getCurrentTaskIds(Integer taskId) {
-        return null;
+    public List<Integer> getCurrentTaskIds(Integer taskId) {
+        return gcsTaskRepository.findIdByTaskStatusOrderByWeightDesc(1);
     }
 
 

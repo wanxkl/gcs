@@ -24,55 +24,59 @@ import java.util.List;
 public class TaskServiceImpl implements TaskService {
     private static final Logger logger = LoggerFactory.getLogger(TaskServiceImpl.class);
     @Autowired
-    private MachineService machineService;
+    private MachineService           machineService;
     @Autowired
-    private GcsTaskService gcsTaskService;
+    private GcsTaskService           gcsTaskService;
     @Autowired
-    private VpnService vpnService;
+    private VpnService               vpnService;
     @Autowired
-    private GcsTaskConfigService gcsTaskConfigService;
+    private GcsTaskConfigService     gcsTaskConfigService;
     @Autowired
-    private GcsDeviceInfoService gcsDeviceInfoService;
+    private GcsDeviceInfoService     gcsDeviceInfoService;
     @Autowired
-    private GcsTaskRecordService gcsTaskRecordService;
+    private GcsTaskRecordService     gcsTaskRecordService;
     @Autowired
     private RemainCurveDetailService remainCurveDetailService;
     @Autowired
-    private CountService countService;
+    private CountService             countService;
     @Autowired
-    private QueueService queueService;
+    private QueueService             queueService;
 
     @Override
     public Task get(String deviceId) throws IOException {
-        Task  task = new Task();
-        GcsDeviceInfo gcsDeviceInfo = null;
+        Task task = new Task();
         Integer hour = Integer.valueOf(TimeUtil.getCurrentHour());
         //通过deviceId获取可做任务
         //可做任务：deviceId任务列表&当前时间可做任务
-        List<Object> validTaskId = gcsTaskService.getValidTaskIds(deviceId);
+        List<Integer> validTaskId = gcsTaskService.getValidTaskIds(deviceId);
 
         if (!ObjectUtils.isEmpty(validTaskId)) {
-            for (Object o : validTaskId) {
-                Integer taskId = Integer.valueOf(o.toString());
+            for (Integer taskId : validTaskId) {
                 GcsTask gcsTask = gcsTaskService.getByTaskId(taskId);
                 task.getTaskList().add(new TaskSimpleAdapter(gcsTask).build());
                 task.getBlackList().add(gcsTask.getPackageName());
                 if (gcsTask.getTaskModeCode() == 2) {
                     task.getBlackList().add(gcsTask.getMarketPackName());
                 }
-                //从留存队列中获取任务设备信息
-                gcsDeviceInfo = queueService.getDeviceInfoByTaskId(taskId, hour);
-                if (!ObjectUtils.isEmpty(gcsDeviceInfo)) {
-                    //开始做留存任务
-                    //记录设备已完成当次留存任务
-                    gcsTaskRecordService.updateRtByTaskIdAndImei(taskId,gcsDeviceInfo.getImei());
-                } else {
-                    //当前小时留存已经做完，开始新增任务
-                    if (!taskIsDone(gcsTask)) {
-                        gcsDeviceInfo = gcsDeviceInfoService.getByTaskId(Integer.valueOf(validTaskId.get(0).toString()));
-                    }
+            }
+            //批量任务,以第一个为准
+            Integer taskId = task.getTaskList().get(0).getTaskId();
+            GcsTask gcsTask = gcsTaskService.getByTaskId(taskId);
+            //从留存队列中获取任务设备信息
+            GcsDeviceInfo gcsDeviceInfo = queueService.getDeviceInfoByTaskId(taskId, hour);
+            if (!ObjectUtils.isEmpty(gcsDeviceInfo)) {
+                //开始做留存任务
+                //记录设备已完成当次留存任务
+                gcsTaskRecordService.updateRtByTaskIdAndImei(taskId, gcsDeviceInfo.getImei());
+            } else {
+                //当前小时留存已经做完，开始新增任务
+                if (!taskIsDone(gcsTask)) {
+                    gcsDeviceInfo = gcsDeviceInfoService.getByTaskId(Integer.valueOf(validTaskId.get(0).toString()));
+                }else{
+                    task.setConfig(Constant.TASK_CONFIG_DONE_HOUR);
                 }
             }
+
             if (!ObjectUtils.isEmpty(gcsDeviceInfo)) {
                 task.setVpn(vpnService.getVpnByDeviceId(deviceId));
                 task.setConfig(new TaskConfigAdapter(gcsTaskConfigService.getGcsTaskConfig()).build());
@@ -81,7 +85,7 @@ public class TaskServiceImpl implements TaskService {
                 task.setConfig(Constant.TASK_CONFIG_INVALID_DEVICE_INFO);
             }
 
-        }else{
+        } else {
             task.setConfig(Constant.TASK_CONFIG_INVALID_TASK);
         }
         return task;
@@ -104,7 +108,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     private float getPercent(int hour, Integer remainCurveId) throws IOException {
-        List<RemainCurveDetail> details = remainCurveDetailService.getRemainCurveDetailByRemainCurveId(1);
+        List<RemainCurveDetail> details = remainCurveDetailService.getRemainCurveDetailByRemainCurveId(remainCurveId);
         for (RemainCurveDetail detail : details) {
             if (hour == detail.getDistance()) {
                 return detail.getPercent();
@@ -140,6 +144,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Boolean isAddUser(Integer taskId, String addUser) {
-        return gcsTaskRecordService.countByTaskIdAndImei(taskId, addUser)==0?true:false;
+        return gcsTaskRecordService.countByTaskIdAndImei(taskId, addUser) == 0 ? true : false;
     }
 }

@@ -63,7 +63,10 @@ public class GcsTaskServiceTest {
 
     @Test
     public void getValidTaskIds() throws Exception {
-        List<Object> list = gcsTaskService.getValidTaskIds("N1");
+        List<Integer> list = gcsTaskService.getValidTaskIds("N1");
         logger.info("list size:{}",list.size());
+
+        List<Integer> taskIds = gcsTaskService.getCurrentTaskIds(1);
+        logger.info("taskIds:{}",taskIds);
     }
 }

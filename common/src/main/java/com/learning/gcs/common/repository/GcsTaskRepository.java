@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.TransactionScoped;
 import java.util.List;
 
 public interface GcsTaskRepository extends MyRepository<GcsTask,Integer>{
@@ -40,4 +39,7 @@ public interface GcsTaskRepository extends MyRepository<GcsTask,Integer>{
 
 
     List<GcsTask> findByTaskStatus(Integer taskStatus);
+
+
+    List<Integer> findIdByTaskStatusOrderByWeightDesc(Integer taskStatus);
 }

@@ -10,6 +10,12 @@ public class TaskSimple {
     private int runNumber;
     private String userName;
     private String userPassword;
+    //market
+    private String marketName;
+    private String marketUrl;
+    private String marketPackName;
+    private String searchTxt;
+    private String findSet;
 
     public int getTaskId() {
         return taskId;
@@ -73,5 +79,45 @@ public class TaskSimple {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+    }
+
+    public String getMarketName() {
+        return marketName;
+    }
+
+    public void setMarketName(String marketName) {
+        this.marketName = marketName;
+    }
+
+    public String getMarketUrl() {
+        return marketUrl;
+    }
+
+    public void setMarketUrl(String marketUrl) {
+        this.marketUrl = marketUrl;
+    }
+
+    public String getMarketPackName() {
+        return marketPackName;
+    }
+
+    public void setMarketPackName(String marketPackName) {
+        this.marketPackName = marketPackName;
+    }
+
+    public String getSearchTxt() {
+        return searchTxt;
+    }
+
+    public void setSearchTxt(String searchTxt) {
+        this.searchTxt = searchTxt;
+    }
+
+    public String getFindSet() {
+        return findSet;
+    }
+
+    public void setFindSet(String findSet) {
+        this.findSet = findSet;
     }
 }
