@@ -32,7 +32,7 @@ public class PhoneCaptchaServiceYima888Impl implements PhoneCaptchaService {
     private final static String pwd = "5084350";
 
     private static String HOST_LOGIN       = "http://yima888.com/http.aspx?action=loginIn&uid={uid}&pwd={pwd}";
-    private static String HOST_GET_PHONE   = "http://yima888.com/http.aspx?action=getMobilenum&pid={pid}&uid={uid}&token={token}&size=1";
+    private static String HOST_GET_PHONE   = "http://yima888.com/http.aspx?action=getMobilenum&lock=1&pid={pid}&uid={uid}&token={token}&size=1";
     private static String HOST_GET_CAPTCHA = "http://yima888.com/http.aspx?action=getVcodeAndHoldMobilenum&uid={uid}&token={token}&pid={pid}&mobile={mobile}";
 
     private static String token = null;
