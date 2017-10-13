@@ -54,9 +54,14 @@ public class TaskController {
     }
 
     @RequestMapping("/record")
-    Result record(@RequestParam(value = "asoId") String deviceId, @RequestParam String imei,
-                  @RequestParam int taskId, @RequestParam("version") Integer version,
-                HttpServletRequest request) {
+    Result record(@RequestParam(value = "asoId") String deviceId,
+                  @RequestParam String imei,
+                  @RequestParam int taskId,
+                  @RequestParam("version") Integer version,
+                  @RequestParam(value = "userName",defaultValue = "") String userName,
+                  @RequestParam(value = "userPassword",defaultValue = "") String userPassword,
+
+                  HttpServletRequest request) {
 
         String ip = request.getHeader("X-real-ip");
         if(StringUtils.isEmpty(ip)){
@@ -74,6 +79,8 @@ public class TaskController {
             gcsTaskLog.setTaskName(gcsTask.getAppName());
             gcsTaskLog.setDailyActiveTimes(0);
             gcsTaskLog.setIp(ip);
+            gcsTaskLog.setUserName(userName);
+            gcsTaskLog.setUserPassword(userPassword);
             gcsTaskLogService.save(gcsTaskLog);
             gcsTaskService.save(gcsTask);
 
