@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>测试设置界面</title>
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+<body>
+ 测试手机号：<input type="text" id="phoneNumber"/>
+ <input type="button" value="设置" onclick="phoneNumberClick()"/>
+ <br/>
+ 测试验证码：<input type="text" id="phoneCaptcha"/>
+ <input type="button" value="设置" onclick="phoneCaptchaClick()"/>
+ <input type="button" value="清空" onclick="phoneCaptchaClearClick()"/>
+ 测试设备号：<input type="text" id="asoId"/>
+
+</body>
+<script>
+
+    function phoneNumberClick() {
+        var phoneNumber = $("#phoneNumber").val();
+        $.get("http://aso.ailiuliangyo.com/captcha/setPhoneNumber?phoneNumber="+phoneNumber);
+        alert("手机号设置成功");
+    }
+
+    function phoneCaptchaClick() {
+        var phoneCaptcha = $("#phoneCaptcha").val();
+        $.get("http://aso.ailiuliangyo.com/captcha/setPhoneCaptcha?PhoneCaptcha="+phoneCaptcha);
+        alert("验证码设置成功");
+    }
+
+    function phoneCaptchaClearClick() {
+        $.get("http://aso.ailiuliangyo.com/captcha/setPhoneCaptcha?PhoneCaptcha=");
+        alert("验证码清空");
+    }
+
+</script>
+</html>
