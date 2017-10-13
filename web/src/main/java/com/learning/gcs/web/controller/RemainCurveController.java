@@ -2,11 +2,15 @@ package com.learning.gcs.web.controller;
 
 import com.learning.gcs.web.Service.RemainCurveService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,6 +34,16 @@ public class RemainCurveController {
     @RequestMapping("/deleteRemain")
     public String DeleteRemain(Model model,@RequestParam("id")String id){
         remainCurveService.deleteRemain(Integer.parseInt(id));
+        model.addAttribute("details",remainCurveService.getRemainDetail());
+        return "remain_setting";
+    }
+    @RequestMapping("/updateRemainDetail")
+    public String updateRemainDetail(Model model, HttpServletRequest request,
+                                     @RequestParam("id") int id,
+                                     @RequestParam("remainType") int remainType,@RequestParam("remainName")String remainName){
+        String []pencents=request.getParameterValues("percent");
+        System.out.println("id="+id);
+        remainCurveService.updateRemainDetail(remainName,remainType,id,pencents);
         model.addAttribute("details",remainCurveService.getRemainDetail());
         return "remain_setting";
     }
