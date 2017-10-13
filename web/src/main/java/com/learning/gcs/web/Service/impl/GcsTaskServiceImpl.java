@@ -1,7 +1,9 @@
 package com.learning.gcs.web.Service.impl;
 
 import com.learning.gcs.common.entity.GcsTask;
+import com.learning.gcs.common.entity.Machine;
 import com.learning.gcs.common.repository.GcsTaskRepository;
+import com.learning.gcs.common.repository.MachineRepository;
 import com.learning.gcs.web.Service.GcsTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,8 @@ import java.util.List;
 public class GcsTaskServiceImpl implements GcsTaskService{
     @Autowired
     private GcsTaskRepository gcsTaskRepository;
+    @Autowired
+    private MachineRepository machineRepository;
     @Override
     public GcsTask findById(int id) {
         return gcsTaskRepository.findOne(id);
@@ -23,7 +27,8 @@ public class GcsTaskServiceImpl implements GcsTaskService{
 
     @Override
     public void updateGcsTaskById(Integer id, String appName, String apkUrl, Integer runNumber, Integer weight, Integer taskModeCode, String taskMode, String packageName, String marketUrl, String marketPackName, String searchTxt, String findSet, Integer taskStatus, Integer taskCount, String machineIds, Integer newAddRemainCurveId, Integer nichijouRemainCurveId, Integer remainCurveId) {
-        gcsTaskRepository.updateById(id,appName,apkUrl,runNumber,weight,taskModeCode,taskMode,packageName,marketUrl,marketPackName,searchTxt,findSet,taskStatus,taskCount,machineIds,newAddRemainCurveId,nichijouRemainCurveId,remainCurveId);
+        List<Machine> machines = machineRepository.findAll();
+        gcsTaskRepository.updateById(id,appName,apkUrl,runNumber,weight,taskModeCode,taskMode,packageName,marketUrl,marketPackName,searchTxt,findSet,taskStatus,taskCount,machineIds,newAddRemainCurveId,nichijouRemainCurveId,remainCurveId,machines);
     }
 
     @Override
