@@ -27,7 +27,7 @@ public interface RemainCurveService {
     /**
      * 修改曲线百分比
      */
-    void updateRemainDetail(List list);
+    void updateRemainDetail(String remainName,int remainType,int id,String[] pencents);
 
     /**
      * 删除曲线

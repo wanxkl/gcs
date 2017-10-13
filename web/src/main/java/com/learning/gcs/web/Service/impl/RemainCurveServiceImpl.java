@@ -46,7 +46,6 @@ public class RemainCurveServiceImpl implements RemainCurveService{
     @Override
     public List getRemainDetail() {
         List<RemainCurve> curves = remainCurveRepository.findAll();
-        System.out.println(curves.get(0).getRemainCurveDetails().get(1).getId());
         return curves;
        /* List<RemainCurveDetail> list = detailRepository.findAll();
         Iterator iterator = list.iterator();
@@ -94,8 +93,15 @@ public class RemainCurveServiceImpl implements RemainCurveService{
     }
 
     @Override
-    public void updateRemainDetail(List list) {
-
+    public void updateRemainDetail(String remainName,int remainType,int id,String[] pencents) {
+        RemainCurve remainCurve =remainCurveRepository.findOne(id);
+        for (int i=0;i<pencents.length;i++){
+            RemainCurveDetail remainCurveDetail = new RemainCurveDetail();
+            remainCurveDetail.setPercent(Float.parseFloat(pencents[i]));
+            remainCurveDetail.setDistance(i);
+            remainCurveDetail.setRemainCurve(remainCurve);
+            detailRepository.updateRemainDetailCurveById(i,Float.parseFloat(pencents[i]),remainCurve);
+        }
     }
 
     @Override
