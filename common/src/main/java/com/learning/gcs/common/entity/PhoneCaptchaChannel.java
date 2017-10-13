@@ -23,7 +23,7 @@ public class PhoneCaptchaChannel implements Serializable{
     private String channelName;
     @Column(nullable = false,columnDefinition = "varchar(32) comment '验证码平台网址' ")
     private String channelSite;
-    @Column(nullable = false,columnDefinition = "varchar(2) comment '验证码平台service实现类' ")
+    @Column(nullable = false,columnDefinition = "varchar(32) comment '验证码平台service实现类' ")
     private String channelService;
 
     public Integer getId() {

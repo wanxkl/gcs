@@ -81,8 +81,8 @@ public class PhoneCaptchaServiceImpl implements PhoneCaptchaService {
                                                                                                                 taskId,
                                                                                                                 phoneCaptchaChannel.getId(),phoneNumber);
             }else{
-                gcsTaskPhoneCaptchaLogRepository.updateCaptchaByTaskIdAndAndPhoneCaptchaChannelIdAndPhoneNumber("test",taskId,
-                                                                                                                phoneCaptchaChannel.getId(),phoneNumber);
+//                gcsTaskPhoneCaptchaLogRepository.updateCaptchaByTaskIdAndAndPhoneCaptchaChannelIdAndPhoneNumber("test",taskId,
+//                                                                                                                phoneCaptchaChannel.getId(),phoneNumber);
             }
 
             return  phoneCaptchaBean;
