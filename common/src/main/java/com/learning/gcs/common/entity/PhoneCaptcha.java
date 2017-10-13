@@ -17,6 +17,7 @@ import java.util.Date;
 @Table(name = "PhoneCaptcha")
 @NamedQuery(name = "PhoneCaptcha", query = "SELECT a FROM PhoneCaptcha a")
 public class PhoneCaptcha implements Serializable{
+    private static final long serialVersionUID = 8663645972182394771L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true, nullable = false,columnDefinition = "int(11) comment '主键ID,机器号' ")

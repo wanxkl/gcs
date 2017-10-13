@@ -11,6 +11,7 @@ public class KeyUtil {
     private static final String  PATTERN_STAR = "*";
     private static final String  PREFIX_QUEUE = "queue:";
     private static final String  PREFIX_IP = "ip:";
+    private static final String  PREFIX_CAPTCHA = "channel:";
 
     public static final String  KEY_TASK_CONFIG = "task_config";
 
@@ -39,6 +40,9 @@ public class KeyUtil {
 
     public static String generateIpKey(Integer taskId){
         return PREFIX_IP+taskId;
+    }
+    public static String generateCaptchaChannelKey(Integer taskId,String phoneNumber){
+        return PREFIX_CAPTCHA+taskId+DIVISION+phoneNumber;
     }
 
 }
