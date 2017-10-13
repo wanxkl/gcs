@@ -3,6 +3,7 @@ package com.learning.gcs.gateway.controller;
 import com.learning.gcs.gateway.bean.PhoneCaptchaBean;
 import com.learning.gcs.gateway.service.PhoneCaptchaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,8 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/captcha")
 public class PhoneCaptchaController {
 
-    @Autowired
     private PhoneCaptchaService phoneCaptchaService;
+
+    @Autowired
+    public PhoneCaptchaController(ApplicationContext applicationContext) {
+        this.phoneCaptchaService = (PhoneCaptchaService)applicationContext.getBean("phoneCaptchaServiceImpl");
+    }
 
     @RequestMapping("/getPhoneNumber")
     PhoneCaptchaBean getPhoneNumber(@RequestParam Integer taskId){

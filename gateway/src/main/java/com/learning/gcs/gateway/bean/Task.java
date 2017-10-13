@@ -1,8 +1,6 @@
 package com.learning.gcs.gateway.bean;
 
 import com.learning.gcs.common.entity.GcsDeviceInfo;
-import com.learning.gcs.common.entity.GcsTask;
-import com.learning.gcs.common.entity.GcsTaskConfig;
 
 import java.util.LinkedList;
 import java.util.List;
