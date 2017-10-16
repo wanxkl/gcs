@@ -15,4 +15,7 @@ public interface PhoneCaptchaService {
 
      PhoneCaptchaBean getPhoneCaptcha(Integer taskId,String phoneNumber);
 
+     PhoneCaptchaBean getPhoneNumber(Integer taskId,String phoneNumber);
+
+     void releasePhoneNumber(Integer taskId, String phoneNumber);
 }

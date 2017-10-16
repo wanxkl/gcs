@@ -32,8 +32,10 @@ public class PhoneCaptchaServiceYima888Impl implements PhoneCaptchaService {
     private final static String pwd = "5084350";
 
     private static String HOST_LOGIN       = "http://yima888.com/http.aspx?action=loginIn&uid={uid}&pwd={pwd}";
-    private static String HOST_GET_PHONE   = "http://yima888.com/http.aspx?action=getMobilenum&lock=1&pid={pid}&uid={uid}&token={token}&size=1";
-    private static String HOST_GET_CAPTCHA = "http://yima888.com/http.aspx?action=getVcodeAndHoldMobilenum&uid={uid}&token={token}&pid={pid}&mobile={mobile}";
+    private static String HOST_GET_PHONE   = "http://yima888.com/http.aspx?action=getMobilenum&pid={pid}&uid={uid}&token={token}&size=1";
+    private static String HOST_GET_CAPTCHA = "http://yima888.com/http.aspx?action=getVcodeAndReleaseMobile&uid={uid}&token={token}&pid={pid}&mobile={mobile}";
+    private static String HOST_RELEASE_PHONE   = "http://yima888.com/http.aspx?action=getMobilenum&lock=1&pid={pid}&uid={uid}&token={token}&size=1";
+    private static String HOST_GET_PHONE_BY_PHONE   = "http://yima888.com/http.aspx?action=getMobilenum&pid={pid}&uid={uid}&token={token}&size=1&mobile={mobile}";
 
     private static String token = null;
 
@@ -91,10 +93,43 @@ public class PhoneCaptchaServiceYima888Impl implements PhoneCaptchaService {
                     captcha = CaptchaUtil.getCaptcha(captchaContent, 4);
                 }
                 PhoneCaptchaBean phoneCaptchaBean = new PhoneCaptchaBean().buildCaptcha(captcha);
+                //打印返回日志
+                logger.info("验证码获取成功,手机号：{},验证码：{}",phoneNumber,phoneCaptchaBean.getCaptcha());
                 return phoneCaptchaBean;
             }
         }
         return new PhoneCaptchaBean();
+    }
+
+    @Override
+    public PhoneCaptchaBean getPhoneNumber(Integer taskId, String phoneNumber) {
+        GcsTaskPhoneCaptchaChannel gcsTaskPhoneCaptchaChannel = gcsTaskPhoneCaptchaChannelRepository.findTopByGcsTaskIdAndStatus(taskId, 1);
+        if (!ObjectUtils.isEmpty(gcsTaskPhoneCaptchaChannel)) {
+            String pid = gcsTaskPhoneCaptchaChannel.getPhoneCaptchaChannelProjectId();
+            String urlGetPhone = HOST_GET_PHONE_BY_PHONE.replace("{uid}", uid)
+                                               .replace("{pid}", pid)
+                                               .replace("{token}", token)
+                                               .replace("{mobile}",phoneNumber);
+            logger.info("urlGetPhone:{}", urlGetPhone);
+            String retGetPhone = HttpUtil.sendGet(urlGetPhone, Constant.CHARSET);
+            logger.info("retGetPhone:{}", retGetPhone);
+            if (retGetPhone.indexOf("|") > -1) {
+                String temp = retGetPhone.split("\\|")[0];
+                PhoneCaptchaBean phoneCaptchaBean = new PhoneCaptchaBean().buildPhoneNumber(temp);
+
+//                GcsTaskPhoneCaptcha gcsTaskPhoneCaptcha = new GcsTaskPhoneCaptcha();
+//                gcsTaskPhoneCaptcha.setGcsTaskId(taskId);
+//                gcsTaskPhoneCaptcha.setPhoneCaptchaId(gcsTaskPhoneCaptchaChannel.getPhoneCaptchaChannelId());
+//                gcsTaskPhoneCaptchaRepository.save(gcsTaskPhoneCaptcha);
+                return phoneCaptchaBean;
+            }
+        }
+        return new PhoneCaptchaBean();
+    }
+
+    @Override
+    public void releasePhoneNumber(Integer taskId, String phoneNumber) {
+
     }
 
     private void init() {

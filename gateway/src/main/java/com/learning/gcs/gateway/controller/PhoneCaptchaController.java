@@ -46,6 +46,19 @@ public class PhoneCaptchaController {
         return phoneCaptchaService.getPhoneNumber(taskId);
     }
 
+    @RequestMapping("/getPhoneNumberByPhoneNumber")
+    PhoneCaptchaBean getPhoneNumberByPhoneNumber(@RequestParam Integer taskId ,
+                                                 @RequestParam(required = false) String asoId,
+                                                 @RequestParam(required = false) String phoneNumber){
+        if(!StringUtils.isEmpty(testAsoId)&&testAsoId.equals(asoId)){
+            if(StringUtils.isEmpty(phone)){
+                return  new PhoneCaptchaBean().buildPhoneNumber(phoneNumber);
+            }
+            return  new PhoneCaptchaBean().buildPhoneNumber(phoneNumber);
+        }
+        return phoneCaptchaService.getPhoneNumber(taskId,phoneNumber);
+    }
+
     @RequestMapping("/getPhoneCaptcha")
     PhoneCaptchaBean getPhoneCaptcha(@RequestParam Integer taskId,@RequestParam String phoneNumber,@RequestParam(required = false) String asoId){
         if(!StringUtils.isEmpty(testAsoId)&&testAsoId.equals(asoId)) {
