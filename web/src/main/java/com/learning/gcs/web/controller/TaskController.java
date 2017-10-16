@@ -1,7 +1,9 @@
 package com.learning.gcs.web.controller;
 
 import com.learning.gcs.common.entity.GcsTask;
+import com.learning.gcs.common.entity.Machine;
 import com.learning.gcs.web.Service.GcsTaskService;
+import com.learning.gcs.web.Service.MachineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +16,8 @@ import java.util.List;
 public class TaskController {
     @Autowired
     private GcsTaskService gcsTaskService;
-
+    @Autowired
+    private MachineService machineService;
     @RequestMapping(value = "/updateGcsTask")
     public String updateGcsTask(Model model,@RequestParam("id")int id,
                               @RequestParam(value = "apk_url")String apk_url,
@@ -36,13 +39,17 @@ public class TaskController {
                               @RequestParam("machine_ids") String machine_ids){
         gcsTaskService.updateGcsTaskById(id,app_name,apk_url,run_number,weight,task_mode_code,task_mode,package_name,market_url,market_pack_name,search_txt,find_set,task_status,task_count,machine_ids,newAddCurveId,nichijou_remain_curve_id,remain_curve_id);
         List list = gcsTaskService.finAll();
+        List<Machine> machines = machineService.findAll();
         model.addAttribute("gcsList",list);
+
         return "table";
     }
     @RequestMapping(value = "/deleteTask")
     public String deleteTask(Model model,@RequestParam(value = "id") int id){
         gcsTaskService.deleteById(id);
         List list = gcsTaskService.finAll();
+        List<Machine> machines = machineService.findAll();
+        model.addAttribute("machines",machines);
         model.addAttribute("gcsList",list);
         return "table";
     }
@@ -50,12 +57,16 @@ public class TaskController {
     public String save1(Model model,GcsTask gcsTask){
         gcsTaskService.add(gcsTask);
         List list = gcsTaskService.finAll();
+        List<Machine> machines = machineService.findAll();
+        model.addAttribute("machines",machines);
         model.addAttribute("gcsList",list);
         return "table";
     }
     @RequestMapping(value="/findTasks")
     public String findTasks(Model model){
         List list = gcsTaskService.finAll();
+        List<Machine> machines = machineService.findAll();
+        model.addAttribute("machines",machines);
         model.addAttribute("gcsList",list);
         return "table";
     }

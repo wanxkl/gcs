@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>设备列表</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet"/>
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet"/>
+    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet"/>
+    <link href="css/animate.css" rel="stylesheet"/>
+    <link href="css/style.css?v=4.1.0" rel="stylesheet"/>
+</head>
+<body class="gray-bg">
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="row row-lg">
+            <div class="col-sm-12">
+                <div class="example-wrap">
+                    <h4 class="example-title">设备列表</h4>
+
+                    <form>
+                        <a class="btn btn-default row"  data-toggle="modal" data-target="#add">添加设备</a>
+                        <select class="form-control row" name="groupName" >
+                            <option th:text="设备组"></option>
+                            <option th:text="所有"></option>
+                            <span th:each="group:${groups}">
+                                <option th:text="${group.groupName}"></option>
+                            </span>
+                        </select>
+                    </form>
+                    <div class="example">
+                        <table id="exampleTableEvents" class="table" data-mobile-responsive="true">
+                            <thead>
+                            <tr>
+                                <th data-field="state" data-checkbox="true"></th>
+                                <th>ID</th>
+                                <th>设备编号</th>
+                                <th>设备状态</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="machine:${machines}">
+                                <td></td>
+                                <td th:text="${machine.id}">1</td>
+                                <td th:text="${machine.machineName}">1</td>
+                                <td th:switch="${machine.liveStatus}">
+                                    <p th:case="0">死亡</p>
+                                    <p th:case="1">生存</p>
+                                    <p th:case="2">任务暂停</p>
+                                </td>
+                                <!--<td><a  th:onclick="'updateTask('+${gcs.id}+')'" data-toggle="modal" data-target="#updateTask">修改</a>&nbsp; <a th:href="@{'deleteTask?id='+${gcs.id}}">删除</a></td>-->
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="pull-right" >
+                            <form method="get" action="machines">
+                                <ul class="pagination" th:each="page:${pages}">
+                                    <li><a th:href="@{'machines?pageNo='+${page}}" th:text="${page}">0</a></li>
+                                </ul>
+                                <span  th:text="'共'+${pageCount}+'页,当前第'+${pageNo}+'页'"></span>
+                                <span>到第</span>
+                                <input type="search" style="width:3em" name="pageNo" />
+                                <span>页</span>
+                                <input  type="submit" value="确认"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--添加设备模态窗-->
+<div id="add" class="modal fade " aria-labelledby="添加设备" aria-hidden="true">
+    <div class="modal-dialog alert-success">
+        <div class="modal-content alert-success">
+            <div class="modal-header">
+                <h4 class="modal-title">添加设备</h4>
+            </div>
+            <div class="modal-body alert-success">
+                <form id="addForm" class="form-horizontal" method="get" action="/addMachine">
+                    <div class="form-group">
+                        <lable class="col-sm-3 control-lable">设备编号：</lable>
+                        <div class="col-sm-7">
+                            <input class="form-control" name="machineName"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">设备状态：</label>
+                        <div class="col-sm-7">
+                            <input class="form-control" name="machineState"/>
+                        </div>
+                    </div>
+                        <input type="hidden" name="${pageNo}"/>
+                    <div class="form-group">
+                        <input  class="form-control" type="submit" value="添加"/>
+                    </div>
+                    <!-- 隐藏属性-->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--修改任务窗口-->
+<div id="updateTask" class="modal fade " aria-labelledby="添加任务" aria-hidden="true">
+    <div class="modal-dialog alert-success">
+        <div class="modal-content alert-success">
+            <div class="modal-header">
+                <h4 class="modal-title">修改任务</h4>
+            </div>
+            <div class="modal-body alert-success">
+                <form class="form-horizontal" method="get" action="/updateGcsTask">
+                    <div class="form-group">
+                        <lable class="col-sm-3 control-lable">ID：</lable>
+                        <div class="col-sm-7">
+                            <input id="taskid" class="form-control" readonly="readonly" name="id"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <lable class="col-sm-3 control-lable">APK下载地址：</lable>
+                        <div class="col-sm-7">
+                            <input id="apkUrl" class="form-control" name="apk_url" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <lable class="col-sm-3 control-lable">任务名称：</lable>
+                        <div class="col-sm-7">
+                            <input id="appName" class="form-control" name="app_name"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">脚本辅助信息：</label>
+                        <div class="col-sm-7">
+                            <input id="findSet" class="form-control" name="find_set" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">市场包名：</label>
+                        <div class="col-sm-7">
+                            <input id="marketPackName" class="form-control" name="market_pack_name" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">市场URL：</label>
+                        <div class="col-sm-7">
+                            <input id="marketUrl" class="form-control" name="market_url"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">任务包名：</label>
+                        <div class="col-sm-7">
+                            <input id="packageName" class="form-control" name="package_name" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">任务重试次数：</label>
+                        <div class="col-sm-7">
+                            <input id="runNumber" class="form-control" name="run_number" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">搜索关键字：</label>
+                        <div class="col-sm-7">
+                            <input id="searchTxt" class="form-control" name="search_txt"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">任务类型名称：</label>
+                        <div class="col-sm-7">
+                            <input id="taskMode" class="form-control" name="task_mode"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">任务类型编码：</label>
+                        <div class="col-sm-7">
+                            <input id="taskModeCode" class="form-control" name="task_mode_code"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">任务状态：</label>
+                        <div class="col-sm-7">
+                            <input id="taskStatus" class="form-control" name="task_status"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">权重：</label>
+                        <div class="col-sm-7">
+                            <input id="weight" class="form-control" name="weight"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">月留存曲线ID：</label>
+                        <div class="col-sm-7">
+                            <input id="remainCurveId" class="form-control" name="remain_curve_id"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">任务机器ID：</label>
+                        <div class="col-sm-7">
+                            <input class="form-control" name="machine_ids" value="全部"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">新增留存曲线ID：</label>
+                        <div class="col-sm-7">
+                            <input id="newAddRemainCurveId" class="form-control" name="newAddCurveId" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">日常留存曲线ID：</label>
+                        <div class="col-sm-7">
+                            <input id="nichijouRemainCurveId" class="form-control" name="nichijou_remain_curve_id"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">任务数量：</label>
+                        <div class="col-sm-7">
+                            <input id="taskCount" class="form-control" name="task_count"  precision="2"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input  class="form-control" type="submit" value="提交修改"/>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+<script src="js/updateTask.js"></script>
+
+<!-- Bootstrap table -->
+<script src="js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script src="js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+
+<!-- Peity -->
+</body>
+<script>
+    function changedTaskModeCode() {
+        var selectedTaskMode =  $('#taskModeCodeId option:selected').text();
+        $('#taskModeId').val(selectedTaskMode);
+    }
+</script>
+</html>
