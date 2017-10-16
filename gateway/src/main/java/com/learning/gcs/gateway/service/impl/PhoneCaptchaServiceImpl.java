@@ -90,4 +90,22 @@ public class PhoneCaptchaServiceImpl implements PhoneCaptchaService {
             return new PhoneCaptchaBean();
         }
     }
+
+    @Override
+    public PhoneCaptchaBean getPhoneNumber(Integer taskId, String phoneNumber) {
+        GcsTaskPhoneCaptchaChannel gcsTaskPhoneCaptchaChannel = gcsTaskPhoneCaptchaChannelRepository.findTopByGcsTaskIdAndStatus(taskId,1);
+
+        PhoneCaptchaChannel phoneCaptchaChannel = phoneCaptchaChannelRepository.getOne(gcsTaskPhoneCaptchaChannel.getPhoneCaptchaChannelId());
+
+        PhoneCaptchaService phoneCaptchaService = (PhoneCaptchaService)applicationContext.getBean(phoneCaptchaChannel.getChannelService());
+
+        PhoneCaptchaBean phoneCaptchaBean = phoneCaptchaService.getPhoneNumber(taskId,phoneNumber);
+
+        return phoneCaptchaBean;
+    }
+
+    @Override
+    public void releasePhoneNumber(Integer taskId, String phoneNumber) {
+
+    }
 }

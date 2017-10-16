@@ -96,4 +96,14 @@ public class PhoneCaptchaServiceMoxinImpl implements PhoneCaptchaService{
         return new PhoneCaptchaBean();
     }
 
+    @Override
+    public PhoneCaptchaBean getPhoneNumber(Integer taskId, String phoneNumber) {
+        return null;
+    }
+
+    @Override
+    public void releasePhoneNumber(Integer taskId, String phoneNumber) {
+
+    }
+
 }
