@@ -26,4 +26,14 @@ public interface MachineService {
      * @param liveState
      */
     void addMachine(String machineName,int liveState);
+
+    /**
+     * 删除设备
+     * @param id
+     */
+    void deleteMachine(int id);
+    /**
+     * 修改设备
+     */
+    void updateMachine(int id,String machineName,int livaState);
 }

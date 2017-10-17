@@ -35,4 +35,15 @@ public class MachinesServiceImpl implements MachineService {
 
         machineRepository.save(machine);
     }
+
+    @Override
+    public void deleteMachine(int id) {
+        machineRepository.delete(id);
+    }
+
+    @Override
+    public void updateMachine(int id, String machineName, int livaState) {
+        String hql = "set machineName='"+machineName+"',livaState='"+livaState+"' where id='"+id+"'";
+        machineRepository.updateByHql(hql);
+    }
 }

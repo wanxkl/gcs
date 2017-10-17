@@ -10,4 +10,22 @@ public interface MachineGroupService {
      * @return
      */
     List<MachineGroup> findAll();
+
+    /**
+     * 添加分组
+     * @param groupName
+     * @param ids
+     */
+    void addGroup(String groupName,String [] ids);
+    /**
+     * 删除设备
+     * @param id
+     */
+    void deleteGroupMachine(int id);
+
+    /**
+     *删除组内的设备
+     * @param machineId 设备id groupId 分组id
+     */
+    void deleteMachineGroup(int groupId,int machineId);
 }
