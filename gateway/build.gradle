@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: "idea"
 apply plugin: "org.springframework.boot"
 apply plugin: "application"
+apply plugin: 'org.hidetake.ssh'
 
 
 dependencies {
@@ -64,3 +65,48 @@ jar{
 //    exclude "banner.txt"
 //    exclude "logback.groovy"
 //}
+ssh.settings {
+    knownHosts = allowAnyHosts
+}
+
+remotes {
+    deployServer {
+        host = ''
+        user = 'root'
+        password = ''
+    }
+}
+
+
+task shutdownTomcat() << {
+    ssh.run {
+        session(remotes.deployServer) {
+            println 'shut down tomcat...'
+            executeScript   '''
+                            #! /bin/bash   
+                            ret=$(ps -ef|grep gateway-8083)
+                            arr=(${ret// / })  
+                            echo ${arr[1]} 
+                            '''
+        }
+    }
+}
+
+task uploadJars(dependsOn:shutdownTomcat) << {
+    ssh.run {
+        session(remotes.deployServer) {
+            println 'start copying Jars...'
+            put from: buildDir.toString() + '/libs/gcs.gateway-1.0.jar', into: '/test/'
+            put from: rootDir.toString() + '/common/build/libs/common-1.0.jar', into: '/test/'
+        }
+    }
+}
+task deploy(dependsOn:uploadJars) << {
+    ssh.run {
+        session(remotes.deployServer) {
+            println 'start deploy Project...'
+            //删除old Jars ,移动new Jars
+            //启动App
+        }
+    }
+}
