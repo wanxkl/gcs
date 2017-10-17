@@ -13,9 +13,9 @@ public class TaskSimple {
     //market
     private String marketName;
     private String marketUrl;
-    private String marketPackName;
+    private String marketPackageName;
     private String searchTxt;
-    private String findSet;
+    private FindSet findSet;
 
     public int getTaskId() {
         return taskId;
@@ -97,12 +97,12 @@ public class TaskSimple {
         this.marketUrl = marketUrl;
     }
 
-    public String getMarketPackName() {
-        return marketPackName;
+    public String getMarketPackageName() {
+        return marketPackageName;
     }
 
-    public void setMarketPackName(String marketPackName) {
-        this.marketPackName = marketPackName;
+    public void setMarketPackageName(String marketPackageName) {
+        this.marketPackageName = marketPackageName;
     }
 
     public String getSearchTxt() {
@@ -113,11 +113,11 @@ public class TaskSimple {
         this.searchTxt = searchTxt;
     }
 
-    public String getFindSet() {
+    public FindSet getFindSet() {
         return findSet;
     }
 
-    public void setFindSet(String findSet) {
+    public void setFindSet(FindSet findSet) {
         this.findSet = findSet;
     }
 }

@@ -1,8 +1,12 @@
 package com.learning.gcs.gateway.adapter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.learning.gcs.common.entity.GcsTask;
+import com.learning.gcs.gateway.bean.FindSet;
 import com.learning.gcs.gateway.bean.TaskSimple;
 import com.learning.gcs.gateway.util.Constant;
+
+import java.io.IOException;
 
 public class TaskSimpleAdapter {
 
@@ -12,7 +16,7 @@ public class TaskSimpleAdapter {
         this.gcsTask = gcsTask;
     }
 
-    public TaskSimple build(){
+    public TaskSimple build() throws IOException {
         TaskSimple taskSimple = new TaskSimple();
         taskSimple.setTaskId(gcsTask.getId());
         taskSimple.setApkUrl(gcsTask.getApkUrl());
@@ -23,9 +27,9 @@ public class TaskSimpleAdapter {
         if(Constant.GCS_TASK_MODE_CODE_MARKET==gcsTask.getTaskModeCode()){
             taskSimple.setMarketName(gcsTask.getMarketName());
             taskSimple.setMarketUrl(gcsTask.getMarketUrl());
-            taskSimple.setMarketPackName(gcsTask.getMarketPackName());
+            taskSimple.setMarketPackageName(gcsTask.getMarketPackName());
             taskSimple.setSearchTxt(gcsTask.getSearchTxt());
-            taskSimple.setFindSet(gcsTask.getFindSet());
+            taskSimple.setFindSet(new ObjectMapper().readValue(gcsTask.getFindSet(),FindSet.class));
         }
 
         return taskSimple;

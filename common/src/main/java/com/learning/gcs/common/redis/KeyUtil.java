@@ -7,6 +7,7 @@ public class KeyUtil {
     private static final String  PREFIX_REMAIN_CURVE_ID = "remain_curve:";
     private static final String  PREFIX_TASK_ID_COUNT = "task_Id_count:";
     private static final String  PREFIX_TASK_ID = "task_Id:";
+    private static final String  PREFIX_TASK_ID_PLAN = "task_Id_play:";
     private static final String  DIVISION = ":";
     private static final String  PATTERN_STAR = "*";
     private static final String  PREFIX_QUEUE = "queue:";
@@ -31,6 +32,10 @@ public class KeyUtil {
     }
     public static String generateRemainTaskIdHourCountKey(Integer taskId,Integer hour){
         return PREFIX_TASK_ID+taskId+DIVISION+hour;
+    }
+
+    public static String generatePlanTaskIdHourCountKey(Integer taskId,Integer hour){
+        return PREFIX_TASK_ID_PLAN+taskId+DIVISION+hour;
     }
 
 

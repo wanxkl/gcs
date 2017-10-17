@@ -11,6 +11,8 @@ import com.learning.gcs.gateway.bean.Result;
 import com.learning.gcs.gateway.bean.Task;
 import com.learning.gcs.gateway.service.*;
 import com.learning.gcs.gateway.util.Constant;
+import com.learning.gcs.gateway.util.WeightRandom;
+import org.apache.commons.math3.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -49,30 +52,31 @@ public class TaskServiceImpl implements TaskService {
         //通过deviceId获取可做任务
         //可做任务：deviceId任务列表&当前时间可做任务
         List<Integer> validTaskId = gcsTaskService.getValidTaskIds(deviceId);
-
+        //根据Weight获取任务，目前只支持一个
+        List<Pair<GcsTask, Integer>> weightList = new ArrayList<>();
         if (!ObjectUtils.isEmpty(validTaskId)) {
-            for (Integer taskId : validTaskId) {
-                GcsTask gcsTask = gcsTaskService.getByTaskId(taskId);
-                task.getTaskList().add(new TaskSimpleAdapter(gcsTask).build());
-                task.getBlackList().add(gcsTask.getPackageName());
-                if (gcsTask.getTaskModeCode() == 2) {
-                    task.getBlackList().add(gcsTask.getMarketPackName());
-                }
+            for (Integer integer : validTaskId) {
+                GcsTask gcsTask = gcsTaskService.getByTaskId(integer);
+                weightList.add(new Pair<>(gcsTask, gcsTask.getWeight()));
             }
-            //批量任务,以第一个为准
-            Integer taskId = task.getTaskList().get(0).getTaskId();
-            GcsTask gcsTask = gcsTaskService.getByTaskId(taskId);
+            GcsTask weightGcsTask = (GcsTask) new WeightRandom(weightList).random();
+            task.getTaskList().add(new TaskSimpleAdapter(weightGcsTask).build());
+            task.getBlackList().add(weightGcsTask.getPackageName());
+            if (weightGcsTask.getTaskModeCode() == 2) {
+                task.getBlackList().add(weightGcsTask.getMarketPackName());
+            }
+
             //从留存队列中获取任务设备信息
-            GcsDeviceInfo gcsDeviceInfo = queueService.getDeviceInfoByTaskId(taskId, hour);
+            GcsDeviceInfo gcsDeviceInfo = queueService.getDeviceInfoByTaskId(weightGcsTask.getId(), hour);
             if (!ObjectUtils.isEmpty(gcsDeviceInfo)) {
                 //开始做留存任务
                 //记录设备已完成当次留存任务
-                gcsTaskRecordService.updateRtByTaskIdAndImei(taskId, gcsDeviceInfo.getImei());
+                gcsTaskRecordService.updateRtByTaskIdAndImei(weightGcsTask.getId(), gcsDeviceInfo.getImei());
             } else {
                 //当前小时留存已经做完，开始新增任务
-                if (!taskIsDone(gcsTask)) {
+                if (!taskIsDone(weightGcsTask)) {
                     gcsDeviceInfo = gcsDeviceInfoService.getByTaskId(Integer.valueOf(validTaskId.get(0).toString()));
-                }else{
+                } else {
                     task.setConfig(Constant.TASK_CONFIG_DONE_HOUR);
                 }
             }
