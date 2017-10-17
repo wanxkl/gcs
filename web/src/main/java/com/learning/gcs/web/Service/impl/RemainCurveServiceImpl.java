@@ -94,13 +94,18 @@ public class RemainCurveServiceImpl implements RemainCurveService{
 
     @Override
     public void updateRemainDetail(String remainName,int remainType,int id,String[] pencents) {
-        RemainCurve remainCurve =remainCurveRepository.findOne(id);
-        for (int i=0;i<pencents.length;i++){
-            RemainCurveDetail remainCurveDetail = new RemainCurveDetail();
-            remainCurveDetail.setPercent(Float.parseFloat(pencents[i]));
-            remainCurveDetail.setDistance(i);
-            remainCurveDetail.setRemainCurve(remainCurve);
-            detailRepository.updateRemainDetailCurveById(i,Float.parseFloat(pencents[i]),remainCurve);
+        RemainCurve remainCurve = new RemainCurve();
+        if(remainCurveRepository.findOne(id)!=null){
+            remainCurve = remainCurveRepository.findOne(id);
+            for (int i=0;i<pencents.length;i++){
+                RemainCurveDetail remainCurveDetail = new RemainCurveDetail();
+                remainCurveDetail.setPercent(Float.parseFloat(pencents[i]));
+                remainCurveDetail.setDistance(i);
+                remainCurveDetail.setRemainCurve(remainCurve);
+                detailRepository.updateRemainDetailCurveById(i,Float.parseFloat(pencents[i]),remainCurve);
+            }
+        }else{
+            return;
         }
     }
 

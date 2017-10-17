@@ -43,7 +43,6 @@ public class GcsTaskServiceImpl implements GcsTaskService{
             machine.setGcsTasks(gcsTasks);
             machines2.add(machine);
         }
-        System.out.println(machines2.size());
         gcsTaskRepository.updateById(id,appName,apkUrl,runNumber,weight,taskModeCode,taskMode,packageName,marketUrl,marketPackName,searchTxt,findSet,taskStatus,taskCount,machineIds,newAddRemainCurveId,nichijouRemainCurveId,remainCurveId,machines2);
         redisWriter.deleteKeys(KeyUtil.generateDeviceIdKey("*"));
 

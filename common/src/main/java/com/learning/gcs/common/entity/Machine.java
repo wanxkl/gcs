@@ -11,8 +11,9 @@ import java.util.Set;
 @Table(name = "Machine")
 @NamedQuery(name = "Machine", query = "SELECT a FROM Machine a")
 public class Machine implements Serializable{
-
+    private static final long serialVersionUID = 8663645972182394771L;
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true, nullable = false,columnDefinition = "int(11) comment '主键ID,机器号' ")
     private Integer      id;
     @Column(nullable = false,columnDefinition = "varchar(16) comment '机器代码 asoId' ")
@@ -22,6 +23,9 @@ public class Machine implements Serializable{
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "machines")
     private List<GcsTask> gcsTasks;
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "machinesList")
+    private List<MachineGroup> machineGroups;
     public Integer getId() {
         return id;
     }
@@ -52,5 +56,13 @@ public class Machine implements Serializable{
 
     public void setGcsTasks(List<GcsTask> gcsTasks) {
         this.gcsTasks = gcsTasks;
+    }
+
+    public List<MachineGroup> getMachineGroups() {
+        return machineGroups;
+    }
+
+    public void setMachineGroups(List<MachineGroup> machineGroups) {
+        this.machineGroups = machineGroups;
     }
 }
