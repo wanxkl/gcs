@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>分组列表</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet"/>
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet"/>
+    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet"/>
+    <link href="css/animate.css" rel="stylesheet"/>
+    <link href="css/style.css?v=4.1.0" rel="stylesheet"/>
+</head>
+<body class="gray-bg">
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="row row-lg">
+            <div class="col-sm-12">
+                <div class="example-wrap" >
+                    <h3 class="text-center">分组列表</h3>
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default" th:each="group:${groups}">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a style="font-size: larger" data-toggle="collapse" data-parent="#accordion" th:href="'#'+${group.id}" th:text="${group.groupName}">没有分组，请先新建分组</a>
+                                    <div class="pull-right"> <a  th:href="@{'deleteGroup?id='+${group.id}}">删除分组</a></div>
+                                </h4>
+                            </div>
+                            <div class="panel-collapse collapse in" th:id="${group.id}" >
+                                <div class="panel-body">
+                                    <table  class="table" data-mobile-responsive="true">
+                                        <thead>
+                                        <tr>
+                                            <th data-field="state" data-checkbox="true"></th>
+                                            <th>ID</th>
+                                            <th>设备编号</th>
+                                            <th>设备状态</th>
+                                            <td>操作</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="machine:${group.machinesList}">
+                                            <td></td>
+                                            <td th:text="${machine.id}">1</td>
+                                            <td th:text="${machine.machineName}">1</td>
+                                            <td th:switch="${machine.liveStatus}">
+                                                <p th:case="0">死亡</p>
+                                                <p th:case="1">生存</p>
+                                                <p th:case="2">任务暂停</p>
+                                            </td>
+                                            <td><a th:href="'deleteMachineGroup?machineId='+${machine.id}+'&amp;groupId='+${group.id}">从本组删除</a></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glyphicon glyphicon-plus example-wrap"  data-toggle="modal" data-target="#add">
+                        <span style="font-size: large"><a>新建分组</a></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--添加分组模态窗-->
+<div id="add" class="modal fade " aria-labelledby="新建分组" aria-hidden="true">
+    <div class="modal-dialog alert-success">
+        <div class="modal-content alert-success">
+            <div class="modal-header">
+                <h4 class="modal-title">新建分组</h4>
+            </div>
+            <div class="modal-body alert-success">
+                <form id="addForm" class="form-horizontal" method="get" action="/addGroup">
+                    <div class="form-group">
+                        <lable class="col-sm-3 control-lable">分组名称：</lable>
+                        <div class="col-sm-7">
+                            <input required="required" class="form-control" name="groupName"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">分组设备：</label>
+                        <div  class="col-sm-7">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" onclick="getMachines()">
+                                    <h4 class="panel-title">
+                                        <a style="font-size: larger" data-toggle="collapse"  href="#machines">选择设备</a>
+                                    </h4>
+                                </div>
+                                <div  style="width:100%" class="panel-collapse collapse in" th:id="machines" >
+                                    <div  class="panel-body">
+                                        <div onclick="allChoice()"><a>全选</a></div>
+                                        <div id="getMachine">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="submit" value="提交"/>
+                    </div>
+                    <!-- 隐藏属性-->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--修改任务窗口-->
+<div id="updateTask" class="modal fade " aria-labelledby="添加任务" aria-hidden="true">
+    <div class="modal-dialog alert-success">
+        <div class="modal-content alert-success">
+            <div class="modal-header">
+                <h4 class="modal-title">修改任务</h4>
+            </div>
+            <div class="modal-body alert-success">
+                <form class="form-horizontal" method="get" action="/updateGcsTask">
+                    <div class="form-group">
+                        <lable class="col-sm-3 control-lable">ID：</lable>
+                        <div class="col-sm-7">
+                            <input id="taskid" class="form-control" readonly="readonly" name="id"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <lable class="col-sm-3 control-lable">APK下载地址：</lable>
+                        <div class="col-sm-7">
+                            <input id="apkUrl" class="form-control" name="apk_url" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <lable class="col-sm-3 control-lable">任务名称：</lable>
+                        <div class="col-sm-7">
+                            <input id="appName" class="form-control" name="app_name"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">脚本辅助信息：</label>
+                        <div class="col-sm-7">
+                            <input id="findSet" class="form-control" name="find_set" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">市场包名：</label>
+                        <div class="col-sm-7">
+                            <input id="marketPackName" class="form-control" name="market_pack_name" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">市场URL：</label>
+                        <div class="col-sm-7">
+                            <input id="marketUrl" class="form-control" name="market_url"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">任务包名：</label>
+                        <div class="col-sm-7">
+                            <input id="packageName" class="form-control" name="package_name" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">任务重试次数：</label>
+                        <div class="col-sm-7">
+                            <input id="runNumber" class="form-control" name="run_number" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">搜索关键字：</label>
+                        <div class="col-sm-7">
+                            <input id="searchTxt" class="form-control" name="search_txt"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">任务类型名称：</label>
+                        <div class="col-sm-7">
+                            <input id="taskMode" class="form-control" name="task_mode"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">任务类型编码：</label>
+                        <div class="col-sm-7">
+                            <input id="taskModeCode" class="form-control" name="task_mode_code"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">任务状态：</label>
+                        <div class="col-sm-7">
+                            <input id="taskStatus" class="form-control" name="task_status"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">权重：</label>
+                        <div class="col-sm-7">
+                            <input id="weight" class="form-control" name="weight"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">月留存曲线ID：</label>
+                        <div class="col-sm-7">
+                            <input id="remainCurveId" class="form-control" name="remain_curve_id"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">任务机器ID：</label>
+                        <div class="col-sm-7">
+                            <input class="form-control" name="machine_ids" value="全部"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">新增留存曲线ID：</label>
+                        <div class="col-sm-7">
+                            <input id="newAddRemainCurveId" class="form-control" name="newAddCurveId" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">日常留存曲线ID：</label>
+                        <div class="col-sm-7">
+                            <input id="nichijouRemainCurveId" class="form-control" name="nichijou_remain_curve_id"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">任务数量：</label>
+                        <div class="col-sm-7">
+                            <input id="taskCount" class="form-control" name="task_count"  precision="2"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input  class="form-control" type="submit" value="提交修改"/>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+<script src="js/machineGroup.js"></script>
+<!-- Bootstrap table -->
+<script src="js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script src="js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+
+<!-- Peity -->
+</body>
+</html>
+
+

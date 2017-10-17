@@ -21,10 +21,10 @@ public class Machine implements Serializable{
     @Column(nullable = false,columnDefinition = "int(8) comment '生存状态 0：死亡 1：生存 2 :任务暂停' ")
     private Integer      liveStatus;
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "machines")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "machines")
     private List<GcsTask> gcsTasks;
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "machinesList")
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "machinesList")
     private List<MachineGroup> machineGroups;
     public Integer getId() {
         return id;

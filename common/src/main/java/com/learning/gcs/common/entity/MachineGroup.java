@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "MachineGroupRepository")
+@Table(name = "MachineGroup")
 @NamedQuery(name="MachineGroup",query = "select a from MachineGroup a")
 public class MachineGroup {
     private static final long serialVersionUID = 8663645972182394771L;

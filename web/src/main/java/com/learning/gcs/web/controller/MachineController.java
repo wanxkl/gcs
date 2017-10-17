@@ -1,6 +1,5 @@
 package com.learning.gcs.web.controller;
 
-import com.learning.gcs.common.entity.Machine;
 import com.learning.gcs.web.Service.CountChartService;
 import com.learning.gcs.web.Service.MachineGroupService;
 import com.learning.gcs.web.Service.MachineService;
@@ -36,6 +35,18 @@ public class MachineController {
                               @RequestParam("machineState") int machineState,
                               @RequestParam("pageNo")int pageNo){
         machineService.addMachine(machineName,machineState);
+        int pageSize = 15;
+        Page page = machineService.findByPage(pageSize,pageNo);
+        model.addAttribute("groups",machineGroupService.findAll());
+        model.addAttribute("machines",page.getContent());
+        model.addAttribute("pages",countChartService.pages(pageNo,page.getTotalPages()));
+        model.addAttribute("pageCount",page.getTotalPages());
+        model.addAttribute("pageNo",pageNo);
+        return "machines";
+    }
+    @RequestMapping("deleteMachine")
+    public String deleteMachine(Model model,@RequestParam("id") int id,@RequestParam("pageNo") int pageNo){
+        machineService.deleteMachine(id);
         int pageSize = 15;
         Page page = machineService.findByPage(pageSize,pageNo);
         model.addAttribute("groups",machineGroupService.findAll());
