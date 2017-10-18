@@ -37,6 +37,7 @@ public class Application  {
         SpringApplication.run(Application.class, args);
         logger.info("Project Begin");
     }
+
     @Bean
     public ObjectMapper getObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
