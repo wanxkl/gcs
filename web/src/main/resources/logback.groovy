@@ -12,14 +12,10 @@
 
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder
 import ch.qos.logback.classic.filter.LevelFilter
-import ch.qos.logback.core.ConsoleAppender
-import ch.qos.logback.core.rolling.RollingFileAppender
-import ch.qos.logback.core.rolling.TimeBasedRollingPolicy
+
 import java.nio.charset.Charset
 
-import static ch.qos.logback.classic.Level.DEBUG
-import static ch.qos.logback.classic.Level.ERROR
-import static ch.qos.logback.classic.Level.INFO
+import static ch.qos.logback.classic.Level.*
 import static ch.qos.logback.core.spi.FilterReply.ACCEPT
 import static ch.qos.logback.core.spi.FilterReply.DENY
 
@@ -76,4 +72,4 @@ appender("ERROR_FILE", RollingFileAppender) {
     }
 }
 logger("com.learning.gcs", DEBUG, [ "ERROR_FILE", "DEBUG_FILE", "INFO_FILE"])
-root(ERROR,["CONSOLE"])
+root(INFO,["CONSOLE"])

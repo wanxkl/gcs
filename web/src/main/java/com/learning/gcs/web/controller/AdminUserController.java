@@ -1,10 +1,16 @@
 package com.learning.gcs.web.controller;
 
 import com.learning.gcs.common.entity.AdminUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author Xull
@@ -15,6 +21,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class AdminUserController {
+
+    private static final Logger logger = LoggerFactory.getLogger(AdminUserController.class);
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+
+
     @RequestMapping("/")
     String home(Model model) {
         AdminUser adminUser =new AdminUser();
@@ -58,5 +72,23 @@ public class AdminUserController {
         adminUser.setUserType(1);
         model.addAttribute("user",adminUser);
         return "home";
+    }
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    String login(@RequestParam String userName, @RequestParam String password, Model model){
+        logger.info("login post");
+        UserDetails userDetails =  userDetailsService.loadUserByUsername(userName);
+        if(password.equals(userDetails.getPassword())){
+            model.addAttribute("userDetails",userDetails);
+        }else{
+            model.addAttribute("error","账号或密码不正确");
+        }
+        return "index";
+
+    }
+
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    String login(){
+        logger.info("login get");
+        return "login";
     }
 }

@@ -1,6 +1,7 @@
 package com.learning.gcs.web.service.impl;
 
-import com.learning.gcs.web.service.AdminUserService;
+import com.learning.gcs.common.repository.AdminUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,9 +15,14 @@ import org.springframework.stereotype.Service;
  * @description
  */
 @Service
-public class AdminUserServiceImpl implements UserDetailsService,AdminUserService{
+public class AdminUserServiceImpl implements UserDetailsService{
+
+    @Autowired
+    private AdminUserRepository adminUserRepository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        return adminUserRepository.findByUserName(username);
     }
+
 }

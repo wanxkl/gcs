@@ -10,4 +10,6 @@ import com.learning.gcs.common.entity.AdminUser;
  * @description
  */
 public interface AdminUserRepository extends MyRepository<AdminUser,Integer>{
+
+    AdminUser findByUserName(String userName);
 }

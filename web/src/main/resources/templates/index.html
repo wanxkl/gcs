@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
     <meta charset="utf-8"/>
@@ -182,7 +183,7 @@
                     </ul>
                 </li>
 
-                <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+                <li sec:authorize="hasRole('ROLE_ADMIN')" class="hidden-folded padder m-t m-b-sm text-muted text-xs">
                     <span class="ng-scope">系统设置</span>
                 </li>
 
