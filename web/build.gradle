@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: "idea"
 apply plugin: "org.springframework.boot"
 apply plugin: "application"
+apply plugin: 'org.hidetake.ssh'
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
@@ -58,11 +59,11 @@ jar{
     }
 }
 //distZip 打包需要放开
-/*processResources {
+processResources {
     exclude "application.properties"
     exclude "banner.txt"
     exclude "logback.groovy"
-}*/
+}
 
 defaultTasks "copyResourceToStatic"
 
@@ -74,5 +75,58 @@ task copyResourceToStatic {
         into "src/main/resources/static"
         exclude "**/*.bak"
 
+    }
+}
+ssh.settings {
+    knownHosts = allowAnyHosts
+}
+
+remotes {
+    deployServer {
+        host = 'aso.ailiuliangyo.com'
+        user = 'root'
+        password = ''
+    }
+}
+
+
+task shutdownTomcat() << {
+    ssh.run {
+        session(remotes.deployServer) {
+            println 'shut down tomcat...'
+            executeScript   '''
+                            #! /bin/bash   
+                            ret=$(ps -ef|grep web-8080)
+                            arr=(${ret// / })  
+                            echo ${arr[1]} 
+                            '''
+        }
+    }
+}
+
+task uploadJars(dependsOn:shutdownTomcat) << {
+    ssh.run {
+        session(remotes.deployServer) {
+            println 'start copying Jars...'
+            put from: buildDir.toString() + '/libs/gcs.web-1.0.jar', into: '/test/'
+            put from: rootDir.toString() + '/common/build/libs/common-1.0.jar', into: '/test/'
+        }
+    }
+}
+task deploy(dependsOn:uploadJars) << {
+    ssh.run {
+        session(remotes.deployServer) {
+            println 'start deploy Project...'
+            //删除old Jars ,移动new Jars
+            //启动App
+            executeScript   '''
+                            #! /bin/bash   
+                            mv -f /usr/local/gcs/web-8080/lib/gcs.web-1.0.jar /backup/
+                            mv -f /usr/local/gcs/web-8080/lib/common-1.0.jar  /backup/
+                            mv /test/gcs.web-1.0.jar /test/common-1.0.jar  /usr/local/gcs/web-8080/lib/
+                            cd /usr/local/gcs/web-8080
+                            nohup bin/web &
+                            '''
+        }
     }
 }
