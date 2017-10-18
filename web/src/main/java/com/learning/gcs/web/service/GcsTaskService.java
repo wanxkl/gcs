@@ -31,7 +31,7 @@ public interface GcsTaskService {
      * @param gcsTask 任务实体
      *
      */
-    void add(GcsTask gcsTask);
+    void add(GcsTask gcsTask,int groupId);
 
     /**
      * t通过id修改任务

@@ -10,6 +10,7 @@ import java.util.List;
 @Table(name = "GcsTask")
 @NamedQuery(name = "GcsTask", query = "SELECT a FROM GcsTask a")
 public class GcsTask implements Serializable{
+    private static final long serialVersionUID = 8663645972182394771L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true, nullable = false,columnDefinition = "int(11) comment '主键ID' ")
@@ -66,6 +67,11 @@ public class GcsTask implements Serializable{
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private List<Machine> machines;
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
     public Integer getId() {
         return id;
     }

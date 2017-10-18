@@ -2,9 +2,11 @@ package com.learning.gcs.web.service.impl;
 
 import com.learning.gcs.common.entity.GcsTask;
 import com.learning.gcs.common.entity.Machine;
+import com.learning.gcs.common.entity.MachineGroup;
 import com.learning.gcs.common.redis.KeyUtil;
 import com.learning.gcs.common.redis.RedisWriter;
 import com.learning.gcs.common.repository.GcsTaskRepository;
+import com.learning.gcs.common.repository.MachineGroupRepository;
 import com.learning.gcs.common.repository.MachineRepository;
 import com.learning.gcs.web.service.GcsTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ public class GcsTaskServiceImpl implements GcsTaskService{
     private GcsTaskRepository gcsTaskRepository;
     @Autowired
     private MachineRepository machineRepository;
+    @Autowired
+    private MachineGroupRepository machineGroupRepository;
     @Override
     public GcsTask findById(int id) {
         return gcsTaskRepository.findOne(id);
@@ -49,8 +53,12 @@ public class GcsTaskServiceImpl implements GcsTaskService{
     }
 
     @Override
-    public void add(GcsTask gcsTask) {
-        List<Machine> machines = machineRepository.findAll();
+    public void add(GcsTask gcsTask,int groupId) {
+        MachineGroup machineGroup = machineGroupRepository.findOne(groupId);
+        List<Machine> machines = new ArrayList<>();
+        for (Machine machine:machineGroup.getMachinesList()){
+            machines.add(machine);
+        }
         gcsTask.setMachines(machines);
         gcsTaskRepository.save(gcsTask);
         redisWriter.deleteKeys(KeyUtil.generateDeviceIdKey("*"));

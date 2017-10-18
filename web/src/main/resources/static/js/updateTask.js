@@ -1,5 +1,4 @@
 function updateTask(id){
-
       $.get("/findOneTask",{"id":id},function(data){
             $("#taskid").val(data.id);
             $("#apkUrl").val(data.apkUrl);
@@ -20,4 +19,15 @@ function updateTask(id){
             $("#nichijouRemainCurveId").val(data.nichijouRemainCurveId);
             $("#taskCount").val(data.taskCount);
       });
+}
+function getGroups(){
+      var str = "";
+      $.get("/findGroups",function (data) {
+          $.each(data ,function (index) {
+              var append = "<option value='"+data[index].id+"'>"+data[index].groupName+"</option>"
+              str+=append;
+          })
+          $("#groups").empty();
+          $("#groups").append(str);
+      })
 }

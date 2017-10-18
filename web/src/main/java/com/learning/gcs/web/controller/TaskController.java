@@ -54,8 +54,9 @@ public class TaskController {
         return "table";
     }
     @RequestMapping(value = "/saveTask")
-    public String save1(Model model,GcsTask gcsTask){
-        gcsTaskService.add(gcsTask);
+    public String save1(Model model,GcsTask gcsTask,@RequestParam("groupId")int groupId){
+        System.out.println(groupId+"=groupId--=");
+        gcsTaskService.add(gcsTask,groupId);
         List list = gcsTaskService.finAll();
         List<Machine> machines = machineService.findAll();
         model.addAttribute("machines",machines);
