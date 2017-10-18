@@ -1,4 +1,4 @@
-package com.learning.gcs.web.Service;
+package com.learning.gcs.web.service;
 
 import org.springframework.data.domain.Page;
 

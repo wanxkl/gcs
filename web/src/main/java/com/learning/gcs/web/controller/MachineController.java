@@ -1,8 +1,8 @@
 package com.learning.gcs.web.controller;
 
-import com.learning.gcs.web.Service.CountChartService;
-import com.learning.gcs.web.Service.MachineGroupService;
-import com.learning.gcs.web.Service.MachineService;
+import com.learning.gcs.web.service.CountChartService;
+import com.learning.gcs.web.service.MachineGroupService;
+import com.learning.gcs.web.service.MachineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;

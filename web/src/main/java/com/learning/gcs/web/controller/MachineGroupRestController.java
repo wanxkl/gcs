@@ -1,7 +1,7 @@
 package com.learning.gcs.web.controller;
 
 import com.learning.gcs.common.entity.MachineGroup;
-import com.learning.gcs.web.Service.MachineGroupService;
+import com.learning.gcs.web.service.MachineGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 

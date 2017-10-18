@@ -1,8 +1,6 @@
-package com.learning.gcs.web.Service;
+package com.learning.gcs.web.service;
 
 import com.learning.gcs.common.entity.GcsTaskConfig;
-
-import java.util.List;
 
 public interface GcsTaskConfigService  {
     /**

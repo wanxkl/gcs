@@ -1,8 +1,7 @@
-package com.learning.gcs.web.Service;
+package com.learning.gcs.web.service;
 
 import com.learning.gcs.common.entity.RemainCurve;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface RemainCurveService {

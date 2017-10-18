@@ -1,16 +1,12 @@
-package com.learning.gcs.web.Service.impl;
+package com.learning.gcs.web.service.impl;
 
-import com.learning.gcs.common.entity.GcsTaskLog;
 import com.learning.gcs.common.repository.GcsTaskLogRepository;
-import com.learning.gcs.common.repository.GcsTaskRecordRepository;
-import com.learning.gcs.common.repository.GcsTaskRepository;
-import com.learning.gcs.web.Service.CountChartService;
+import com.learning.gcs.web.service.CountChartService;
 import com.learning.gcs.web.util.CountUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import javax.management.Query;
 import javax.persistence.EntityManager;
 import java.util.*;
 

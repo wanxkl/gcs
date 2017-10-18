@@ -1,16 +1,15 @@
-package com.learning.gcs.web.Service.impl;
+package com.learning.gcs.web.service.impl;
 
 import com.learning.gcs.common.entity.RemainCurve;
 import com.learning.gcs.common.entity.RemainCurveDetail;
 import com.learning.gcs.common.repository.RemainCurveDetailRepository;
 import com.learning.gcs.common.repository.RemainCurveRepository;
-import com.learning.gcs.web.Service.RemainCurveService;
+import com.learning.gcs.web.service.RemainCurveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Service

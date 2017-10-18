@@ -1,6 +1,6 @@
 package com.learning.gcs.web.controller;
 
-import com.learning.gcs.web.Service.MachineGroupService;
+import com.learning.gcs.web.service.MachineGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

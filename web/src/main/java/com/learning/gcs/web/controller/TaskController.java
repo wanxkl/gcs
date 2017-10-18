@@ -2,8 +2,8 @@ package com.learning.gcs.web.controller;
 
 import com.learning.gcs.common.entity.GcsTask;
 import com.learning.gcs.common.entity.Machine;
-import com.learning.gcs.web.Service.GcsTaskService;
-import com.learning.gcs.web.Service.MachineService;
+import com.learning.gcs.web.service.GcsTaskService;
+import com.learning.gcs.web.service.MachineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

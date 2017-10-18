@@ -1,10 +1,10 @@
-package com.learning.gcs.web.Service.impl;
+package com.learning.gcs.web.service.impl;
 
 import com.learning.gcs.common.entity.Machine;
 import com.learning.gcs.common.entity.MachineGroup;
 import com.learning.gcs.common.repository.MachineGroupRepository;
 import com.learning.gcs.common.repository.MachineRepository;
-import com.learning.gcs.web.Service.MachineGroupService;
+import com.learning.gcs.web.service.MachineGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

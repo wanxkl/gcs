@@ -1,8 +1,7 @@
 package com.learning.gcs.web.controller;
 
 import com.learning.gcs.common.entity.GcsTask;
-import com.learning.gcs.web.Service.GcsTaskConfigService;
-import com.learning.gcs.web.Service.GcsTaskService;
+import com.learning.gcs.web.service.GcsTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;

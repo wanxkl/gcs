@@ -1,10 +1,10 @@
-package com.learning.gcs.web.Service.impl;
+package com.learning.gcs.web.service.impl;
 
 import com.learning.gcs.common.entity.GcsTaskConfig;
 import com.learning.gcs.common.redis.KeyUtil;
 import com.learning.gcs.common.redis.RedisWriter;
 import com.learning.gcs.common.repository.GcsTaskConfigRepository;
-import com.learning.gcs.web.Service.GcsTaskConfigService;
+import com.learning.gcs.web.service.GcsTaskConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 @Service
