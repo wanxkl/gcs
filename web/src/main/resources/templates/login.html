@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>GCS-登录</title>
     <meta charset="utf-8"/>
@@ -22,9 +22,9 @@
             <h1 class="logo-name">G</h1>
         </div>
         <h3>欢迎使用GCS</h3>
-        <form class="m-t" role="form" action="/login" method="post">
+        <form class="m-t" role="form" th:action="@{/login}" action="/login" method="post">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="用户名" name="userName" required=""/>
+                <input type="text" class="form-control" placeholder="用户名" name="username" required=""/>
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" placeholder="密码" name="password" required=""/>

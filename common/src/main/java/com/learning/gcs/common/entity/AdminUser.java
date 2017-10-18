@@ -28,7 +28,7 @@ public class AdminUser implements UserDetails {
     @Column(unique = true, nullable = false)
     private Integer         id;
     @Column(nullable = false, length = 32)
-    private String          userName;
+    private String          username;
     @Column(nullable = false, length = 32)
     private String          password;
     private Integer         userType;
@@ -87,8 +87,8 @@ public class AdminUser implements UserDetails {
         this.userLevel = userLevel;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 
@@ -111,7 +111,7 @@ public class AdminUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.userName;
+        return this.username;
     }
 
     @Override

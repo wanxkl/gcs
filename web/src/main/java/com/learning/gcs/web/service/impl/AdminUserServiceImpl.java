@@ -1,5 +1,6 @@
 package com.learning.gcs.web.service.impl;
 
+import com.learning.gcs.common.entity.AdminUser;
 import com.learning.gcs.common.repository.AdminUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +23,14 @@ public class AdminUserServiceImpl implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return adminUserRepository.findByUserName(username);
+        AdminUser adminUser =  adminUserRepository.findByUsername(username);
+
+        if(adminUser == null){
+            throw new UsernameNotFoundException("用户名不存在");
+        }
+
+        return adminUser;
+
     }
 
 }

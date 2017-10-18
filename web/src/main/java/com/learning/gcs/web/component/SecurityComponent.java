@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * @author Xull
@@ -18,9 +20,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class SecurityComponent {
 
+    @Configuration
+    public class WebMvcConfig extends WebMvcConfigurerAdapter {
+        @Override
+        public void addViewControllers(ViewControllerRegistry registry) {
+            registry.addViewController("/login").setViewName("login");
+        }
+    }
 
     @Configuration
     public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+
 
         @Autowired
         private UserDetailsService userDetailsService;
@@ -28,16 +39,17 @@ public class SecurityComponent {
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
             auth.userDetailsService(userDetailsService);
         }
-
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.authorizeRequests()
-                    .antMatchers(new String[]{"/login","/js/**","/css/**","/img/**","/images/**","/fonts/**","/**/favicon.ico"}).permitAll()
-//                    .anyRequest().authenticated()
-                    .and().formLogin().loginPage("/login").failureUrl("/login?error").permitAll()
+                    .antMatchers(new String[]{"/js/**","/css/**","/img/**","/images/**","/fonts/**","/**/favicon.ico"}).permitAll()
+                    .anyRequest().authenticated()
+                    .and().formLogin().loginPage("/login").permitAll()
                     .and().logout().permitAll()
+                    .and().headers().frameOptions().sameOrigin()
                     .and().csrf().disable();
 
         }
+
     }
 }
