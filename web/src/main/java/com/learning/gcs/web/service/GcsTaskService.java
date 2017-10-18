@@ -24,7 +24,7 @@ public interface GcsTaskService {
      * @param id 任务id
      * @return 修改是否成功
      */
-    void updateGcsTaskById(Integer id, String appName, String apkUrl, Integer runNumber, Integer weight, Integer taskModeCode, String taskMode, String packageName, String marketUrl, String marketPackName, String searchTxt, String findSet, Integer taskStatus, Integer taskCount, String machineIds, Integer newAddRemainCurveId, Integer nichijouRemainCurveId, Integer remainCurveId);
+    void updateGcsTaskById(Integer id, String appName, String apkUrl, Integer runNumber, Integer weight, Integer taskModeCode, String taskMode, String packageName, String marketUrl, String marketPackName, String searchTxt, String findSet, Integer taskStatus, Integer taskCount, Integer newAddRemainCurveId, Integer nichijouRemainCurveId, Integer remainCurveId,int groupId);
 
     /**
      * 添加任务

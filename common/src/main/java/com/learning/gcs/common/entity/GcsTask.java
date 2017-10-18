@@ -1,6 +1,8 @@
 package com.learning.gcs.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.data.repository.query.parser.Part;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,8 +11,8 @@ import java.util.List;
 @Entity
 @Table(name = "GcsTask")
 @NamedQuery(name = "GcsTask", query = "SELECT a FROM GcsTask a")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GcsTask implements Serializable{
-    private static final long serialVersionUID = 8663645972182394771L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true, nullable = false,columnDefinition = "int(11) comment '主键ID' ")
@@ -64,13 +66,11 @@ public class GcsTask implements Serializable{
     private Integer      nichijouRemainCurveId;
     @Column(nullable = false,columnDefinition = "int(8) COMMENT '月留存曲线ID'")
     private Integer      remainCurveId;
-    @JsonIgnore
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    private List<Machine> machines;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
+    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinColumn(name="groupId")
+    private MachineGroup group;
+
 
     public Integer getId() {
         return id;
@@ -216,12 +216,12 @@ public class GcsTask implements Serializable{
         this.taskCount = taskCount;
     }
 
-    public List<Machine> getMachines() {
-        return machines;
+    public MachineGroup getGroup() {
+        return group;
     }
 
-    public void setMachines(List<Machine> machines) {
-        this.machines = machines;
+    public void setGroup(MachineGroup group) {
+        this.group = group;
     }
 
     public String getMarketName() {

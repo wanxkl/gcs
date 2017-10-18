@@ -71,34 +71,34 @@
                             <div class="form-group">
                                 <lable class="col-sm-3 control-lable">任务名称：</lable>
                                 <div class="col-sm-7">
-                                    <input class="form-control" name="appName"/>
+                                    <input required="required" class="form-control" name="appName"/>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-lable">任务包名：</label>
                                 <div class="col-sm-7">
-                                    <input class="form-control" name="packageName"/>
+                                    <input required="required"  class="form-control" name="packageName"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-lable">任务重试次数：</label>
                                 <div class="col-sm-7">
-                                    <input class="form-control" name="runNumber"/>
+                                    <input required="required" type="number" min="1" class="form-control" name="runNumber"/>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-lable">权重：</label>
                                 <div class="col-sm-7">
-                                    <input class="form-control" name="weight"/>
+                                    <input required="required" type="number" max="10" min="1" class="form-control" name="weight"/>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <lable class="col-sm-3 control-lable">任务APK下载地址：</lable>
                                 <div class="col-sm-7">
-                                    <input class="form-control" name="apkUrl"/>
+                                    <input required="required" type="url" class="form-control" name="apkUrl"/>
                                 </div>
                             </div>
 
@@ -106,7 +106,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-lable">任务数量：</label>
                                 <div class="col-sm-7">
-                                    <input class="form-control" name="taskCount"  precision="2"/>
+                                    <input required="required" class="form-control" name="taskCount"  precision="2"/>
                                 </div>
                             </div>
 
@@ -132,14 +132,14 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-lable">市场URL：</label>
                                 <div class="col-sm-7">
-                                    <input class="form-control" name="marketUrl"/>
+                                    <input type="url" class="form-control" name="marketUrl"/>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-lable">搜索关键字：</label>
                                 <div class="col-sm-7">
-                                    <input class="form-control" name="searchTxt"/>
+                                    <input required="required" class="form-control" name="searchTxt"/>
                                 </div>
                             </div>
 
@@ -181,9 +181,9 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-lable">任务机器ID：</label>
+                                <label class="col-sm-3 control-lable">任务机器组：</label>
                                 <div class="col-sm-7">
-                                    <select id="groups" name="groupId" onclick="getGroups()" class="form-control">
+                                    <select id="groups" name="groupId" onfocus="getGroups()" class="form-control">
 
                                     </select>
                                 </div>
@@ -298,9 +298,11 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-lable">任务机器ID：</label>
+                                <label class="col-sm-3 control-lable">任务机器组：</label>
                                 <div class="col-sm-7">
-                                    <input class="form-control" name="machine_ids" value="全部"/>
+                                    <select id="updateGroup" class="form-control" onfocus="getGroups()" name="groupId">
+
+                                    </select>
                                 </div>
                             </div>
 

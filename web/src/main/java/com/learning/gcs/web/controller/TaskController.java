@@ -36,8 +36,8 @@ public class TaskController {
                               @RequestParam("newAddCurveId") int newAddCurveId,
                               @RequestParam("nichijou_remain_curve_id") int nichijou_remain_curve_id,
                               @RequestParam("task_count") int task_count,
-                              @RequestParam("machine_ids") String machine_ids){
-        gcsTaskService.updateGcsTaskById(id,app_name,apk_url,run_number,weight,task_mode_code,task_mode,package_name,market_url,market_pack_name,search_txt,find_set,task_status,task_count,machine_ids,newAddCurveId,nichijou_remain_curve_id,remain_curve_id);
+                              @RequestParam("groupId") int groupId){
+        gcsTaskService.updateGcsTaskById(id,app_name,apk_url,run_number,weight,task_mode_code,task_mode,package_name,market_url,market_pack_name,search_txt,find_set,task_status,task_count,groupId,newAddCurveId,nichijou_remain_curve_id,remain_curve_id);
         List list = gcsTaskService.finAll();
         List<Machine> machines = machineService.findAll();
         model.addAttribute("gcsList",list);
