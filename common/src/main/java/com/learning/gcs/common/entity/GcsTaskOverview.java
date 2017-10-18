@@ -1,8 +1,9 @@
 package com.learning.gcs.common.entity;
 
-import org.springframework.data.jpa.repository.Query;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,9 +14,6 @@ import java.util.Date;
  * @created 2017/10/18 10:08
  * @description 任务总览
  */
-@Entity
-@Table(name="GcsTaskOverview")
-@NamedQuery(name = "GcsTaskOverview",query = "select a from GcsTaskOverview a ")
 public class GcsTaskOverview implements Serializable{
     private static final long serialVersionUID = -8141860388537181331L;
 

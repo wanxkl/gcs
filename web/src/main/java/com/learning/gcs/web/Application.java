@@ -15,6 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 
 @EnableJpaRepositories(
@@ -28,6 +29,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
         excludeFilters = {
                 @ComponentScan.Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),
                 @ComponentScan.Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) })
+@EnableWebSecurity
 public class Application  {
 
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
@@ -37,6 +39,7 @@ public class Application  {
         SpringApplication.run(Application.class, args);
         logger.info("Project Begin");
     }
+
     @Bean
     public ObjectMapper getObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();

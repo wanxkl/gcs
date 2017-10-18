@@ -1,8 +1,14 @@
 package com.learning.gcs.common.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Xull
@@ -14,19 +20,21 @@ import java.util.Date;
 @Entity
 @Table(name = "AdminUser")
 @NamedQuery(name = "AdminUser", query = "SELECT a FROM AdminUser a")
-public class AdminUser implements Serializable{
+public class AdminUser implements UserDetails {
     private static final long serialVersionUID = 1660836200116410830L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true, nullable = false)
-    private Integer id;
+    private Integer         id;
     @Column(nullable = false, length = 32)
-    private String userName;
+    private String          userName;
     @Column(nullable = false, length = 32)
-    private String password;
-    private Integer userType;
-    private Integer userLevel;
+    private String          password;
+    private Integer         userType;
+    private Integer         userLevel;
+    @ManyToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    private List<AdminRole> roles;
     private Date createTime = new Date();
     private Date updateTime = new Date();
 
@@ -45,6 +53,7 @@ public class AdminUser implements Serializable{
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
     public Integer getId() {
         return id;
     }
@@ -53,20 +62,13 @@ public class AdminUser implements Serializable{
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+
+    public List<AdminRole> getRoles() {
+        return roles;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setRoles(List<AdminRole> roles) {
+        this.roles = roles;
     }
 
     public Integer getUserType() {
@@ -84,4 +86,52 @@ public class AdminUser implements Serializable{
     public void setUserLevel(Integer userLevel) {
         this.userLevel = userLevel;
     }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> auths = new ArrayList<>();
+        List<AdminRole> roles = this.getRoles();
+        for (AdminRole role : roles) {
+            auths.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return auths;
+    }
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.userName;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 }
