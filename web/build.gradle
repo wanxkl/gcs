@@ -90,15 +90,17 @@ remotes {
 }
 
 
-task shutdownTomcat() << {
+task shutdownTomcat(dependsOn:distZip) << {
     ssh.run {
         session(remotes.deployServer) {
             println 'shut down tomcat...'
             executeScript   '''
                             #! /bin/bash   
-                            ret=$(ps -ef|grep web-8080)
+                            ret=$(ps -ef | grep web-8080 | grep -v grep)
                             arr=(${ret// / })  
+                            echo ${ret} 
                             echo ${arr[1]} 
+                            kill -9 ${arr[1]} 
                             '''
         }
     }
