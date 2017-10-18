@@ -11,7 +11,6 @@ import java.util.Set;
 @Table(name = "Machine")
 @NamedQuery(name = "Machine", query = "SELECT a FROM Machine a")
 public class Machine implements Serializable{
-    private static final long serialVersionUID = 8663645972182394771L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true, nullable = false,columnDefinition = "int(11) comment '主键ID,机器号' ")
@@ -20,9 +19,6 @@ public class Machine implements Serializable{
     private String       machineName;
     @Column(nullable = false,columnDefinition = "int(8) comment '生存状态 0：死亡 1：生存 2 :任务暂停' ")
     private Integer      liveStatus;
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "machines")
-    private List<GcsTask> gcsTasks;
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY,mappedBy = "machinesList")
     private List<MachineGroup> machineGroups;
@@ -50,13 +46,6 @@ public class Machine implements Serializable{
         this.liveStatus = liveStatus;
     }
 
-    public List<GcsTask> getGcsTasks() {
-        return gcsTasks;
-    }
-
-    public void setGcsTasks(List<GcsTask> gcsTasks) {
-        this.gcsTasks = gcsTasks;
-    }
 
     public List<MachineGroup> getMachineGroups() {
         return machineGroups;
