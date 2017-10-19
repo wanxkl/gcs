@@ -1,6 +1,7 @@
 package com.learning.gcs.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.util.Set;
 @Entity
 @Table(name = "Machine")
 @NamedQuery(name = "Machine", query = "SELECT a FROM Machine a")
+@JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
 public class Machine implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,7 +21,7 @@ public class Machine implements Serializable{
     private String       machineName;
     @Column(nullable = false,columnDefinition = "int(8) comment '生存状态 0：死亡 1：生存 2 :任务暂停' ")
     private Integer      liveStatus;
-    @JsonIgnore
+
     @ManyToMany(fetch = FetchType.LAZY,mappedBy = "machinesList")
     private List<MachineGroup> machineGroups;
     public Integer getId() {
