@@ -12,6 +12,13 @@ import org.springframework.data.domain.Page;
  */
 public interface GcsTaskOverviewService {
     /**
+     * 指定日期和任务Id的总览是否存在
+     * @param createDate        创建日期
+     * @param taskId            任务Id
+     * @return                  true:存在 false:不存在
+     */
+    boolean isExist(String createDate,Integer taskId);
+    /**
      *                          生成昨日数据
      *
      */
@@ -32,11 +39,12 @@ public interface GcsTaskOverviewService {
 
     /**
      * 根据 任务日期和任务Id      更新任务总览
+     * @param doneCount         完成任务数
      * @param createDate        任务日期
      * @param taskId            任务Id
      * @return                  影响数量
      */
-    Integer updateByCreateDateAndTaskId(String createDate,Integer taskId);
+    Integer updateByCreateDateAndTaskId(Integer doneCount, String createDate,Integer taskId);
 
     /**
      * 根据条件分页查询

@@ -1,7 +1,9 @@
 package com.learning.gcs.web.service.impl;
 
 import com.learning.gcs.common.entity.GcsTaskOverview;
+import com.learning.gcs.common.repository.GcsTaskOverviewRepository;
 import com.learning.gcs.web.service.GcsTaskOverviewService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class GcsTaskOverViewServiceImpl implements GcsTaskOverviewService{
+
+    @Autowired
+    private GcsTaskOverviewRepository gcsTaskOverviewRepository;
+
+    @Override
+    public boolean isExist(String createDate, Integer taskId) {
+        return gcsTaskOverviewRepository.countByCreateDateAndTaskId(createDate, taskId)==0?false:true;
+    }
+
     @Override
     public void generateYesterdayData() {
 
@@ -26,12 +37,12 @@ public class GcsTaskOverViewServiceImpl implements GcsTaskOverviewService{
 
     @Override
     public GcsTaskOverview save(GcsTaskOverview gcsTaskOverview) {
-        return null;
+        return gcsTaskOverviewRepository.save(gcsTaskOverview);
     }
 
     @Override
-    public Integer updateByCreateDateAndTaskId(String createDate, Integer taskId) {
-        return null;
+    public Integer updateByCreateDateAndTaskId(Integer doneCount,String createDate, Integer taskId) {
+        return gcsTaskOverviewRepository.updateDoneCountByCreateDateAndTaskId(doneCount,createDate,taskId);
     }
 
     @Override

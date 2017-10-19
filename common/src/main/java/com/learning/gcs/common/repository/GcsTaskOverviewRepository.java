@@ -1,6 +1,10 @@
 package com.learning.gcs.common.repository;
 
 import com.learning.gcs.common.entity.GcsTaskOverview;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Xull
@@ -10,4 +14,14 @@ import com.learning.gcs.common.entity.GcsTaskOverview;
  * @description
  */
 public interface GcsTaskOverviewRepository extends MyRepository<GcsTaskOverview,Integer>{
+    @Transactional
+    @Modifying
+    @Query("update GcsTaskOverview g set g.doneCount=:doneCount where g.createDate=:createDate and g.taskId=:taskId")
+    Integer updateDoneCountByCreateDateAndTaskId(@Param("doneCount") Integer doneCount,@Param("createDate") String createDate,
+                                                 @Param("taskId") Integer taskId);
+
+    Integer countByCreateDateAndTaskId(String createDate,Integer taskId);
+
+
+
 }
