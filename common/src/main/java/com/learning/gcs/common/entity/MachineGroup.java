@@ -21,7 +21,9 @@ public class MachineGroup implements Serializable {
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     private List<Machine> machinesList;
-
+    @JsonIgnore
+    @OneToMany(cascade = { CascadeType.REFRESH, CascadeType.MERGE },mappedBy = "group",fetch = FetchType.LAZY)
+    private List<GcsTask> gcsTasks;
     public int getId() {
         return id;
     }
@@ -48,6 +50,14 @@ public class MachineGroup implements Serializable {
 
     public void setMachinesList(List<Machine> machinesList) {
         this.machinesList = machinesList;
+    }
+
+    public List<GcsTask> getGcsTasks() {
+        return gcsTasks;
+    }
+
+    public void setGcsTasks(List<GcsTask> gcsTasks) {
+        this.gcsTasks = gcsTasks;
     }
 
     @Override
