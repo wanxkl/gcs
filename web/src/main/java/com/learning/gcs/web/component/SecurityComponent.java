@@ -45,8 +45,7 @@ public class SecurityComponent {
                     .antMatchers(new String[]{"/js/**","/css/**","/img/**","/images/**","/fonts/**","/**/favicon.ico"}).permitAll()
                     .anyRequest().authenticated()
                     .and().formLogin().loginPage("/login").permitAll()
-                    .and().logout().logoutUrl("/login").logoutSuccessUrl("/login").permitAll()
-                    .and().logout().permitAll()
+                    .and().logout().logoutSuccessUrl("/login").permitAll()
                     .and().headers().frameOptions().sameOrigin()
                     .and().csrf().disable();
 
