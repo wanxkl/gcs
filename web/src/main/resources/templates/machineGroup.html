@@ -58,7 +58,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="glyphicon glyphicon-plus example-wrap"  data-toggle="modal" data-target="#add">
+                    <div class="glyphicon glyphicon-plus example-wrap"  onclick="getMachines()"  data-toggle="modal" data-target="#add">
                         <span style="font-size: large"><a>新建分组</a></span>
                     </div>
                 </div>
@@ -87,14 +87,13 @@
                         <label class="col-sm-3 control-lable">分组设备：</label>
                         <div  class="col-sm-7">
                             <div class="panel panel-default">
-                                <div class="panel-heading" onclick="getMachines()">
+                                <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a style="font-size: larger" data-toggle="collapse"  href="#machines">选择设备</a>
                                     </h4>
                                 </div>
                                 <div  style="width:100%" class="panel-collapse collapse in" th:id="machines" >
                                     <div  class="panel-body">
-                                        <div onclick="allChoice()"><a>全选</a></div>
                                         <div id="getMachine">
 
                                         </div>
