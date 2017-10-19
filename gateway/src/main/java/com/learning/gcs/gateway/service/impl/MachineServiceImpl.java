@@ -2,6 +2,7 @@ package com.learning.gcs.gateway.service.impl;
 
 import com.learning.gcs.common.entity.GcsTask;
 import com.learning.gcs.common.entity.Machine;
+import com.learning.gcs.common.entity.MachineGroup;
 import com.learning.gcs.common.redis.KeyUtil;
 import com.learning.gcs.common.redis.RedisReader;
 import com.learning.gcs.common.redis.RedisWriter;
@@ -30,16 +31,14 @@ public class MachineServiceImpl implements MachineService{
 
         if(ObjectUtils.isEmpty(set)){
             Machine machine =machineRepository.findByMachineName(deviceId);
-            if(!ObjectUtils.isEmpty(machine)){
-                List<GcsTask> gcsTasks = machine.getGcsTasks();
-                if(!ObjectUtils.isEmpty(gcsTasks)){
+            List<MachineGroup> groups = machine.getMachineGroups();
+            for (MachineGroup group : groups) {
+                for (GcsTask gcsTask : group.getGcsTasks()) {
                     String key = KeyUtil.generateDeviceIdKey(deviceId);
-                    gcsTasks.stream().forEach(c->{
-                        redisWriter.setSet(key,c.getId()+"");
-                    });
-                    return redisReader.getSetValues(KeyUtil.generateDeviceIdKey(deviceId));
+                    redisWriter.setSet(key,gcsTask.getId()+"");
                 }
             }
+            return redisReader.getSetValues(KeyUtil.generateDeviceIdKey(deviceId));
         }
         return set;
     }
