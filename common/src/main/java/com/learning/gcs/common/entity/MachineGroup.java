@@ -19,7 +19,7 @@ public class MachineGroup implements Serializable {
     @Column(nullable = false,columnDefinition = "varchar(128) comment '组名'")
     private String groupName;
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     private List<Machine> machinesList;
 
     public int getId() {
@@ -52,6 +52,6 @@ public class MachineGroup implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "id="+this.id+"-groupName="+this.groupName+"-list="+this.machinesList;
     }
 }

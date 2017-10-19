@@ -1,6 +1,6 @@
 function updateTask(id){
+    var groupId=0 ;
       $.get("/findOneTask",{"id":id},function(data){
-          $("#updateGroup").empty();
             $("#taskid").val(data.id);
             $("#apkUrl").val(data.apkUrl);
             $("#appName").val(data.appName);
@@ -19,23 +19,27 @@ function updateTask(id){
             $("#newAddRemainCurveId").val(data.newAddRemainCurveId);
             $("#nichijouRemainCurveId").val(data.nichijouRemainCurveId);
             $("#taskCount").val(data.taskCount);
-            console.log(data)
-            var str ="<option value='"+data.group.id+"'>"+data.group.groupName+"</option>";
-
-
-          $("#updateGroup").append(str);
+            groupId=data.group.id;
+          getGroups(groupId)
       });
+
 }
-function getGroups(){
-      var str = "";
-      $.get("/findGroups",function (data) {
-          $.each(data ,function (index) {
-              var append = "<option value='"+data[index].id+"'>"+data[index].groupName+"</option>"
-              str+=append;
-          })
-          $("#groups").empty();
-          $("#groups").append(str);
-          $("#updateGroup").empty();
-          $("#updateGroup").append(str);
-      })
+function getGroups(groupId) {
+    $.get("/findGroups",function (data) {
+        var str = "";
+        $.each(data ,function (index) {
+            if(data[index].id==groupId){
+                var append = "<option selected='selected' value='"+data[index].id+"'>"+data[index].groupName+"</option>"
+                str+=append;
+            }else{
+                var append = "<option value='"+data[index].id+"'>"+data[index].groupName+"</option>"
+                str+=append;
+            }
+        })
+        $("#groups").empty();
+        $("#groups").append(str);
+        $("#updateGroup").empty();
+        $("#updateGroup").append(str);
+    })
 }
+

@@ -85,7 +85,7 @@ remotes {
     deployServer {
         host = 'aso.ailiuliangyo.com'
         user = 'root'
-        password = '52Zhongguo'
+        password = ''
     }
 }
 
@@ -110,7 +110,7 @@ task uploadJars(dependsOn:shutdownTomcat) << {
     ssh.run {
         session(remotes.deployServer) {
             println 'start copying Jars...'
-            put from:buildDir.toString()+'/resources/main/templates' ,into:'/test/'
+
             put from:buildDir.toString()+'/resources/main/static' ,into:'/test/'
             put from: buildDir.toString() + '/libs/gcs.web-1.0.jar', into: '/test/'
             put from: rootDir.toString() + '/common/build/libs/common-1.0.jar', into: '/test/'
@@ -128,8 +128,7 @@ task deploy(dependsOn:uploadJars) << {
                             mv -f /usr/local/gcs/web-8080/lib/gcs.web-1.0.jar /backup/
                             mv -f /usr/local/gcs/web-8080/lib/common-1.0.jar  /backup/
                             mv /test/gcs.web-1.0.jar /test/common-1.0.jar  /usr/local/gcs/web-8080/lib/
-                            mv /test/templats /usr/local/web-8080/conf
-                            mv /test/static /usr/local/web-8080/conf
+                        
                             cd /usr/local/gcs/web-8080
                             nohup bin/web &
                             '''
