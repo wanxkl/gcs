@@ -20,7 +20,7 @@
                     <div class="col-sm-12">
                         <div class="example-wrap">
                             <h4 class="example-title">任务列表</h4>
-                            <a class="btn btn-default"  data-toggle="modal" data-target="#add">添加任务</a>
+                            <a class="btn btn-default" onclick="getGroups(-1)"  data-toggle="modal" data-target="#add">添加任务</a>
                             <div class="example">
                                 <table id="exampleTableEvents" class="table" data-mobile-responsive="true">
                                     <thead>
@@ -183,14 +183,14 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-lable">任务机器组：</label>
                                 <div class="col-sm-7">
-                                    <select id="groups" name="groupId" onfocus="getGroups()" class="form-control">
+                                    <select id="groups" name="groupId"  class="form-control">
 
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <input  class="form-control" type="submit" value="添加"/>
+                            <div  onclick="preventDbl()" class="form-group">
+                                <input id="submit"   class="form-control" type="submit" value="添加"/>
                             </div>
                             <!-- 隐藏属性-->
                             <div>
@@ -300,7 +300,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-lable">任务机器组：</label>
                                 <div class="col-sm-7">
-                                    <select id="updateGroup" class="form-control" onfocus="getGroups()" name="groupId">
+                                    <select id="updateGroup" class="form-control"  name="groupId">
 
                                     </select>
                                 </div>

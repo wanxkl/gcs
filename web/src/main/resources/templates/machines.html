@@ -23,13 +23,6 @@
 
                     <form>
                         <a class="btn btn-default row"  data-toggle="modal" data-target="#add">添加设备</a>
-                        <select class="form-control row" name="groupName" >
-                            <option th:text="--设备组--"></option>
-                            <option th:text="所有"></option>
-                            <span th:each="group:${groups}">
-                                <option th:text="${group.groupName}"></option>
-                            </span>
-                        </select>
                     </form>
                     <div class="example">
                         <table id="exampleTableEvents" class="table" data-mobile-responsive="true">

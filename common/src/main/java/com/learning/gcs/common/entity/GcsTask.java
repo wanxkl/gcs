@@ -67,8 +67,8 @@ public class GcsTask implements Serializable{
     @Column(nullable = false,columnDefinition = "int(8) COMMENT '月留存曲线ID'")
     private Integer      remainCurveId;
 
-    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinColumn(name="groupId")
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER,optional=true)
+    @JoinColumn(name = "groupId")
     private MachineGroup group;
 
 

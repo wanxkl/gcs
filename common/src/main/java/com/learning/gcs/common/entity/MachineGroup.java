@@ -19,9 +19,11 @@ public class MachineGroup implements Serializable {
     @Column(nullable = false,columnDefinition = "varchar(128) comment '组名'")
     private String groupName;
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     private List<Machine> machinesList;
-
+    @JsonIgnore
+    @OneToMany(cascade = { CascadeType.REFRESH, CascadeType.MERGE },mappedBy = "group",fetch = FetchType.LAZY)
+    private List<GcsTask> gcsTasks;
     public int getId() {
         return id;
     }
@@ -50,8 +52,16 @@ public class MachineGroup implements Serializable {
         this.machinesList = machinesList;
     }
 
+    public List<GcsTask> getGcsTasks() {
+        return gcsTasks;
+    }
+
+    public void setGcsTasks(List<GcsTask> gcsTasks) {
+        this.gcsTasks = gcsTasks;
+    }
+
     @Override
     public String toString() {
-        return super.toString();
+        return "id="+this.id+"-groupName="+this.groupName+"-list="+this.machinesList;
     }
 }

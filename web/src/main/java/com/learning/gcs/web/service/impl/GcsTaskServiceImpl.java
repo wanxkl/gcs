@@ -28,7 +28,6 @@ public class GcsTaskServiceImpl implements GcsTaskService{
     @Override
     public GcsTask findById(int id) {
         GcsTask gcsTask = gcsTaskRepository.findOne(id);
-        //logger.debug(gcsTask.getGroup().getGroupName());
         return gcsTask ;
     }
     @Autowired
@@ -41,26 +40,23 @@ public class GcsTaskServiceImpl implements GcsTaskService{
 
     @Override
     public void updateGcsTaskById(Integer id, String appName, String apkUrl, Integer runNumber, Integer weight, Integer taskModeCode, String taskMode, String packageName, String marketUrl, String marketPackName, String searchTxt, String findSet, Integer taskStatus, Integer taskCount, Integer newAddRemainCurveId, Integer nichijouRemainCurveId, Integer remainCurveId, int groupId) {
-        GcsTask gcsTask = gcsTaskRepository.findOne(id);
-        List<GcsTask> gcsTasks = new ArrayList<>();
-        gcsTasks.add(gcsTask);
         MachineGroup group = machineGroupRepository.findOne(groupId);
-        System.out.println(group);
         gcsTaskRepository.updateById(id,appName,apkUrl,runNumber,weight,taskModeCode,taskMode,packageName,marketUrl,marketPackName,searchTxt,findSet,taskStatus,taskCount,newAddRemainCurveId,nichijouRemainCurveId,remainCurveId,group);
-        /*redisWriter.deleteKeys(KeyUtil.generateDeviceIdKey("*"));*/
+        redisWriter.deleteKeys(KeyUtil.generateDeviceIdKey("*"));
     }
 
     @Override
     public void add(GcsTask gcsTask,int groupId) {
         MachineGroup machineGroup = machineGroupRepository.findOne(groupId);
+
         gcsTask.setGroup(machineGroup);
         gcsTaskRepository.save(gcsTask);
-        /*redisWriter.deleteKeys(KeyUtil.generateDeviceIdKey("*"));*/
+        redisWriter.deleteKeys(KeyUtil.generateDeviceIdKey("*"));
     }
 
     @Override
     public void deleteById(int id) {
         gcsTaskRepository.delete(id);
-        /*redisWriter.deleteKeys(KeyUtil.generateDeviceIdKey("*"));*/
+        redisWriter.deleteKeys(KeyUtil.generateDeviceIdKey("*"));
     }
 }

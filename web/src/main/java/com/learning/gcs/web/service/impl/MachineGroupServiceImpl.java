@@ -5,6 +5,8 @@ import com.learning.gcs.common.entity.MachineGroup;
 import com.learning.gcs.common.repository.MachineGroupRepository;
 import com.learning.gcs.common.repository.MachineRepository;
 import com.learning.gcs.web.service.MachineGroupService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +18,14 @@ public class MachineGroupServiceImpl implements MachineGroupService {
     MachineGroupRepository machineGroupRepository;
     @Autowired
     MachineRepository machineRepository;
+    Logger logger = LoggerFactory.getLogger(MachineGroupServiceImpl.class);
     @Override
     public List<MachineGroup> findAll() {
-        return machineGroupRepository.findAll();
+        List<MachineGroup> groups = machineGroupRepository.findAll();
+        /*for (MachineGroup group:groups){
+            logger.debug("machineGroupfindMachine="+group.getMachinesList().get(0).getMachineName());
+        }*/
+        return groups;
     }
 
     @Override
@@ -35,6 +42,7 @@ public class MachineGroupServiceImpl implements MachineGroupService {
             Machine machine = machineRepository.findOne(Integer.parseInt(id));
             machines.add(machine);
         }
+
         machineGroup.setMachines(machines);
         machineGroupRepository.save(machineGroup);
     }
