@@ -31,8 +31,6 @@ public class SecurityComponent {
     @Configuration
     public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
-
         @Autowired
         private UserDetailsService userDetailsService;
         @Override
@@ -48,7 +46,6 @@ public class SecurityComponent {
                     .and().logout().logoutSuccessUrl("/login").permitAll()
                     .and().headers().frameOptions().sameOrigin()
                     .and().csrf().disable();
-
         }
 
     }
