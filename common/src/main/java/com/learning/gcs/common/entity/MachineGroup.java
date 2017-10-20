@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "MachineGroup")
 @NamedQuery(name="MachineGroup",query = "select a from MachineGroup a")
-@JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
+@JsonIgnoreProperties({ "gcsTasks","hibernateLazyInitializer" })
 public class MachineGroup implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

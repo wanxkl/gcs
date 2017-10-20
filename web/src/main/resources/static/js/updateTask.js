@@ -11,8 +11,17 @@ function updateTask(id){
             $("#runNumber").val(data.runNumber);
             $("#searchTxt").val(data.searchTxt);
             $("#taskMode").val(data.taskMode);
+            if(data.taskModeCode=="1"){
+                $("#cpa").attr("selected","seleced")
+            }else if(data.taskModeCode=="2"){
+                $("#market").attr("selected","seleced")
+            }
             $("#taskModeCode").val(data.taskModeCode);
-            $("#taskStatus").val(data.taskStatus);
+            if (data.taskStatus==0){
+                $("#off").attr("selected","seleced")
+            }else if (data.taskStatus==1){
+                $("#on").attr("selected","seleced")
+            }
             $("#weight").val(data.weight);
             $("#remainCurveId").val(data.remainCurveId);
             $("#machineIds").val(data.machineIds);

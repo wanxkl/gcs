@@ -42,7 +42,10 @@
                                             <td th:text="${gcs.id}" id="${gcs.id}">1</td>
                                             <td th:text="${gcs.appName}">1</td>
                                             <td th:text="${gcs.runNumber}">1</td>
-                                            <td th:text="${gcs.taskMode}">1</td>
+                                            <td th:text="${gcs.taskMode}">
+                                                <p th:case="1">cpa</p>
+                                                <p th:case="2">market</p>
+                                            </td>
                                             <td th:switch="${gcs.taskStatus}">
                                                 <p th:case="1">开启</p>
                                                 <p th:case="0">关闭</p>
@@ -68,6 +71,16 @@
                     </div>
                     <div class="modal-body alert-success">
                         <form id="addForm" class="form-horizontal" method="get" action="/saveTask">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-lable">任务类型名称：</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control" name="taskModeCode" id="taskModeCodeId" onchange="changedTaskModeCode()">
+                                        <option value="0">请选择</option>
+                                        <option value="1">cpa</option>
+                                        <option value="2">market</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <lable class="col-sm-3 control-lable">任务名称：</lable>
                                 <div class="col-sm-7">
@@ -110,36 +123,28 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-lable">任务类型名称：</label>
-                                <div class="col-sm-7">
-                                    <select class="form-control" name="taskModeCode" id="taskModeCodeId" onchange="changedTaskModeCode()">
-                                        <option value="0">请选择</option>
-                                        <option value="1">Cpa</option>
-                                        <option value="2">Market</option>
-                                    </select>
-                                </div>
-                            </div>
 
-                            <HR style="border:1 dashed #987cb9" width="100%" color="#987cb9"/>
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-lable">市场包名：</label>
-                                <div class="col-sm-7">
-                                    <input class="form-control" name="marketPackName"/>
+                            <div id="marketDiv" hidden="hidden">
+                                <HR style="border:1 dashed #987cb9" width="100%" color="#987cb9"/>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-lable">市场包名：</label>
+                                    <div class="col-sm-7">
+                                        <input class="form-control" name="marketPackName"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-lable">市场URL：</label>
-                                <div class="col-sm-7">
-                                    <input type="url" class="form-control" name="marketUrl"/>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-lable">市场URL：</label>
+                                    <div class="col-sm-7">
+                                        <input type="url" class="form-control" name="marketUrl"/>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-lable">搜索关键字：</label>
-                                <div class="col-sm-7">
-                                    <input required="required" class="form-control" name="searchTxt"/>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-lable">搜索关键字：</label>
+                                    <div class="col-sm-7">
+                                        <input  class="form-control" name="searchTxt"/>
+                                    </div>
                                 </div>
                             </div>
 
@@ -258,7 +263,7 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-lable">任务重试次数：</label>
                                 <div class="col-sm-7">
-                                    <input id="runNumber" class="form-control" name="run_number" />
+                                    <input type="number" min="1" id="runNumber" class="form-control" name="run_number" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -270,10 +275,14 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-lable">任务类型名称：</label>
                                 <div class="col-sm-7">
-                                    <input id="taskMode" class="form-control" name="task_mode"/>
+                                    <select id="taskMode" class="form-control" onchange="changeUpdateTaskModeCode()" name="task_mode">
+                                        <option value="0">请选择</option>
+                                        <option id="cpa" value="1">cpa</option>
+                                        <option id="market" value="2">market</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div hidden="hidden" class="form-group">
                                 <label class="col-sm-3 control-lable">任务类型编码：</label>
                                 <div class="col-sm-7">
                                     <input id="taskModeCode" class="form-control" name="task_mode_code"/>
@@ -282,13 +291,16 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-lable">任务状态：</label>
                                 <div class="col-sm-7">
-                                    <input id="taskStatus" class="form-control" name="task_status"/>
+                                    <select  id="taskStatus" class="form-control" name="task_status">
+                                        <option id="on" value="1">开启</option>
+                                        <option id="off" value="0">关闭</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-lable">权重：</label>
                                 <div class="col-sm-7">
-                                    <input id="weight" class="form-control" name="weight"/>
+                                    <input type="number" min="1" max="10" id="weight" class="form-control" name="weight"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -353,10 +365,28 @@
     <!-- Peity -->
 </body>
 <script>
+
     function changedTaskModeCode() {
         var selectedTaskMode =  $('#taskModeCodeId option:selected').text();
+        if(selectedTaskMode=="cpa"){
+            $("#marketDiv").removeAttr("hidden");
+        }
+        if(selectedTaskMode=="market"){
+            $("#marketDiv").attr("hidden","hidden")
+        }
         console.log(selectedTaskMode);
         $('#taskModeId').val(selectedTaskMode);
+    }
+    function changeUpdateTaskModeCode() {
+        var selectedTaskMode =  $('#taskMode option:selected').val();
+        if(selectedTaskMode==1){
+            $("#marketDiv").removeAttr("hidden");
+        }
+        if(selectedTaskMode==2){
+            $("#marketDiv").attr("hidden","hidden");
+        }
+        console.log(selectedTaskMode);
+        $('#taskModeCode').val(selectedTaskMode);
     }
 </script>
 </html>

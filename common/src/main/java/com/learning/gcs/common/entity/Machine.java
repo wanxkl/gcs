@@ -11,7 +11,7 @@ import java.util.Set;
 @Entity
 @Table(name = "Machine")
 @NamedQuery(name = "Machine", query = "SELECT a FROM Machine a")
-@JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
+@JsonIgnoreProperties({ "machineGroups","hibernateLazyInitializer" })
 public class Machine implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -28,7 +28,7 @@ public class TaskController {
                               @RequestParam("package_name") String package_name,
                               @RequestParam("search_txt") String search_txt,
                               @RequestParam("run_number") int run_number,
-                              @RequestParam(value = "task_mode")String task_mode,
+                              @RequestParam("task_mode")String task_mode,
                               @RequestParam("task_mode_code") int task_mode_code,
                               @RequestParam("task_status") int task_status,
                               @RequestParam("weight") int weight,

@@ -15,6 +15,10 @@ public class GcsTaskConfigController {
     @RequestMapping("/gcsTaskConfig")
     public String gcsTaskConfig(Model model){
         GcsTaskConfig gcsTaskConfig = gcsTaskConfigService.findNewGcsTaskConfig();
+        if(gcsTaskConfig==null){
+            gcsTaskConfig = new GcsTaskConfig();
+        }
+
         model.addAttribute("gcsTaskConfig",gcsTaskConfig);
         return "gcsTaskConfig";
     }
