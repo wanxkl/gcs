@@ -1,5 +1,6 @@
 package com.learning.gcs.web.service;
 
+import com.learning.gcs.common.entity.GcsTask;
 import com.learning.gcs.common.entity.GcsTaskOverview;
 import org.springframework.data.domain.Page;
 
@@ -47,12 +48,12 @@ public interface GcsTaskOverviewService {
     Integer updateByCreateDateAndTaskId(Integer doneCount, String createDate,Integer taskId);
 
     /**
-     * 根据条件分页查询
-     * @param page              分页条件
-     * @param gcsTaskOverview   查询条件
-     * @return                  分页数据
+     * 分页查询
+     * @param pageSize 每页显示数
+     * @param pageNo 页码
+     * @return
      */
-    Page<GcsTaskOverview> findByPage(Page page,GcsTaskOverview gcsTaskOverview);
+    Page<GcsTaskOverview> findByPage(int pageSize, int pageNo, GcsTask gcsTask);
 
     /**
      * 批量生成指定日期数据
