@@ -43,7 +43,6 @@ public class CountChartServiceImpl implements CountChartService{
         String endTime = time+" 23:59:59";
         List list = new ArrayList();
         String sql ="SELECT rt, COUNT(rt) FROM gcs_task_record WHERE create_time>='"+starteTime+"' and create_time<='"+endTime+"' ";
-        //System.out.println(sql);
         if (taskName!=null&&!"".equals(taskName)){
             sql+=" and task_id='"+taskName+"'";
         }

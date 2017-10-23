@@ -15,7 +15,6 @@ public class CountRestController {
     private CountChartService countChartService;
     @RequestMapping("/countDayChart")
     public List<Integer> charAdd(@RequestParam("taskName")String taskName,@RequestParam("timeIn")String timeIn){
-        //System.out.println(taskName);
         List<Integer> ints =countChartService.findIncreasUsers(taskName,timeIn) ;
         return ints;
     }

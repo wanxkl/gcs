@@ -54,8 +54,10 @@ $("#timeIn").bootstrapDatepickr({
      $("#timeIn").val(timeInVal);
      var time = $("#timeIn").val();
          var taskName = $("#taskName").val();
+         console.log(time,"time","taskname",taskName);
          $.get("/countDayChart",{"timeIn":time,"taskName":taskName},function(data){return data},"json").done(function (data) {
                  // 填入数据
+                 console.log(data)
                  lineChart.setOption({
                      series : [
                                  {
@@ -122,10 +124,10 @@ $("#timeIn").bootstrapDatepickr({
          $("#timeIn").val(timeInVal);
          var time = $("#timeIn").val();
              var taskName = $("#taskName").val();
-
+             console.log(time,"time","taskname",taskName);
              $.get("/countDayChart",{"timeIn":time,"taskName":taskName},function(data){return data},"json").done(function (data) {
                      // 填入数据
-
+                     console.log(data)
                      lineChart.setOption({
                          series : [
                                      {
@@ -193,7 +195,7 @@ $("#timeIn").bootstrapDatepickr({
          // 异步加载数据
          var time = $("#timeIn").val();
              var taskName = $("#taskName").val();
-
+             console.log(time,"time","taskname",taskName);
              $.get("/countDayChart",{"timeIn":time,"taskName":taskName},function(data){return data},"json").done(function (data) {
                      // 填入数据
 
@@ -258,10 +260,10 @@ $("#timeIn").bootstrapDatepickr({
 
            var time = $("#timeIn").val();
                var taskName = $("#taskName").val();
-
+               console.log(time,"2time","taskname",taskName);
                $.get("/countRemain",{"timeIn":time,"taskName":taskName},function(data){return data},"json").done(function (data) {
                        // 填入数据
-
+                       console.log(data)
                        lineChart2.setOption({
                            series : [
                                        {
@@ -334,10 +336,10 @@ $("#timeIn").bootstrapDatepickr({
             $("#timeIn").val(timeInVal);
             var time = $("#timeIn").val();
                 var taskName = $("#taskName").val();
-
+                console.log(time,"time","taskname",taskName);
                 $.get("/countDayChart",{"timeIn":time,"taskName":taskName},function(data){return data},"json").done(function (data) {
                         // 填入数据
-
+                        console.log(data)
                         lineChart.setOption({
                             series : [
                                         {
@@ -404,10 +406,10 @@ $("#timeIn").bootstrapDatepickr({
                 $("#timeIn").val(timeInVal);
                 var time = $("#timeIn").val();
                     var taskName = $("#taskName").val();
-
+                    console.log(time,"time","taskname",taskName);
                     $.get("/countRemain",{"timeIn":time,"taskName":taskName},function(data){return data},"json").done(function (data) {
                             // 填入数据
-
+                            console.log(data)
                             lineChart.setOption({
                                 series : [
                                             {

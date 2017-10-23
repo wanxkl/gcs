@@ -38,7 +38,6 @@ public class RemainCurveController {
                                      @RequestParam("id") int id,
                                      @RequestParam("remainType") int remainType,@RequestParam("remainName")String remainName){
         String []pencents=request.getParameterValues("percent");
-        System.out.println("id="+id);
         remainCurveService.updateRemainDetail(remainName,remainType,id,pencents);
         model.addAttribute("details",remainCurveService.getRemainDetail());
         return "remain_setting";

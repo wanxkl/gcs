@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>黑名单设置</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet"/>
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet"/>
+    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet"/>
+    <link href="css/animate.css" rel="stylesheet"/>
+    <link href="css/style.css?v=4.1.0" rel="stylesheet"/>
+</head>
+<body class="gray-bg">
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="row row-lg">
+            <div class="col-sm-12">
+                <div class="example-wrap">
+                    <h4 class="example-title">黑名单设置</h4>
+                    <div class="example">
+                        <a class="btn btn-default"   data-toggle="modal" data-target="#add">添加黑名单</a>
+                        <table id="exampleTableEvents" class="table" data-mobile-responsive="true">
+                            <thead>
+                            <tr>
+                                <th data-field="state" data-checkbox="true"></th>
+                                <th>ID</th>
+                                <th>包名</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="black:${blackList}">
+                                <td></td>
+                                <td th:text="${black.id}">没有任务</td>
+                                <td th:text="${black.blackName}">1</td>
+                                <td th:text="${black.createTime}">
+                                    1
+                                </td>
+                                <td>
+                                    <a th:onclick="'findOneBlack('+${black.id}+')'" data-toggle="modal" data-target="#update">修改</a> &nbsp; <a th:href="@{'deleteBlack?id='+${black.id}}">删除</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!--<div class="pull-right" >
+                            <form method="get" action="findAllTaskOverView">
+                                <ul class="pagination" th:each="page:${pages}">
+                                    <li><a th:href="@{'findAllTaskOverView?pageNo='+${page}}" th:text="${page}">0</a></li>
+                                </ul>
+                                <span  th:text="'共'+${pageCount}+'页,当前第'+${pageNo}+'页'"></span>
+                                <span>到第</span>
+                                <input type="search" style="width:3em" name="pageNo" />
+                                <span>页</span>
+                                <input  type="submit" value="确认"/>
+                            </form>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--添加黑名单-->
+<div id="add" class="modal fade " aria-labelledby="添加黑名单" aria-hidden="true">
+    <div class="modal-dialog alert-success">
+        <div class="modal-content alert-success">
+            <div class="modal-header">
+                <h4 class="modal-title">添加黑名单</h4>
+            </div>
+            <div class="modal-body alert-success">
+                <form id="addForm" class="form-horizontal" method="get" action="/saveBlackList">
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">包名：</label>
+                        <div class="col-sm-7">
+                            <input class="form-control" name="blackName"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input  class="form-control" type="submit" value="添加"/>
+                    </div>
+                    <!-- 隐藏属性-->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+ <!--修改-->
+<div id="update" class="modal fade " aria-labelledby="修改黑名单" aria-hidden="true">
+    <div class="modal-dialog alert-success">
+        <div class="modal-content alert-success">
+            <div class="modal-header">
+                <h4 class="modal-title">修改黑名单</h4>
+            </div>
+            <div class="modal-body alert-success">
+                <form id="updateForm" class="form-horizontal" method="get" action="/updateBlack">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">ID：</label>
+                        <div class="col-sm-7">
+                            <input id="blackId" class="form-control" name="id"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-lable">包名：</label>
+                        <div class="col-sm-7">
+                            <input id="blackName" class="form-control" name="blackName"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input  class="form-control" type="submit" value="修改"/>
+                    </div>
+                    <!-- 隐藏属性-->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+<script src="js/blackList.js"></script>
+
+<!-- Bootstrap table -->
+<script src="js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script src="js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+
+<!-- Peity -->
+</body>
+</html>
