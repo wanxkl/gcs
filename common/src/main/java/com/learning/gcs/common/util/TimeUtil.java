@@ -33,5 +33,6 @@ public class TimeUtil {
 
     public static void main(String[] args) {
         System.out.println(getCurrentHour());
+        System.out.println(getFormatDateDistinceNow(1));
     }
 }

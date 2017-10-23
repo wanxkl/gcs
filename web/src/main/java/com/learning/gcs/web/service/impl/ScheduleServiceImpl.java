@@ -1,6 +1,12 @@
 package com.learning.gcs.web.service.impl;
 
+import com.learning.gcs.common.util.TimeUtil;
+import com.learning.gcs.web.service.GcsTaskOverviewService;
 import com.learning.gcs.web.service.ScheduleService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,9 +18,17 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ScheduleServiceImpl implements ScheduleService{
+
+    private static final Logger logger = LoggerFactory.getLogger(ScheduleServiceImpl.class);
+
+    @Autowired
+    private GcsTaskOverviewService gcsTaskOverviewService;
+
+    @Scheduled(cron = "0 0 0 * * ?")
     @Override
     public void taskByEveryDay() {
-
+        logger.info("开始执行每日任务：{}", TimeUtil.getFormatTime());
+        gcsTaskOverviewService.generateYesterdayData();
     }
 
     @Override
@@ -22,8 +36,11 @@ public class ScheduleServiceImpl implements ScheduleService{
 
     }
 
+    @Scheduled(cron = "0 0/5 * * * ?")
     @Override
     public void taskByEveryFiveMinute() {
+        logger.info("开始执行五分钟任务：{}", TimeUtil.getFormatTime());
+        gcsTaskOverviewService.generateTodayData();
 
     }
 }

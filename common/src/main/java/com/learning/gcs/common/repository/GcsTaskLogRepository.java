@@ -12,4 +12,6 @@ public interface GcsTaskLogRepository extends MyRepository<GcsTaskLog,Integer>{
     @Query("select g.taskId,count(g.id) from GcsTaskLog g where g.createDate=:createDate group by g.taskId")
     List<Object[]> findByCreateDateGroupByTaskId(@Param("createDate") String createDate);
 
+    Integer countByCreateDateAndTaskId(String createDate,Integer taskId);
+
 }

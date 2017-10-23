@@ -53,4 +53,11 @@ public interface GcsTaskOverviewService {
      * @return                  分页数据
      */
     Page<GcsTaskOverview> findByPage(Page page,GcsTaskOverview gcsTaskOverview);
+
+    /**
+     * 批量生成指定日期数据
+     * @param createDate    指定日期
+     * @return  结果数
+     */
+    Integer batchUpdate(String createDate);
 }
