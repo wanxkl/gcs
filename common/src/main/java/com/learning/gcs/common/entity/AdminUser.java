@@ -1,12 +1,7 @@
 package com.learning.gcs.common.entity;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -20,9 +15,8 @@ import java.util.List;
 @Entity
 @Table(name = "AdminUser")
 @NamedQuery(name = "AdminUser", query = "SELECT a FROM AdminUser a")
-public class AdminUser implements UserDetails {
+public class AdminUser implements Serializable {
     private static final long serialVersionUID = 1660836200116410830L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true, nullable = false)
@@ -38,22 +32,6 @@ public class AdminUser implements UserDetails {
     private Date createTime = new Date();
     private Date updateTime = new Date();
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -62,13 +40,20 @@ public class AdminUser implements UserDetails {
         this.id = id;
     }
 
-
-    public List<AdminRole> getRoles() {
-        return roles;
+    public String getUsername() {
+        return username;
     }
 
-    public void setRoles(List<AdminRole> roles) {
-        this.roles = roles;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Integer getUserType() {
@@ -87,51 +72,27 @@ public class AdminUser implements UserDetails {
         this.userLevel = userLevel;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public List<AdminRole> getRoles() {
+        return roles;
     }
 
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> auths = new ArrayList<>();
-        List<AdminRole> roles = this.getRoles();
-        for (AdminRole role : roles) {
-            auths.add(new SimpleGrantedAuthority(role.getName()));
-        }
-        return auths;
-    }
-    @Override
-    public String getPassword() {
-        return this.password;
+    public void setRoles(List<AdminRole> roles) {
+        this.roles = roles;
     }
 
-    @Override
-    public String getUsername() {
-        return this.username;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
 }

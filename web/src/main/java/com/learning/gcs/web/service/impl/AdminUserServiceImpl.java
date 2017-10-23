@@ -1,12 +1,19 @@
 package com.learning.gcs.web.service.impl;
 
+import com.learning.gcs.common.entity.AdminRole;
 import com.learning.gcs.common.entity.AdminUser;
 import com.learning.gcs.common.repository.AdminUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Xull
@@ -29,7 +36,14 @@ public class AdminUserServiceImpl implements UserDetailsService{
             throw new UsernameNotFoundException("用户名不存在");
         }
 
-        return adminUser;
+        List<GrantedAuthority> auths = new ArrayList<>();
+        List<AdminRole> roles = adminUser.getRoles();
+        for (AdminRole role : roles) {
+            auths.add(new SimpleGrantedAuthority(role.getName()));
+        }
+
+        return new User(adminUser.getUsername(),
+                        adminUser.getPassword(),auths);
 
     }
 
