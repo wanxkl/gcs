@@ -5,6 +5,8 @@ import com.learning.gcs.common.entity.RemainCurveDetail;
 import com.learning.gcs.common.repository.RemainCurveDetailRepository;
 import com.learning.gcs.common.repository.RemainCurveRepository;
 import com.learning.gcs.web.service.RemainCurveService;
+import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ public class RemainCurveServiceImpl implements RemainCurveService{
     RemainCurveDetailRepository detailRepository;
     @Autowired
     RemainCurveRepository remainCurveRepository;
+    private org.slf4j.Logger logger = LoggerFactory.getLogger("RemainCurveServiceImpl");
     @Override
     public void saveRemainDetail(String[] datas ,String remainName,int remainType) {
         List<String> list = new ArrayList();
@@ -31,13 +34,13 @@ public class RemainCurveServiceImpl implements RemainCurveService{
         remainCurve.setRemainType(remainType);
         List<RemainCurveDetail> details = new ArrayList<RemainCurveDetail>();
         for (int i =0;i<list.size();i++){
-
             RemainCurveDetail remainCurveDetail = new RemainCurveDetail();
             remainCurveDetail.setRemainCurve(remainCurve);
             remainCurveDetail.setDistance(i);
             remainCurveDetail.setPercent(Float.parseFloat(list.get(i).toString()));
             details.add(remainCurveDetail);
         }
+
         remainCurve.setRemainCurveDetails(details);
         remainCurveRepository.save(remainCurve);
     }

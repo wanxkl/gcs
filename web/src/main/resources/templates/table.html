@@ -277,8 +277,8 @@
                                 <div class="col-sm-7">
                                     <select id="taskMode" class="form-control" onchange="changeUpdateTaskModeCode()" name="task_mode">
                                         <option value="0">请选择</option>
-                                        <option id="cpa" value="1">cpa</option>
-                                        <option id="market" value="2">market</option>
+                                        <option id="cpa" value="cpa">cpa</option>
+                                        <option id="market" value="cpa">market</option>
                                     </select>
                                 </div>
                             </div>
@@ -368,25 +368,31 @@
 
     function changedTaskModeCode() {
         var selectedTaskMode =  $('#taskModeCodeId option:selected').text();
+        var taskModeCode= "";
         if(selectedTaskMode=="cpa"){
             $("#marketDiv").removeAttr("hidden");
+            taskModeCode=1
         }
         if(selectedTaskMode=="market"){
             $("#marketDiv").attr("hidden","hidden")
+            taskModeCode=2
         }
         console.log(selectedTaskMode);
-        $('#taskModeId').val(selectedTaskMode);
+        $('#taskModeId').val(taskModeCode);
     }
     function changeUpdateTaskModeCode() {
         var selectedTaskMode =  $('#taskMode option:selected').val();
-        if(selectedTaskMode==1){
+        var taskModeCode= "";
+        if(selectedTaskMode=="cpa"){
             $("#marketDiv").removeAttr("hidden");
+            taskModeCode=1
         }
-        if(selectedTaskMode==2){
-            $("#marketDiv").attr("hidden","hidden");
+        if(selectedTaskMode=="market"){
+            $("#marketDiv").attr("hidden","hidden")
+            taskModeCode=2
         }
         console.log(selectedTaskMode);
-        $('#taskModeCode').val(selectedTaskMode);
+        $('#taskModeCode').val(taskModeCode);
     }
 </script>
 </html>
