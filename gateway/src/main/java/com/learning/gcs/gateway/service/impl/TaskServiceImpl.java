@@ -1,14 +1,12 @@
 package com.learning.gcs.gateway.service.impl;
 
-import com.learning.gcs.common.entity.GcsDeviceInfo;
-import com.learning.gcs.common.entity.GcsTask;
-import com.learning.gcs.common.entity.GcsTaskRecord;
-import com.learning.gcs.common.entity.RemainCurveDetail;
+import com.learning.gcs.common.entity.*;
 import com.learning.gcs.common.util.TimeUtil;
 import com.learning.gcs.gateway.adapter.TaskConfigAdapter;
 import com.learning.gcs.gateway.adapter.TaskSimpleAdapter;
 import com.learning.gcs.gateway.bean.Result;
 import com.learning.gcs.gateway.bean.Task;
+import com.learning.gcs.gateway.bean.TaskConfig;
 import com.learning.gcs.gateway.service.*;
 import com.learning.gcs.gateway.util.Constant;
 import com.learning.gcs.gateway.util.WeightRandom;
@@ -54,7 +52,8 @@ public class TaskServiceImpl implements TaskService {
         List<Integer> validTaskId = gcsTaskService.getValidTaskIds(deviceId);
         //根据Weight获取任务，目前只支持一个
         List<Pair<GcsTask, Integer>> weightList = new ArrayList<>();
-        if (!ObjectUtils.isEmpty(validTaskId)) {
+        GcsTaskConfig gcsTaskConfig = gcsTaskConfigService.getGcsTaskConfig();
+        if (!ObjectUtils.isEmpty(validTaskId)&&gcsTaskConfig.isState()) {
             for (Integer integer : validTaskId) {
                 GcsTask gcsTask = gcsTaskService.getByTaskId(integer);
                 weightList.add(new Pair<>(gcsTask, gcsTask.getWeight()));
@@ -86,11 +85,17 @@ public class TaskServiceImpl implements TaskService {
                 task.setConfig(new TaskConfigAdapter(gcsTaskConfigService.getGcsTaskConfig()).build());
                 task.setInfo(gcsDeviceInfo);
             } else {
-                task.setConfig(Constant.TASK_CONFIG_INVALID_DEVICE_INFO);
+                TaskConfig taskConfig = new TaskConfigAdapter(gcsTaskConfig).build();
+                taskConfig.setMessage("TaskId没有合适的DeviceInfo");
+                taskConfig.setState(false);
+                task.setConfig(taskConfig);
             }
 
         } else {
-            task.setConfig(Constant.TASK_CONFIG_INVALID_TASK);
+            TaskConfig taskConfig = new TaskConfigAdapter(gcsTaskConfig).build();
+            taskConfig.setMessage("AsoId没有合适的Task");
+            taskConfig.setState(false);
+            task.setConfig(taskConfig);
         }
         return task;
     }

@@ -16,29 +16,31 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class MachineServiceImpl implements MachineService{
+public class MachineServiceImpl implements MachineService {
 
     @Autowired
-    private RedisWriter redisWriter;
+    private RedisWriter       redisWriter;
     @Autowired
-    private RedisReader redisReader;
+    private RedisReader       redisReader;
     @Autowired
     private MachineRepository machineRepository;
+
     @Override
     public Set<Object> getTaskIdsByDeviceId(String deviceId) {
 
         Set<Object> set = redisReader.getSetValues(KeyUtil.generateDeviceIdKey(deviceId));
-
-        if(ObjectUtils.isEmpty(set)){
-            Machine machine =machineRepository.findByMachineName(deviceId);
-            List<MachineGroup> groups = machine.getMachineGroups();
-            for (MachineGroup group : groups) {
-                for (GcsTask gcsTask : group.getGcsTasks()) {
-                    String key = KeyUtil.generateDeviceIdKey(deviceId);
-                    redisWriter.setSet(key,gcsTask.getId()+"");
+        if (ObjectUtils.isEmpty(set)) {
+            Machine machine = machineRepository.findByMachineName(deviceId);
+            if (!ObjectUtils.isEmpty(machine)) {
+                List<MachineGroup> groups = machine.getMachineGroups();
+                for (MachineGroup group : groups) {
+                    for (GcsTask gcsTask : group.getGcsTasks()) {
+                        String key = KeyUtil.generateDeviceIdKey(deviceId);
+                        redisWriter.setSet(key, gcsTask.getId() + "");
+                    }
                 }
+                return redisReader.getSetValues(KeyUtil.generateDeviceIdKey(deviceId));
             }
-            return redisReader.getSetValues(KeyUtil.generateDeviceIdKey(deviceId));
         }
         return set;
     }
